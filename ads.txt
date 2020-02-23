@@ -1,0 +1,8 @@
+google.com, pub-8251399081266327, DIRECT, f08c47fec0942fa0
+google.com, pub-6997479010326903, RESELLER, f08c47fec0942fa0
+google.com, pub-2264390143245556, RESELLER, f08c47fec0942fa0
+cpmstar.com, 23984, RESELLER
+google.com, pub-7020262665364086, RESELLER, f08c47fec0942fa0
+spotxchange.com, 238406, RESELLER, 7842df1d2fe2db34
+spotx.tv, 238406, RESELLER, 7842df1d2fe2db34
+google.com, pub-5029257013560698, RESELLER, f08c47fec0942fa0

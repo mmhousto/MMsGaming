@@ -1,0 +1,191 @@
+<!--
+URL: www.freecontactform.com
+Version: FreeContactForm Free V2.3
+Copyright (c) 2019 freecontactform.com
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+Notice: The free version is free to use, but all credit and references 
+to freecontactform.com must be kept intact.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+	<title>Contact Me</title>
+	<script src="freecontactformvalidation.js"></script>
+	<script>
+	required.add('Full_Name','NOT_EMPTY','Full Name');
+	required.add('Email_Address','EMAIL','Email Address');
+	required.add('Your_Message','NOT_EMPTY','Your Message');
+	required.add('AntiSpam','NOT_EMPTY','Anti-Spam Question');
+	</script>
+	<link rel="stylesheet" type="text/css" href="freecontactform.css">
+	<link rel="stylesheet" type="text/css" href="footer.css">
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+	
+	<style type="text/css">
+        html{
+            min-height: 100%;
+            min-width: 100%;
+            margin: 0;
+            font-family: Arial;
+            }
+        body {
+            background-color: #38b6ff;
+            min-height: 100%;
+            min-width: 100%;
+            position: relative;
+            margin: 0;
+            font-family: Arial;
+            overflow: visible;
+            }
+        .wrapper{ 
+            width: 450px;
+            padding: 20px;
+            font: 14px sans-serif;
+            border: dashed black 2px; }
+        .btn-primary {
+          color: #fff;
+          background-color: #35CD34;
+          border-color: #2e6da4;
+        }
+        .btn-primary:hover {
+          color: #fff;
+          background-color: #01A800;
+          border-color: #204d74;
+        }
+        .footer {
+            display: block;
+            position: static;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1.5rem;
+            font-size: 14px;
+            background-color: gray;
+            color: black;
+            padding: 5px;
+        }
+        .alignLeft {
+            float: left;
+            margin-left: 1px;
+        }
+        .alignRight {
+            float: right;
+            margin-right: 12px;
+        }
+        #gradient {
+            background-image: linear-gradient(
+                to top right, 
+                #a7fbfc, #ff80bd
+                );
+        }
+        .freecontactform{
+            border: dashed black 2px;
+        }
+        .antispammessage {
+            border-top: solid black 1px;
+            border-bottom: solid black 1px;
+        }
+    </style>
+    
+	</head>
+	<body>
+<div id="page-container">
+   <div id="content-wrap">
+	    <center>
+     <a href="index.php"><img src="MMsGCoo.png" alt="MM Gaming"  height="150" width="400" vspace="10"></a>
+     
+     <h2>If you have any questions or concerns fill out the form below and sumbit it,<br> I will get back to you as soon as possible!</h2>
+	
+	<form name="freecontactform" method="post" action="freecontactformprocess.php" onsubmit="return validate.check(this)">
+	<table width="400px" class="freecontactform">
+	<tr>
+	 <td colspan="2">
+	  
+	 <div class="freecontactformheader">Contact Me Form</div>
+	  
+	 <div class="freecontactformmessage">Fields marked with <span class="required_star"> * </span> are mandatory.</div>
+	  
+	 </td>
+	</tr>
+	<tr>
+	 <td valign="top">
+	  <label for="Full_Name" class="required">Full Name<span class="required_star"> * </span></label>
+	 </td>
+	 <td valign="top">
+	  <input type="text" name="Full_Name" id="Full_Name" maxlength="80" style="width:230px">
+	 </td>
+	</tr>
+	<tr>
+	 <td valign="top">
+	  <label for="Email_Address" class="required">Email Address<span class="required_star"> * </span></label>
+	 </td>
+	 <td valign="top">
+	  <input type="text" name="Email_Address" id="Email_Address" maxlength="100" style="width:230px">
+	 </td>
+	</tr>
+	<tr>
+	 <td valign="top">
+	  <label for="Telephone_Number" class="not-required">Telephone Number</label>
+	 </td>
+	 <td valign="top">
+	  <input type="text" name="Telephone_Number" id="Telephone_Number" maxlength="100" style="width:230px">
+	 </td>
+	</tr>
+	<tr>
+	 <td valign="top">
+	  <label for="Your_Message" class="required">Your Message<span class="required_star"> * </span></label>
+	 </td>
+	 <td valign="top">
+	  <textarea style="width:230px;height:160px" name="Your_Message" id="Your_Message" maxlength="2000"></textarea>
+	 </td>
+	</tr>
+	<tr>
+	 <td colspan="2" style="text-align:center" >
+	  <div class="antispammessage">
+	  To help prevent automated spam, please answer this question
+	  <br /><br />
+		  <div class="antispamquestion">
+		   <span class="required_star"> * </span>
+		   Using only numbers, what is 10 plus 15? &nbsp; 
+		   <input type="text" name="AntiSpam" id="AntiSpam" maxlength="100" style="width:30px">
+		  </div>
+	  </div>
+	 </td>
+	</tr>
+	<tr>
+	 <td colspan="2" style="text-align:center" >
+	 <br /><br />
+	  <input type="submit" value=" Submit Form " style="width:200px;height:40px">
+	  <br /><br />
+	  <!-- 
+	  If you want to remove this author link, 
+	  please purchase an unbranded version from: https://www.freecontactform.com/unbranded_form.php 
+	  Or upgrade to the more professional version at: https://www.freecontactform.com/responsive_form.php
+	  -->
+	  <div>Form provided by: <a href="https://www.freecontactform.com" target="_blank" rel="nofollow">FreeContactForm.com</a></div>
+	  <br /><br />
+	 </td>
+	</tr>
+	</table>
+	</form>
+</center>
+</div>
+<footer id="gradient" class="footer">
+  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+</footer>
+</div>
+</body>
+</html>
