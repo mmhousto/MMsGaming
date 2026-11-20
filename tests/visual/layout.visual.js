@@ -25,7 +25,7 @@ test.beforeAll(async ({ request }) => {
   await request.post('/register.php', {
     form: { username: NAME, email: `${NAME}@example.com`, password: PASSWORD, confirm_password: PASSWORD },
   });
-  mysql(`UPDATE users SET points = 1234, totalPoints = 3000, created_at = '2026-01-01 00:00:00' WHERE username = '${NAME}'`);
+  mysql(`UPDATE users SET points = 1234, totalPoints = 3000 WHERE username = '${NAME}'`);
 });
 
 for (const who of ['guest', 'player']) {
