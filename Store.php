@@ -992,8 +992,14 @@ HAVE A LOOK. NEED HELP? <a href="contactform.htm">CONTACT ME!</a></font></p></di
         <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
           <input type="hidden" name="cmd" value="_s-xclick" />
           <input type="hidden" name="hosted_button_id" value="Y9PERZA6GR25A" />
+          <?php if (is_logged_in()) { /* tells PayPal which player to credit (signed, see lib/donations.php) */ ?>
+          <input type="hidden" name="custom" value="<?php echo e(donation_custom_token((int) $_SESSION['id'])); ?>" />
+          <?php } ?>
+          <input type="hidden" name="notify_url" value="https://mms-gaming.com/donate.php" />
+          <input type="hidden" name="return" value="https://mms-gaming.com/thankYou.php" />
           <input type="image" rel="nofollow" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
         </form>
+        <?php if (!is_logged_in()) { ?><small><a href="/login.php">Log in</a> first to receive points for your donation.</small><?php } ?>
 
       </td>
     </tr>

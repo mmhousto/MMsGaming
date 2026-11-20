@@ -6,6 +6,8 @@ const { defineConfig } = require('@playwright/test');
 const PORT = process.env.TEST_PORT || '8099';
 // Emails the site sends during tests are written here instead of sent.
 process.env.MMSG_MAIL_LOG = process.env.MMSG_MAIL_LOG || require('path').join(require('os').tmpdir(), 'mmsg-test-mail.log');
+// PayPal notices are checked against a local stand-in instead of PayPal.
+process.env.MMSG_PAYPAL_VERIFY_URL = `http://127.0.0.1:${PORT}/tests/fixtures/paypal-verify.php`;
 
 module.exports = defineConfig({
   // Tests share one database, so run them one at a time for predictable results.

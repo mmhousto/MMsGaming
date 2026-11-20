@@ -15,6 +15,8 @@ define('DB_SERVER', '${DB_HOST:-127.0.0.1}');
 define('DB_USERNAME', '${DB_USER:-mmtest}');
 define('DB_PASSWORD', '${DB_PASS:-testpw}');
 define('DB_NAME', '${DB_NAME:-mmsg_test}');
+// Test PayPal account (donations are only credited for payments to it).
+define('PAYPAL_RECEIVER', 'seller@example.com');
 PHP
 
 export MMSG_CONFIG="$CONF"
