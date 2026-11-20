@@ -24,15 +24,7 @@ $total = $mmsgStats['total'];
 <html lang="en">
 
 <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162871090-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-162871090-1');
-</script>
+    <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
     <title>Free Online Gaming | Play Neon Jump</title>

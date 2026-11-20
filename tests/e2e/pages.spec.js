@@ -48,6 +48,13 @@ for (const who of ['guest', 'player']) {
         const match = body.match(PHP_ERROR);
         expect(match ? body.slice(Math.max(0, match.index - 100), match.index + 300) : null, `PHP error on ${page}`).toBeNull();
 
+        // Analytics: GA4 only (the old Universal Analytics tag stopped working in 2023).
+        expect(body, `old analytics tag on ${page}`).not.toContain('UA-162871090');
+        if (body.includes('googletagmanager.com/gtag/js')) {
+          expect(body, `GA4 tag on ${page}`).toContain('gtag/js?id=G-5F2BTG9Z5H');
+          expect(body).toContain("gtag('config', 'G-5F2BTG9Z5H')");
+        }
+
         // Pages with the site footer use the shared one (working links, current year).
         if (body.includes('<footer id="gradient"')) {
           expect(body, `footer contact link on ${page}`).toContain('<a href="/contactform.html">Contact Me!</a>');
@@ -113,4 +120,12 @@ test.describe('shared header', () => {
     expect(body).toContain('href="/logout.php"');
     expect(body).toContain(`<span id="Gamer"><a href="/profile.php">${name}</a></span>`);
   });
+});
+
+test('the plain-HTML pages use the GA4 tag too', async ({ request }) => {
+  for (const page of ['contactform.html', 'thankyou.html', 'privacyPolicy.html', 'terms.html']) {
+    const body = await (await request.get(`/${page}`)).text();
+    expect(body, page).toContain('gtag/js?id=G-5F2BTG9Z5H');
+    expect(body, page).not.toContain('UA-162871090');
+  }
 });
