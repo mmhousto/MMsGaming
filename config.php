@@ -9,6 +9,8 @@
  *   /home/<account>/domains/mms-gaming.com/MMsGamingconfig.php   <- secrets
  *   /home/<account>/domains/mms-gaming.com/public_html/          <- this site
  *
+ * The account home folder (/home/<account>/MMsGamingconfig.php) also works.
+ *
  * Or set the MMSG_CONFIG environment variable to its full path.
  *
  * MMsGamingconfig.php must define DB_SERVER, DB_USERNAME, DB_PASSWORD and
@@ -19,6 +21,7 @@ $mmsgConfigCandidates = array_filter([
     getenv('MMSG_CONFIG') ?: null,
     dirname(__DIR__) . '/MMsGamingconfig.php',
     dirname(__DIR__, 2) . '/MMsGamingconfig.php',
+    dirname(__DIR__, 3) . '/MMsGamingconfig.php', // account home, e.g. /home/<account>/
 ]);
 
 $mmsgConfigFile = null;
