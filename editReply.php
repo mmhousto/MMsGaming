@@ -256,10 +256,10 @@ h2, h3, h4, h5, h6 {
     $message = $_POST['message']; 
         
     echo "<form method='POST' action='".editReplies($link)."'>
-            <input type='hidden' name='rid' value='".$rid."'>
-            <input type='hidden' name='uid' value='".$uid."'>
-            <input type='hidden' name='date' value='".$date."'>
-            <textarea class='myTextArea' name='message'>".$message."</textarea><br>
+            <input type='hidden' name='rid' value='".e($rid)."'>
+            <input type='hidden' name='uid' value='".e($uid)."'>
+            <input type='hidden' name='date' value='".e($date)."'>
+            <textarea class='myTextArea' name='message'>".e($message)."</textarea><br>
             <button style='width: 100px; height: 30px; font-size: 16px; font-weight: 400; background-color: #333; color: white; border: none; border-radius: 25px; margin-top: 10px;' name='editRSubmit' type='submit'>Edit</button>
         </form>";
         ?>

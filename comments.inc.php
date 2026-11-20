@@ -5,15 +5,9 @@
 require_once "config.php";
 
 function setComments($link) {
-    if (isset($_POST['commentSubmit'])) {
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        $sql = "INSERT INTO comments (uid, date, message) VALUES ('$uid', '$date', '".mysqli_real_escape_string($link, $message)."')";
-        $result = mysqli_query($link, $sql);
+    if (isset($_POST['commentSubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "INSERT INTO comments (uid, date, message) VALUES (?, ?, ?)", [$user, date('Y-m-d H:i:s'), $message]);
     }
-    
 }
 
 function getComments($link) {
@@ -21,30 +15,30 @@ function getComments($link) {
     $result = mysqli_query($link, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
         $uid = $row['uid'];
-        $sql2 = "SELECT * FROM users WHERE username ='$uid'";
-        $result2 = mysqli_query($link, $sql2);
+        $sql2 = "SELECT * FROM users WHERE username =?";
+        $result2 = db_query($link, $sql2, [$uid]);
         if ($row2 = mysqli_fetch_assoc($result2)) {
         echo "<div class='comment-box'><p style='font-family: arial; font-size: 14px; line-height: 16px; font-weight: 100;'>";
-        echo $row2['username']."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-        echo "Posted on: ".$row['date']."<br><br>";
-        echo nl2br($row['message'])."<br><br><br>";
+        echo e($row2['username'])."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+        echo "Posted on: ".e($row['date'])."<br><br>";
+        echo nl2br(e($row['message']))."<br><br><br>";
         echo "</p>";
         if (isset($_SESSION['id'])) {
             if ($_SESSION['id'] == $row2['id']) {
                 echo "<form style='position: absolute; top:0px; right:50px;' method='POST' action='".deleteComments($link)."'>
-                    <input type='hidden' name='cid' value='".$row['cid']."'>
+                    <input type='hidden' name='cid' value='".e($row['cid'])."'>
                     <button class='delete-btn' type='submit' name='deleteSubmit'>Delete</button>
                 </form>
                 <form style='position: absolute; top:0px; right:0px;' method='POST' action='../editComment.php' onsubmit='target_popup(this)'>
-                    <input type='hidden' name='cid' value='".$row['cid']."'>
-                    <input type='hidden' name='uid' value='".$row['uid']."'>
-                    <input type='hidden' name='date' value='".$row['date']."'>
-                    <input type='hidden' name='message' value='".$row['message']."'>
+                    <input type='hidden' name='cid' value='".e($row['cid'])."'>
+                    <input type='hidden' name='uid' value='".e($row['uid'])."'>
+                    <input type='hidden' name='date' value='".e($row['date'])."'>
+                    <input type='hidden' name='message' value='".e($row['message'])."'>
                     <button class='edit-btn' name='edit'>Edit</button>
                 </form>";
             } else {
                 echo "<form style='position: absolute; bottom:0px; left:0px;' method='POST' action='../replyComment.php' onsubmit='target_popup(this)'>
-                    <input type='hidden' name='cid' value='".$row['cid']."'>
+                    <input type='hidden' name='cid' value='".e($row['cid'])."'>
                     <button class='reply-btn' name='reply'>Reply</button>
                 </form>";
             }
@@ -54,35 +48,35 @@ function getComments($link) {
         echo "</div>";
         }
         $cid = $row['cid'];
-        $sql3 = "SELECT * FROM replies WHERE cid = '$cid'";
-        $result3 = mysqli_query($link, $sql3);
+        $sql3 = "SELECT * FROM replies WHERE cid = ?";
+        $result3 = db_query($link, $sql3, [$cid]);
         while ($row3 = mysqli_fetch_assoc($result3)) {
             $uid = $row3['uid'];
-            $sql4 = "SELECT * FROM users WHERE username ='$uid'";
-            $result4 = mysqli_query($link, $sql4);
+            $sql4 = "SELECT * FROM users WHERE username =?";
+            $result4 = db_query($link, $sql4, [$uid]);
             if ($row4 = mysqli_fetch_assoc($result4)) {
             echo "<div class='comment-box' style='left: 10%; width: 90%;'><p style='font-family: arial; font-size: 14px; line-height: 16px; font-weight: 100;'>";
-            echo $row3['uid']."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-            echo "Posted on: ".$row3['date']."<br><br>";
-            echo nl2br($row3['message'])."<br><br><br>";
+            echo e($row3['uid'])."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+            echo "Posted on: ".e($row3['date'])."<br><br>";
+            echo nl2br(e($row3['message']))."<br><br><br>";
             echo "</p>";
             if (isset($_SESSION['id'])) {
                 if ($_SESSION['id'] == $row4['id']) {
                     echo "<form style='position: absolute; top:0px; right:50px;' method='POST' action='".deleteReplies($link)."'>
-                    <input type='hidden' name='rid' value='".$row3['rid']."'>
+                    <input type='hidden' name='rid' value='".e($row3['rid'])."'>
                     <button class='delete-btn' type='submit' name='deleteRSubmit'>Delete</button>
                     </form>
                     <form style='position: absolute; top:0px; right:0px;' method='POST' action='../editReply.php' onsubmit='target_popup(this)'>
-                        <input type='hidden' name='rid' value='".$row3['rid']."'>
-                        <input type='hidden' name='uid' value='".$row3['uid']."'>
-                        <input type='hidden' name='date' value='".$row3['date']."'>
-                        <input type='hidden' name='message' value='".$row3['message']."'>
+                        <input type='hidden' name='rid' value='".e($row3['rid'])."'>
+                        <input type='hidden' name='uid' value='".e($row3['uid'])."'>
+                        <input type='hidden' name='date' value='".e($row3['date'])."'>
+                        <input type='hidden' name='message' value='".e($row3['message'])."'>
                         <button class='edit-btn' name='editR'>Edit</button>
                     </form>";
                 } else {
                     echo "<form style='position: absolute; bottom:0px; left:0px;' method='POST' action='../replyReply.php' onsubmit='target_popup(this)'>
-                        <input type='hidden' name='rid' value='".$row3['rid']."'>
-                        <input type='hidden' name='cid' value='".$row3['cid']."'>
+                        <input type='hidden' name='rid' value='".e($row3['rid'])."'>
+                        <input type='hidden' name='cid' value='".e($row3['cid'])."'>
                         <button class='reply-btn' name='replyR'>Reply</button>
                     </form>";
                 }
@@ -92,29 +86,29 @@ function getComments($link) {
             echo "</div>";
             }
             $rid = $row3['rid'];
-            $sql5 = "SELECT * FROM secondReplies WHERE rid = '$rid'";
-            $result5 = mysqli_query($link, $sql5);
+            $sql5 = "SELECT * FROM secondReplies WHERE rid = ?";
+            $result5 = db_query($link, $sql5, [$rid]);
         while ($row5 = mysqli_fetch_assoc($result5)) {
             $uid = $row5['uid'];
-            $sql6 = "SELECT * FROM users WHERE username ='$uid'";
-            $result6 = mysqli_query($link, $sql6);
+            $sql6 = "SELECT * FROM users WHERE username =?";
+            $result6 = db_query($link, $sql6, [$uid]);
             if ($row6 = mysqli_fetch_assoc($result6)) {
             echo "<div class='comment-box' style='left: 20%; width: 80%;'><p style='font-family: arial; font-size: 14px; line-height: 16px; font-weight: 100;'>";
-            echo $row5['uid']."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
-            echo "Posted on: ".$row5['date']."<br><br>";
-            echo nl2br($row5['message'])."<br><br><br>";
+            echo e($row5['uid'])."&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp";
+            echo "Posted on: ".e($row5['date'])."<br><br>";
+            echo nl2br(e($row5['message']))."<br><br><br>";
             echo "</p>";
             if (isset($_SESSION['id'])) {
                 if ($_SESSION['id'] == $row6['id']) {
                     echo "<form style='position: absolute; top:0px; right:50px;' method='POST' action='".deleteSReplies($link)."'>
-                    <input type='hidden' name='srid' value='".$row5['srid']."'>
+                    <input type='hidden' name='srid' value='".e($row5['srid'])."'>
                     <button class='delete-btn' type='submit' name='deleteSRSubmit'>Delete</button>
                     </form>
                     <form style='position: absolute; top:0px; right:0px;' method='POST' action='../editSReply.php' onsubmit='target_popup(this)'>
-                        <input type='hidden' name='srid' value='".$row5['srid']."'>
-                        <input type='hidden' name='uid' value='".$row5['uid']."'>
-                        <input type='hidden' name='date' value='".$row5['date']."'>
-                        <input type='hidden' name='message' value='".$row5['message']."'>
+                        <input type='hidden' name='srid' value='".e($row5['srid'])."'>
+                        <input type='hidden' name='uid' value='".e($row5['uid'])."'>
+                        <input type='hidden' name='date' value='".e($row5['date'])."'>
+                        <input type='hidden' name='message' value='".e($row5['message'])."'>
                         <button class='edit-btn' name='editSR'>Edit</button>
                     </form>";
                 } else {
@@ -134,129 +128,88 @@ function getComments($link) {
 }
 
 
-function editComments($link) {
-        if (isset($_POST['editSubmit'])) {
-        $cid = $_POST['cid'];
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        $sql = "UPDATE comments SET message = '".mysqli_real_escape_string($link, $message)."' WHERE cid = '$cid'";
-        $result = mysqli_query($link, $sql);
-        echo "<script>";
-        echo 'alert("Comment updated!");';
-        echo 'window.opener.location.reload();
+// All comment writes use the logged-in user from the session (never a
+// user id sent by the form), set the date on the server, and only let
+// people edit or delete their own posts.
+function comment_user() {
+    return (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && !empty($_SESSION['username']))
+        ? (string) $_SESSION['username'] : null;
+}
+
+function comment_message() {
+    $message = trim((string) ($_POST['message'] ?? ''));
+    return ($message === '' || strlen($message) > 5000) ? null : $message;
+}
+
+function comment_done($text) {
+    echo "<script>";
+    echo 'alert(' . js($text) . ');';
+    echo 'window.opener.location.reload();
         window.close();';
-        echo "</script>";
+    echo "</script>";
+}
+
+function editComments($link) {
+    if (isset($_POST['editSubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "UPDATE comments SET message = ? WHERE cid = ? AND uid = ?", [$message, (int) ($_POST['cid'] ?? 0), $user]);
+        comment_done("Comment updated!");
     }
-    
 }
 
 function editReplies($link) {
-        if (isset($_POST['editRSubmit'])) {
-        $rid = $_POST['rid'];
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        $sql = "UPDATE replies SET message = '".mysqli_real_escape_string($link, $message)."' WHERE rid = '$rid'";
-        $result = mysqli_query($link, $sql);
-        echo "<script>";
-        echo 'alert("Reply updated!");';
-        echo 'window.opener.location.reload();
-        window.close();';
-        echo "</script>";
+    if (isset($_POST['editRSubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "UPDATE replies SET message = ? WHERE rid = ? AND uid = ?", [$message, (int) ($_POST['rid'] ?? 0), $user]);
+        comment_done("Reply updated!");
     }
-    
 }
 
 function editSReplies($link) {
-        if (isset($_POST['editSRSubmit'])) {
-        $srid = $_POST['srid'];
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        $sql = "UPDATE secondReplies SET message = '".mysqli_real_escape_string($link, $message)."' WHERE srid = '$srid'";
-        $result = mysqli_query($link, $sql);
-        echo "<script>";
-        echo 'alert("Reply updated!");';
-        echo 'window.opener.location.reload();
-        window.close();';
-        echo "</script>";
+    if (isset($_POST['editSRSubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "UPDATE secondReplies SET message = ? WHERE srid = ? AND uid = ?", [$message, (int) ($_POST['srid'] ?? 0), $user]);
+        comment_done("Reply updated!");
     }
-    
 }
 
 function deleteComments($link) {
-        if (isset($_POST['deleteSubmit'])) {
-        $cid = $_POST['cid'];
-        
-        $sql = "DELETE FROM comments WHERE cid = '$cid'";
-        $result = mysqli_query($link, $sql);
-        $sql2 = "DELETE FROM replies WHERE cid = '$cid'";
-        $result2 = mysqli_query($link, $sql2);
-        $sql3 = "DELETE FROM secondReplies WHERE cid = '$cid'";
-        $result3 = mysqli_query($link, $sql3);
+    if (isset($_POST['deleteSubmit']) && ($user = comment_user())) {
+        $cid = (int) ($_POST['cid'] ?? 0);
+        db_query($link, "DELETE FROM comments WHERE cid = ? AND uid = ?", [$cid, $user]);
+        if (db_affected_rows() === 1) {
+            db_query($link, "DELETE FROM replies WHERE cid = ?", [$cid]);
+            db_query($link, "DELETE FROM secondReplies WHERE cid = ?", [$cid]);
+        }
     }
 }
 
 function deleteReplies($link) {
-        if (isset($_POST['deleteRSubmit'])) {
-        $rid = $_POST['rid'];
-        
-        $sql = "DELETE FROM replies WHERE rid = '$rid'";
-        $result = mysqli_query($link, $sql);
-        $sql2 = "DELETE FROM secondReplies WHERE rid = '$rid'";
-        $result2 = mysqli_query($link, $sql2);
+    if (isset($_POST['deleteRSubmit']) && ($user = comment_user())) {
+        $rid = (int) ($_POST['rid'] ?? 0);
+        db_query($link, "DELETE FROM replies WHERE rid = ? AND uid = ?", [$rid, $user]);
+        if (db_affected_rows() === 1) {
+            db_query($link, "DELETE FROM secondReplies WHERE rid = ?", [$rid]);
+        }
     }
 }
 
 function deleteSReplies($link) {
-        if (isset($_POST['deleteSRSubmit'])) {
-        $srid = $_POST['srid'];
-        
-        $sql = "DELETE FROM secondReplies WHERE srid = '$srid'";
-        $result = mysqli_query($link, $sql);
+    if (isset($_POST['deleteSRSubmit']) && ($user = comment_user())) {
+        db_query($link, "DELETE FROM secondReplies WHERE srid = ? AND uid = ?", [(int) ($_POST['srid'] ?? 0), $user]);
     }
 }
 
 function replyComments($link) {
-    if (isset($_POST['replySubmit'])) {
-        $cid = $_POST['cid'];
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        
-        $sql = "INSERT INTO replies (cid, uid, date, message) VALUES ('$cid', '$uid', '$date', '".mysqli_real_escape_string($link, $message)."')";
-        $result = mysqli_query($link, $sql);
-        
-        echo "<script>";
-        echo 'alert("Replied to a comment!");';
-        echo 'window.opener.location.reload();
-        window.close();';
-        echo "</script>";
+    if (isset($_POST['replySubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "INSERT INTO replies (cid, uid, date, message) VALUES (?, ?, ?, ?)",
+            [(int) ($_POST['cid'] ?? 0), $user, date('Y-m-d H:i:s'), $message]);
+        comment_done("Replied to a comment!");
     }
 }
 
 function replyReplies($link) {
-    if (isset($_POST['replyRSubmit'])) {
-        $rid = $_POST['rid'];
-        $cid = $_POST['cid'];
-        $uid = $_POST['uid'];
-        $date = $_POST['date'];
-        $message = $_POST['message'];
-        
-        
-        $sql = "INSERT INTO secondReplies (rid, cid, uid, date, message) VALUES ('$rid', '$cid', '$uid', '$date', '".mysqli_real_escape_string($link, $message)."')";
-        $result = mysqli_query($link, $sql);
-        
-        echo "<script>";
-        echo 'alert("Replied to a reply!");';
-        echo 'window.opener.location.reload();
-        window.close();';
-        echo "</script>";
+    if (isset($_POST['replyRSubmit']) && ($user = comment_user()) && ($message = comment_message()) !== null) {
+        db_query($link, "INSERT INTO secondReplies (rid, cid, uid, date, message) VALUES (?, ?, ?, ?, ?)",
+            [(int) ($_POST['rid'] ?? 0), (int) ($_POST['cid'] ?? 0), $user, date('Y-m-d H:i:s'), $message]);
+        comment_done("Replied to a reply!");
     }
 }
 

@@ -1,30 +1,28 @@
 <?php
-    session_start(); 
-    require_once "config.php";
+session_start();
+require_once "config.php";
+require_login_post();
 
-    $username = $_SESSION['username'];
-    $font = $_SESSION['Font'];   
-    $id = $_SESSION['id']; 
-	$ownFont = $_SESSION['ownFont'];
-
-$of = "SELECT ownFont FROM custom WHERE UID = '$id'";
-$result1 = mysqli_query($link, $of);
-while($row = mysqli_fetch_assoc($result1)) {
-	$ownFont = $row["ownFont"];
+$id = (int) $_SESSION['id'];
+$owned = 0;
+$res = db_query($link, "SELECT ownFont FROM custom WHERE UID = ?", [$id]);
+if ($res && ($row = mysqli_fetch_assoc($res))) {
+	$owned = (int) $row['ownFont'];
 }
 
-$f = "SELECT Font FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $f);
-while($row = mysqli_fetch_assoc($result2)) {
-	$font = $row["Font"];
-}
-if ($ownFont == 1) {
-$sql = "UPDATE custom SET Font = '$_POST[myFont]' WHERE UID = '$id'";
-mysqli_query($link, $sql) or die('Error querying database.');
-header("location: index.php");
-} else {
-	echo '<script type="text/javascript"> alert("You Do Not Own Fonts, keep earning points!"); </script>';
+if ($owned !== 1) {
+	echo '<script type="text/javascript">alert("You Do Not Own Fonts, keep earning points!");</script>';
 	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
 }
 
-?>
+$value = safe_font_name($_POST['myFont'] ?? '');
+if ($value === null) {
+	echo '<script type="text/javascript">alert("Please enter a font name like Arial or Comic Sans MS.");</script>';
+	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
+}
+
+db_query($link, "UPDATE custom SET Font = ? WHERE UID = ?", [$value, $id]) or die('Error querying database.');
+header("location: index.php");
+exit();

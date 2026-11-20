@@ -10,20 +10,21 @@
 	$ownCursor = $_SESSION['ownCursor'];
 	$cursor = $_SESSION['CursorC'];
 
-$oc = "SELECT ownCursor FROM custom WHERE UID = '$id'";
-$result1 = mysqli_query($link, $oc);
+$oc = "SELECT ownCursor FROM custom WHERE UID = ?";
+$result1 = db_query($link, $oc, [$id]);
 while($row = mysqli_fetch_assoc($result1)) {
 	$ownCursor = $row["ownCursor"];
 }
 
-$cr = "SELECT CursorC FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $cr);
+$cr = "SELECT CursorC FROM custom WHERE UID = ?";
+$result2 = db_query($link, $cr, [$id]);
 while($row = mysqli_fetch_assoc($result2)) {
 	$cursor = $row["CursorC"];
 }
 
-if ($ownCursor == 1) {
-	echo "url($cursor), auto";
+$cursor = safe_image_url($cursor);
+if ($ownCursor == 1 && $cursor !== null) {
+	echo "url(\"$cursor\"), auto";
 } 	else {
 	echo 'auto';
 }

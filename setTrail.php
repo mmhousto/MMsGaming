@@ -1,31 +1,28 @@
 <?php
-    session_start(); 
-    require_once "config.php";
+session_start();
+require_once "config.php";
+require_login_post();
 
-    $username = $_SESSION['username'];
-    $TrailC = $_SESSION['Trail'];   
-    $id = $_SESSION['id'];
-	$ownTrail = $_SESSION['ownTrail'];
-
-$tc = "SELECT Trail FROM custom WHERE UID = '$id'";
-$result1 = mysqli_query($link, $tc);
-while($row = mysqli_fetch_assoc($result1)) {
-	$TrailC = $row["Trail"];
+$id = (int) $_SESSION['id'];
+$owned = 0;
+$res = db_query($link, "SELECT ownTrail FROM custom WHERE UID = ?", [$id]);
+if ($res && ($row = mysqli_fetch_assoc($res))) {
+	$owned = (int) $row['ownTrail'];
 }
 
-$ot = "SELECT ownTrail FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $ot);
-while($row = mysqli_fetch_assoc($result2)) {
-	$ownTrail = $row["ownTrail"];
-}
-
-if ($ownTrail == 1) {
-$sql = "UPDATE custom SET Trail = '$_POST[color]' WHERE UID = '$id'";
-mysqli_query($link, $sql) or die('Error querying database.');
-header("location: index.php");
-} else {
-	echo '<script type="text/javascript"> alert("You Do Not Own the Circle Trail!"); </script>';
+if ($owned !== 1) {
+	echo '<script type="text/javascript">alert("You Do Not Own the Circle Trail!");</script>';
 	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
 }
 
-?>
+$value = safe_css_color($_POST['color'] ?? '');
+if ($value === null) {
+	echo '<script type="text/javascript">alert("Please enter a color like red or #ff0000.");</script>';
+	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
+}
+
+db_query($link, "UPDATE custom SET Trail = ? WHERE UID = ?", [$value, $id]) or die('Error querying database.');
+header("location: index.php");
+exit();

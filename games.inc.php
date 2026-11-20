@@ -101,8 +101,8 @@ function getCardGames($link) {
 }
 
 function getSelectedGame($link, $gid) {
-    $sql = "SELECT * FROM games WHERE gid = '$gid'";
-    $result = mysqli_query($link, $sql);
+    $sql = "SELECT * FROM games WHERE gid = ?";
+    $result = db_query($link, $sql, [$gid]);
     while ($row = mysqli_fetch_assoc($result)) {
         echo $row['SRC']."</div>
         <br/>
