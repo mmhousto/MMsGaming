@@ -12,7 +12,9 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$username = $password = $points = $rank = $totalPoints = "";
+$points = $totalPoints = $ownTrail = $ownBg = $ownImg = $ownCursor = $isDonor = 0;
+$username = $password = $rank = $lastSet = "";
+$bgColor = $TrailC = $bgImg = $CursorC = $font = "";
 $username_err = $password_err = "";
  
 // Processing form data when form is submitted
@@ -65,6 +67,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["totalPoints"] = $totalPoints;
                             $_SESSION["points"] = $points;
                             $_SESSION["rank"] = $rank;
+                            $_SESSION["UID"] = $id;
+                            $_SESSION["ownTrail"] = $ownTrail;
+                            $_SESSION["ownBg"] = $ownBg;
+                            $_SESSION["ownImg"] = $ownImg;
+                            $_SESSION["ownCursor"] = $ownCursor;
+                            $_SESSION["lastSet"] = $lastSet;
+                            $_SESSION["BgColor"] = $bgColor;
+                            $_SESSION["Trail"] = $TrailC;
+                            $_SESSION["BgImg"] = $bgImg;
+                            $_SESSION["CursorC"] = $CursorC;
+                            $_SESSION["Font"] = $font;
+                            $_SESSION["Donor"] = $isDonor;  
+                            
 
                                                     
                             
@@ -97,10 +112,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Login</title>
-    <link rel="shortcut icon" href="favicon2.ico" type="image/x-icon">
-    <link rel="icon" href="favicon2.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    
     <style type="text/css">
         html{
             min-height: 100%;
@@ -110,8 +130,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         body {
             background-color: #38b6ff;
             min-height: 100%;
+            position: relative;
             margin: 0;
             font-family: Arial;
+            overflow: hidden;
             }
         .wrapper{ 
             width: 350px;
@@ -128,18 +150,56 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           background-color: #01A800;
           border-color: #204d74;
         }
+.footer {
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: gray;
+            color: black;
+            padding: 5px;
+        }
+        .alignLeft {
+            float: left;
+        }
+        .alignRight {
+            float: right;
+        }
+        #gradient {
+            background-image: linear-gradient(
+                to top right, 
+                #a7fbfc, #ff80bd
+                );
+        }
     </style>
+    
 </head>
 <body>
     <center>
-     <img src="MMsGCo.png" alt="MM Gaming"  height="150" width="300" vspace="5">
-     <br>
-     <br>
-     <br>
+     <img src="MMsGCoo.png" alt="MM Gaming"  height="150" width="400" vspace="10">
+     
+     <h1>Welcome Gamers!</h1>
+     <h3>Login or register to earn points while you play below!</h3>
+     <p>For those of you who just want to play games and not earn points while ranking up, Click <a href="index.php">Here</a> to continue to the site!</p>
      <div class="wrapper" border="">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
         <form class="frm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <input type="hidden" name="points" value="<?php echo $points; ?>">
+            <input type="hidden" name="totalPoints" value="<?php echo $totalPoints; ?>">
+            <input type="hidden" name="rank" value="<?php echo $rank; ?>">
+            <input type="hidden" name="ownTrail" value="<?php echo $ownTrail; ?>">
+            <input type="hidden" name="ownBg" value="<?php echo $ownBg; ?>">
+            <input type="hidden" name="ownImg" value="<?php echo $ownImg; ?>">
+            <input type="hidden" name="ownCursor" value="<?php echo $ownCursor; ?>">
+            <input type="hidden" name="lastSet" value="<?php echo $lastSet; ?>">
+            <input type="hidden" name="Trail" value="<?php echo $TrailC; ?>">
+            <input type="hidden" name="BgColor" value="<?php echo $bgColor; ?>">
+            <input type="hidden" name="BgImg" value="<?php echo $bgImg; ?>">
+            <input type="hidden" name="CursorC" value="<?php echo $CursorC; ?>">
+            <input type="hidden" name="Font" value="<?php echo $font; ?>">
+            <input type="hidden" name="Donor" value="<?php echo $isDonor; ?>">
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
@@ -156,6 +216,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
         </form>
      </div>
-    </center>    
+     <br>
+    </center> 
+<footer id="gradient" class="footer">
+  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+</footer>
 </body>
 </html>

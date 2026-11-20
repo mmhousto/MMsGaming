@@ -74,14 +74,102 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Reset Password</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="footer.css">
+    
+    <script data-ad-client="ca-pub-8251399081266327" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script type="text/javascript" src="mouseFollow.js"></script>
+
     <style type="text/css">
-        body{ font: 14px sans-serif; }
+
+        body {
+  background-color: #38b6ff;
+  height: 100%;
+  font-family: Arial;
+  background-image: none;
+  overflow: hidden;
+}
+.pointer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: <?php include "loadTrail.php";?>;
+  border: 1px solid <?php include "loadTrail.php";?>;
+  opacity: 0.4;
+  border-radius: 50%;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.pointer1{
+  transition: 0.05s;
+}
+
+.pointer2{
+  transition: 0.10s;
+  width: 35px;
+  height: 35px;
+}
+
+.pointer3{
+  transition: 0.15s;
+  width: 30px;
+  height: 30px;
+}
+
+.pointer4{
+  transition: 0.20s;
+  width: 25px;
+  height: 25px;
+}
+
+.pointer5{
+  transition: 0.25s;
+  width: 20px;
+  height: 20px;
+}
         .wrapper{ width: 350px; padding: 20px; }
+        .footer {
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: gray;
+            color: black;
+            padding: 5px;
+        }
+        .alignLeft {
+            float: left;
+        }
+        .alignRight {
+            float: right;
+        }
+        #gradient {
+            background-image: linear-gradient(
+                to top right, 
+                #a7fbfc, #ff80bd
+                );
+        }
     </style>
 </head>
-<body>
+<body style="background-color: <?php include "loadBg.php"; ?>;">
+
+<div id="page-container">
+   <div id="content-wrap">
+       
+
     <div class="wrapper">
         <h2>Reset Password</h2>
         <p>Please fill out this form to reset your password.</p>
@@ -98,9 +186,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <a class="btn btn-link" href="welcome.php">Cancel</a>
+                <a class="btn btn-link" href="index.php">Cancel</a>
             </div>
         </form>
-    </div>    
+    </div>  
+</div>
+<footer id="gradient" class="footer">
+  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+</footer>
+</div>
 </body>
 </html>
