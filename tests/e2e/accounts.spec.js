@@ -71,7 +71,7 @@ test('sign-up mistakes show a message instead of crashing (taken name, short or 
   const attempts = [
     { username: taken, password: PASSWORD, confirm_password: PASSWORD, expect: 'already taken' },
     { username: taken, password: PASSWORD, confirm_password: PASSWORD, expect: 'already taken' },
-    { username: 'fresh_name_1', password: '123', confirm_password: '123', expect: 'atleast 6 characters' },
+    { username: 'fresh_name_1', password: '123', confirm_password: '123', expect: 'at least 10 characters' },
     { username: 'fresh_name_2', password: PASSWORD, confirm_password: 'different1', expect: 'did not match' },
   ];
   for (const a of attempts) {

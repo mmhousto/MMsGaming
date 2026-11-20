@@ -13,16 +13,30 @@ require_once "config.php";
  
 // Define variables and initialize with empty values
 $new_password = $confirm_password = "";
-$new_password_err = $confirm_password_err = "";
+$current_password_err = $new_password_err = $confirm_password_err = "";
  
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
  
+    // The current password is required, so a borrowed or stolen session
+    // can't be used to lock the owner out. Wrong guesses count toward the
+    // same 15-minute pause as wrong logins.
+    $mmsgUser = (string) ($_SESSION["username"] ?? '');
+    if (login_blocked($link, $mmsgUser)) {
+        $current_password_err = "Too many failed attempts. Please wait 15 minutes and try again.";
+    } else {
+        $mmsgRow = mysqli_fetch_assoc(db_query($link, "SELECT password FROM users WHERE id = ?", [(int) $_SESSION["id"]]));
+        if (!$mmsgRow || !password_verify(trim((string) ($_POST["current_password"] ?? '')), $mmsgRow["password"])) {
+            rate_record($link, 'login', $mmsgUser);
+            $current_password_err = "Your current password is not correct.";
+        }
+    }
+
     // Validate new password
     if(empty(trim($_POST["new_password"]))){
         $new_password_err = "Please enter the new password.";     
-    } elseif(strlen(trim($_POST["new_password"])) < 6){
-        $new_password_err = "Password must have atleast 6 characters.";
+    } elseif(($mmsgProblem = password_problem(trim($_POST["new_password"]), (string) ($_SESSION["username"] ?? ''))) !== null){
+        $new_password_err = $mmsgProblem;
     } else{
         $new_password = trim($_POST["new_password"]);
     }
@@ -38,7 +52,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
         
     // Check input errors before updating the database
-    if(empty($new_password_err) && empty($confirm_password_err)){
+    if(empty($current_password_err) && empty($new_password_err) && empty($confirm_password_err)){
         // Prepare an update statement
         $sql = "UPDATE users SET password = ? WHERE id = ?";
         
@@ -66,7 +80,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    mysqli_close($link);
+    // (the connection closes by itself at the end; closing it here broke the rest of the page)
 }
 ?>
  
@@ -255,9 +269,14 @@ input::-webkit-credentials-auto-fill-button:hover {
         <h1>Reset Password for your account</h1>
         <p>Please fill out this form to reset your password.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
+            <div class="form-group <?php echo (!empty($current_password_err)) ? 'has-error' : ''; ?>">
+                <label>Current Password</label>
+                <input type="password" name="current_password" class="form-control" autocomplete="current-password">
+                <span class="help-block"><?php echo e($current_password_err); ?></span>
+            </div>
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password</label>
-                <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>">
+                <input type="password" name="new_password" class="form-control" autocomplete="new-password">
                 <span class="help-block"><?php echo $new_password_err; ?></span>
             </div>
             <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">

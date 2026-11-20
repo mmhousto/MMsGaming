@@ -168,9 +168,7 @@ input::-webkit-credentials-auto-fill-button:hover {
 <?php 
     if(isset($_GET["reset"])) {
         if ($_GET["reset"] == "success") {
-            echo '<br><p class="signupsuccess">Check your e-mail!</p>';
-        } elseif ($_GET["reset"] == "fail") {
-            echo '<br><p class="signupsuccess">E-mail does not exist!</p>';
+            echo '<br><p class="signupsuccess">If an account uses that e-mail, we have sent it a reset link. Check your e-mail!</p>';
         } 
     }
 ?>

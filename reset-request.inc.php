@@ -11,8 +11,17 @@ if(isset($_POST["forgot-password"])){
 	
 	require_once 'config.php';
 		
-	$userEmail = $_POST["user-email"];
-	
+	$userEmail = trim((string) ($_POST["user-email"] ?? ''));
+
+	// At most 3 reset emails per address and 10 per visitor per hour, so
+	// nobody can flood someone's inbox. Over the limit looks the same as
+	// success, so it doesn't reveal anything either.
+	if (rate_count($link, 'reset', $userEmail, null, 3600) >= 3 || rate_count($link, 'reset', null, client_ip(), 3600) >= 10) {
+		header("Location: forgot-password.php?reset=success");
+		exit();
+	}
+	rate_record($link, 'reset', $userEmail);
+
 	$sql1 = "SELECT * from users WHERE Email =?";
 	$result = db_query($link, $sql1, [$userEmail]);
 	if(mysqli_num_rows($result)>0){
@@ -56,7 +65,9 @@ if(isset($_POST["forgot-password"])){
 	header("Location: forgot-password.php?reset=success");
 	
 	} else {
-    header("Location: forgot-password.php?reset=fail");
+    // Same answer as for a real account, so the form can't be used to
+    // find out which email addresses have accounts.
+    header("Location: forgot-password.php?reset=success");
     }
 } else {
 	header("Location: index.php");
