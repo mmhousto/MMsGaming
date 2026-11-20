@@ -18,8 +18,8 @@ $menuIconClass = $menuIconClass ?? 'icon';
 
 $mmsgTabs = [
     'home' => ['/index.php', 'Home'],
+    'mygames' => ['/Unity-Games.php', 'Our Games'],
     'games' => ['/Free-Games.php', 'Games'],
-    'mygames' => ['/Unity-Games.php', 'My Games'],
     'store' => ['/Store.php', 'Store'],
     'scoreboard' => ['/Scoreboard.php', 'Scoreboard'],
     'blog' => ['/blog/', 'Blog'],

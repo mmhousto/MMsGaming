@@ -920,6 +920,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 <div id="Home" class="tabcontent">
 <br>
+<?php include __DIR__ . '/templates/my-games-showcase.php'; ?>
 
 <div class="bgY" style="text-align: middle;">
     

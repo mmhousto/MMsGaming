@@ -909,6 +909,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 </div>
 
 <div id="Free Games" class="tabcontent">
+<?php $showcaseCompact = true; $showcaseTitle = 'OUR OWN GAMES'; include __DIR__ . '/templates/my-games-showcase.php'; ?>
 <br>
 
 <div class="bgY" style="text-align: middle;">
