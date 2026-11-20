@@ -15,75 +15,12 @@ $result10 = db_query($link, $isD, [$id]);
 while($row = mysqli_fetch_assoc($result10)) {
   $isDonor = $row["Donor"];
 }
-$p = "SELECT points FROM users WHERE username = ?";
-$result1 = db_query($link, $p, [$username]);//"SELECT points FROM users WHERE username = $username";
-while($row = mysqli_fetch_assoc($result1)) {
-  $points = $row["points"];
-}
-$tp = "SELECT totalPoints FROM users WHERE username = ?";
-$result = db_query($link, $tp, [$username]);//"SELECT points FROM users WHERE username = $username";
-while($row = mysqli_fetch_assoc($result)) {
-  $totalPoints = $row["totalPoints"];
-}
-if($totalPoints < 100){
-    $rank = "Noob";
-    $total = 100;
-} else if($totalPoints >= 100 && $totalPoints < 200){                            
-    $rank = "Novice";
-    $total = 200;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 200 && $totalPoints < 400){
-    $rank = "Experienced";
-    $total = 400;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 400 && $totalPoints < 800){
-    $rank = "Specialist";
-    $total = 800;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 800 && $totalPoints < 1600){
-    $rank = "Expert";
-    $total = 1600;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 1600 && $totalPoints < 3200){
-    $rank = "Bada**";
-    $total = 3200;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 3200 && $totalPoints < 6400){
-    $rank = "Noble";
-    $total = 6400;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 6400 && $totalPoints < 12800){
-    $rank = "Spartan";
-    $total = 12800;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 12800 && $totalPoints < 25600){
-    $rank = "Legend";
-    $total = 25600;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 25600 && $totalPoints < 52000){
-    $rank = "Game Game Junkie";
-    $total = 52000;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else if($totalPoints >= 52000 && $totalPoints < 104000){
-    $rank = "Godsent";
-    $total = 104000;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-} else {
-    $rank = "INSANE";
-    $total = 208000;
-    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-}   
+$mmsgStats = player_stats($link, $username ?? null);
+$points = $mmsgStats['points'];
+$totalPoints = $mmsgStats['totalPoints'];
+$rank = $mmsgStats['rank'];
+$total = $mmsgStats['total'];
+   
 
 ?>
 
@@ -564,14 +501,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
         <h3><b><?php if($isDonor){echo "Donor";}else{echo "Gamer";} ?>:</b> <span id="Gamer"><a href="../profile.php"><?php echo htmlspecialchars($username); ?></a></span></h3>
         <h4><b>Rank:</b> <span id="Rank"><?php echo htmlspecialchars($rank); ?></span></h4>
         <h4><b>Points:</b> <span id="points" class="pointCount"><?php echo $points; ?></span></h4>
-        <div class="Progress"><b>Next Rank:</b> <div id="pntCount" class="pointCount"><?php if($total == 100){
-        																				echo $totalPoints;
-        																			 }else{echo ($totalPoints - ($total/2));}?>	
-        																			 </div>/<div id="total" class="total"><?php if($total == 100){
-        																				echo $total;}else{echo ($total-($total/2));} ?></div>
+        <div class="Progress"><b>Next Rank:</b> <div id="pntCount" class="pointCount"><?php echo progress_for($totalPoints, $total)['count']; ?>	
+        																			 </div>/<div id="total" class="total"><?php echo progress_for($totalPoints, $total)['goal']; ?></div>
           <div class="meter">
-  			<span id="myBar" style="width: <?php if($total == 100){echo $totalPoints;}
-  				else{echo ((($totalPoints - ($total/2))/($total/2)) * 100);}?>%"></span>
+  			<span id="myBar" style="width: <?php echo progress_for($totalPoints, $total)['percent']; ?>%"></span>
 		      </div>
 		    </div>
         </div>
@@ -861,10 +794,9 @@ $(document).mousemove(function(e){
     Gamer   : '$username',
     Rank    : '$rank',
     Points  : '$points',
-    PntCount: ";if($total == 100){echo "'$totalPoints'";}else{echo "('$totalPoints' - ('$total'/2))";} echo",
-    Total   : ";if($total == 100){echo "'$total'";}else{echo "('$total'-('$total'/2))";} echo",
-    Prog    : ";if($total == 100){echo "'$totalPoints'";}
-                    else{echo "((('$totalPoints' - ('$total'/2))/('$total'/2)) * 100)";} echo',
+    PntCount: " . progress_for($totalPoints, $total)['count'] . ",
+    Total   : " . progress_for($totalPoints, $total)['goal'] . ",
+    Prog    : " . progress_for($totalPoints, $total)['percent'] . ',
     Perc    : function(){return this.Prog;}
   };
 //=======================================================================================================//

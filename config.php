@@ -56,3 +56,4 @@ if (!isset($link) || !($link instanceof mysqli)) {
 mysqli_set_charset($link, 'utf8mb4');
 
 require_once __DIR__ . '/lib/security.php';
+require_once __DIR__ . '/lib/points.php';

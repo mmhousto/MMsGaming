@@ -30,16 +30,15 @@ test('guests cannot change any email', async ({ request }) => {
 });
 
 test('a username containing SQL only ever touches its own row', async ({ request }) => {
-  const others = query('SELECT COUNT(*) FROM users')[0][0];
   const evil = insertUserDirect("x' OR '1'='1", { totalPoints: 150 });
+  const othersBefore = query(`SELECT id, \`rank\`, points FROM users WHERE username <> ${q(evil)} ORDER BY id`);
   await login(request, evil);
   await request.get('/index.php');
   await request.get('/addPoints.php');
 
-  // Only this user moved to the "Novice" rank; nobody else's row changed.
+  // This user moved to the "Novice" rank; nobody else's row changed.
   expect(scalar(`SELECT \`rank\` FROM users WHERE username = ${q(evil)}`)).toBe('Novice');
-  expect(scalar(`SELECT COUNT(*) FROM users WHERE \`rank\` = 'Novice' AND username <> ${q(evil)}`)).toBe('0');
-  expect(Number(others)).toBeGreaterThanOrEqual(0);
+  expect(query(`SELECT id, \`rank\`, points FROM users WHERE username <> ${q(evil)} ORDER BY id`)).toEqual(othersBefore);
 
   // And it is shown escaped on the scoreboard.
   const board = await (await request.get('/Scoreboard.php')).text();
