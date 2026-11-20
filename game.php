@@ -29,7 +29,9 @@ $totalPoints = $mmsgStats['totalPoints'];
 $rank = $mmsgStats['rank'];
 $total = $mmsgStats['total'];
 
-$playable = $game['play_type'] !== 'store';
+// Games played right here (the points timer runs while the mouse is over them).
+$playable = in_array($game['play_type'], ['unity', 'unity2019', 'embed'], true);
+$launchUrl = $game['play_type'] === 'launch' ? unity_safe_url($game['launch_url'] ?? '') : '';
 $storeLinks = unity_game_store_links($game);
 $pageTitle = 'Play ' . $game['title'] . " for Free | MM's Gaming Community";
 $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
@@ -100,7 +102,7 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
 <br><br>
 <center>
 <br>
-<?php if ($playable) { ?>
+<?php if ($playable || $launchUrl !== '') { ?>
     <p style="color:black; margin: -30px 10px 10px;"><font size="+2">GAME ON!</font></p>
 <?php } ?>
 
@@ -140,6 +142,11 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
 <?php if ($playable) { include __DIR__ . '/templates/unity-player.php'; ?>
 </div>
 <?php } ?>
+<?php if ($launchUrl !== '') { ?>
+<div id="game" style="height: auto; padding: 30px;">
+    <a class="button" id="play-game" href="<?php echo e($launchUrl); ?>">PLAY GAME</a>
+</div>
+<?php } ?>
 
 <br>
 <!-- LikeBtn.com BEGIN -->
@@ -165,6 +172,10 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
 <?php if (trim((string) $game['tips']) !== '') { ?>
     <h3><strong><?php echo e($game['title']); ?> Tips</strong></h3>
     <?php echo unity_game_paragraphs($game['tips']); ?>
+<?php } ?>
+<?php if (trim((string) ($game['credits'] ?? '')) !== '') { ?>
+    <h3><strong>Credits</strong></h3>
+    <?php echo unity_game_paragraphs($game['credits']); ?>
 <?php } ?>
 <?php if (trim((string) $game['privacy_url']) !== '') { ?>
     <p style="text-align: left;"><a href="<?php echo e($game['privacy_url']); ?>"><?php echo e($game['title']); ?> privacy policy</a></p>
@@ -195,7 +206,14 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
 <br><br><br>
 </center>
 </div>
-<?php $footerClass = $game['play_type'] === 'unity2019' ? 'footer2' : 'footer'; include __DIR__ . '/templates/footer.php'; ?>
+<?php
+$footerClass = $game['play_type'] === 'unity2019' ? 'footer2' : 'footer';
+// The footer's Privacy Policy link goes to the game's own policy when it has one.
+if (unity_safe_url($game['privacy_url']) !== '') {
+    $privacyUrl = unity_safe_url($game['privacy_url']);
+}
+include __DIR__ . '/templates/footer.php';
+?>
 </div>
 
 <?php if ($playable && $loggedIn) { ?>

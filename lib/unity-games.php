@@ -7,10 +7,21 @@
  *   unity      a modern Unity WebGL build (createUnityInstance / *.loader.js)
  *   unity2019  the old Unity 2019 player (UnityLoader.js + *.json)
  *   embed      a build hosted elsewhere, shown in a frame (embed_url)
+ *   launch     a PLAY GAME button that opens a full-window player page
+ *              (launch_url), e.g. /ZombCube/Play-ZombCube/
  *   store      no web version: just the store links
  */
 
-const UNITY_PLAY_TYPES = ['unity', 'unity2019', 'embed', 'store'];
+const UNITY_PLAY_TYPES = ['unity', 'unity2019', 'embed', 'launch', 'store'];
+
+/** A site-root path ("/x/y/") or https:// address, or '' if it's neither. */
+function unity_safe_url(?string $url): string
+{
+    $url = trim((string) $url);
+    // "/path" (but not "//host", which would leave the site) or https://...
+    $ok = preg_match('#^/(?![/\\\\])#', $url) || preg_match('#^https://#i', $url);
+    return $ok && !preg_match('/[\s"\'<>\\\\]/', $url) ? $url : '';
+}
 
 /** One published game by its slug (its folder name, e.g. "HGWK"), or null. */
 function unity_game(mysqli $link, string $slug): ?array

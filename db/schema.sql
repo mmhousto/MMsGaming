@@ -125,5 +125,7 @@ CREATE TABLE unity_games (
   meta_description varchar(300) NOT NULL DEFAULT '',
   published tinyint NOT NULL DEFAULT 1,
   sort_order int NOT NULL DEFAULT 0,
+  launch_url varchar(255) NOT NULL DEFAULT '',
+  credits text,
   UNIQUE KEY slug (slug)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

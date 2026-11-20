@@ -67,3 +67,53 @@ test("game pages' points script doesn't run code hidden in an old username", asy
   expect(body).not.toContain("'z';alert(9)//'");
   expect(body).toContain('Gamer   : "z\\u0027;alert(9)\\/\\/"');
 });
+
+test('ZombCube: PLAY GAME opens its full-window player; store buttons; credits', async ({ request }) => {
+  const body = await (await request.get('/ZombCube/')).text();
+  expect(body).toContain('<a class="button" id="play-game" href="/ZombCube/Play-ZombCube/">PLAY GAME</a>');
+  for (const href of ['https://store.steampowered.com/app/3035180/ZombCube/', 'https://mms-gaming-co.itch.io/zombcube',
+    'https://www.xbox.com/en-us/games/store/zombcube/9pd5qmlqxw5j', 'https://apps.apple.com/us/app/zombcube/id1606013960']) {
+    expect(body).toContain(`href="${href}"`);
+  }
+  expect(body).toContain('<h3><strong>Credits</strong></h3>');
+  expect(body).toContain('blackSnow by airtone');
+  expect(body).toContain('<a href="/ZombCube/PrivacyPolicy.html">ZombCube privacy policy</a>');
+  expect(body).not.toContain('function addPoints()'); // no points on the landing page itself
+  // The full-window player page is still there.
+  expect((await request.get('/ZombCube/Play-ZombCube/')).status()).toBe(200);
+});
+
+test('Imprecision and Magnet Destroyer are store pages (no broken PLAY GAME)', async ({ request }) => {
+  const imp = await (await request.get('/Imprecision/')).text();
+  expect(imp).not.toContain('id="play-game"');
+  expect(imp).toContain('href="https://store.steampowered.com/app/2466820/Imprecision"');
+  expect(imp).toContain('CC BY 4.0');
+
+  const mag = await (await request.get('/Magnet-Destroyer/')).text();
+  expect(mag).not.toContain('id="play-game"');
+  expect(mag).not.toContain('GAME ON!');
+  expect(mag).toContain('href="https://apps.apple.com/us/app/magnet-destroyer/id1622929531"');
+  expect(mag).toContain('href="https://play.google.com/store/apps/details?id=com.MorganHouston.MagnetDestroyer"');
+
+  // Its old play page (which loaded ZombCube by mistake) now sends people to the game page.
+  const old = await (await request.get('/Magnet-Destroyer/Play-Magnet-Destroyer/')).text();
+  expect(old).toContain('url=/Magnet-Destroyer/');
+  expect(old).not.toContain('ZombCube WebGL'); // no leftover ZombCube player
+});
+
+test('Retro Space Ball shows its itch.io build in a frame', async ({ request }) => {
+  const body = await (await request.get('/RetroSpaceBall/')).text();
+  expect(body).toContain('<iframe src="https://v6p9d9t4.ssl.hwcdn.net/html/2032191/WebGL_b1.2.0/index.html"');
+});
+
+test('My Games lists every published game from the table, and only those', async ({ request }) => {
+  const body = await (await request.get('/Unity-Games.php')).text();
+  const list = body.match(/<ul[^>]*id="my-games-list">([\s\S]*?)<\/ul>/)[1];
+  for (const slug of ['Imprecision', 'HGWK', 'Gravity-Balls', 'ZombCube', 'Magnet-Destroyer', 'RetroSpaceBall']) {
+    expect(list, slug).toContain(`href="/${slug}/"`);
+  }
+  expect(list).not.toContain('TestHiddenGame');
+  // Shown in sort order: Imprecision (5) before HGWK (10) before Paddle Balls (20).
+  expect(list.indexOf('/Imprecision/')).toBeLessThan(list.indexOf('/HGWK/'));
+  expect(list.indexOf('/HGWK/')).toBeLessThan(list.indexOf('/Gravity-Balls/'));
+});

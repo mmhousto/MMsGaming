@@ -59,9 +59,13 @@ VALUES
 - Controls: one per line, `KEY | what it does`; several keys separated by spaces
   (`A D | to move`).
 - Leave a store link `''` if the game isn't there. Only `https://` links are shown.
-- `play_type` can also be `store` (no web version, just the store buttons),
+- `play_type` can also be `launch` (a **PLAY GAME** button that opens a
+  full-window player page; set `launch_url`, e.g. `/ZombCube/Play-ZombCube/`,
+  and keep Unity's generated `index.html` in that folder),
+  `store` (no web version, just the store buttons),
   `embed` (set `embed_url` to a build hosted elsewhere, e.g. on itch.io), or
   `unity2019` (old Unity 2019 builds with `UnityLoader.js`).
+- `credits`: music/art credits (e.g. Creative Commons attributions), shown on the page.
 - To hide a game without deleting it: `UPDATE unity_games SET published = 0 WHERE slug = 'MyNewGame';`
 
 ## Updating a game
