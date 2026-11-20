@@ -929,9 +929,7 @@ Before 1970s, multiplayer games were confined to only one screen. One could play
 </center>
 
 </div>
-<footer id="gradient" class="footer">
-  <span class="alignLeft">© 2019-2024 MM's Gaming Community LLC. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
-</footer>
+<?php include __DIR__ . '/templates/footer.php'; ?>
 </main>
 
 </body>
