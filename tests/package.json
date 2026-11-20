@@ -1,0 +1,12 @@
+{
+  "name": "mmsgaming-tests",
+  "private": true,
+  "description": "Automated tests for mms-gaming.com. Not deployed as part of the site.",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0"
+  }
+}
