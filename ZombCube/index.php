@@ -639,7 +639,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 </center>
 </div>
-<?php include __DIR__ . '/../templates/footer.php'; ?>
+<?php $privacyUrl = '/ZombCube/PrivacyPolicy.html'; include __DIR__ . '/../templates/footer.php'; ?>
 </main>
 </body>
 

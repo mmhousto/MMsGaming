@@ -43,7 +43,7 @@ Get-ChildItem -Path $root -Recurse -File -Filter '*.php' | Sort-Object FullName 
         $pre = @()
         if ($m.Groups[1].Value -ne 'footer') { $pre += "`$footerClass = '$($m.Groups[1].Value)';" }
         $privacy = $m.Groups[2].Value
-        if ($privacy -notmatch '^(\.\./)?privacyPolicy\.html$') {
+        if ($privacy -cnotmatch '^(\.\./)?privacyPolicy\.html$') {
             # A page-specific privacy policy, relative to the page's folder.
             $pre += "`$privacyUrl = '/" + (($folders + $privacy) -join '/') + "';"
         }

@@ -45,7 +45,17 @@ for (const who of ['guest', 'player']) {
         const match = body.match(PHP_ERROR);
         expect(match ? body.slice(Math.max(0, match.index - 100), match.index + 300) : null, `PHP error on ${page}`).toBeNull();
 
+        // Pages with the site footer use the shared one (working links, current year).
+        if (body.includes('<footer id="gradient"')) {
+          expect(body, `footer contact link on ${page}`).toContain('<a href="/contactform.html">Contact Me!</a>');
+          expect(body, `footer year on ${page}`).toContain(`© 2019-${new Date().getFullYear()}`);
+        }
       });
     }
   });
 }
+
+test('ZombCube links to its own privacy policy', async ({ request }) => {
+  const body = await (await request.get('/ZombCube/index.php')).text();
+  expect(body).toContain('<a href="/ZombCube/PrivacyPolicy.html">Privacy Policy</a>');
+});
