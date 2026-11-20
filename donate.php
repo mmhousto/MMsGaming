@@ -22,11 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 	while($row = mysqli_fetch_assoc($result1)) {
 		$points = $row["points"];
 	}
-	$isD = "SELECT Donor FROM custom WHERE UID = ?";
-	$result2 = db_query($link, $isD, [$id]);//"SELECT points FROM users WHERE username = $username";
-	while($row = mysqli_fetch_assoc($result2)) {
-		$isDonor = $row["Donor"];
-	}
+	$isDonor = player_custom($link, $id ?? null)['Donor'];
 
 		foreach ($_POST as $key => $value) {
 			$postFields .= "&$key=".urlencode($value);
