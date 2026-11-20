@@ -6,6 +6,11 @@ RewriteEngine On
 RewriteCond %{HTTPS} off 
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
+# Developer files are deployed with the site but must not be public:
+# tests, database schema, CI config and dotfiles like .gitignore / .user.ini
+RewriteRule ^(tests|db|\.github|node_modules)(/|$) - [R=404,L]
+RewriteRule (^|/)(package(-lock)?\.json|\.git[^/]*|\.user\.ini)$ - [R=404,L]
+
 
 </IfModule>
 

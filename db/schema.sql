@@ -1,0 +1,77 @@
+-- MM's Gaming Community database structure (used by the automated tests).
+--
+-- NOTE: this was reconstructed from the PHP code, not exported from the
+-- live database. To make tests match production exactly, export the real
+-- structure from phpMyAdmin (Export -> Custom -> Structure only, no data)
+-- and replace this file. Never commit data or passwords here.
+
+SET NAMES utf8mb4;
+
+CREATE TABLE users (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  Email varchar(255) DEFAULT NULL,
+  username varchar(50) NOT NULL UNIQUE,
+  password varchar(255) NOT NULL,
+  created_at datetime DEFAULT CURRENT_TIMESTAMP,
+  points int DEFAULT 0,
+  totalPoints int NOT NULL DEFAULT 0,
+  `rank` varchar(255) NOT NULL DEFAULT 'Noob'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE custom (
+  UID int NOT NULL PRIMARY KEY,
+  ownTrail int DEFAULT 0,
+  ownBg int DEFAULT 0,
+  ownImg int DEFAULT 0,
+  ownImage int DEFAULT 0,
+  ownCursor int DEFAULT 0,
+  ownFont int DEFAULT 0,
+  lastSet varchar(50) DEFAULT '',
+  BgColor varchar(255) DEFAULT '',
+  Trail varchar(255) DEFAULT '',
+  BgImg varchar(600) DEFAULT '',
+  CursorC varchar(600) DEFAULT '',
+  Font varchar(100) DEFAULT '',
+  Donor int DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE comments (
+  cid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  uid varchar(50) DEFAULT NULL,
+  date datetime DEFAULT NULL,
+  message text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE replies (
+  rid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  cid int DEFAULT NULL,
+  uid varchar(50) DEFAULT NULL,
+  date datetime DEFAULT NULL,
+  message text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE secondReplies (
+  srid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  rid int DEFAULT NULL,
+  cid int DEFAULT NULL,
+  uid varchar(50) DEFAULT NULL,
+  date datetime DEFAULT NULL,
+  message text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE posts (
+  aid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title varchar(255), summary text, posted varchar(50), image varchar(255),
+  alt varchar(255), href varchar(255), author varchar(100), content text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE games (
+  gid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  title varchar(255), img varchar(255), imgDesc varchar(255), genre varchar(255),
+  SRC text, Description text, HowToPlay text, Controls text, Tips text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE pwdReset (
+  pwdResetId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  pwdResetEmail text, pwdResetSelector text, pwdResetToken longtext, pwdResetExpires text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

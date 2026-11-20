@@ -11,3 +11,8 @@ key
 pem
 *.pem
 *.key
+
+# Test tooling (installed locally / in CI, never committed)
+node_modules/
+tests/test-results/
+tests/playwright-report/

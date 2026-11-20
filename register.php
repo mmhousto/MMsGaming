@@ -123,22 +123,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
+                // Create the new user's store/customization row, then go to login
+                db_query($link, "INSERT INTO custom (UID) VALUES (?)", [(int) mysqli_insert_id($link)]);
+                db_query($link, "UPDATE users SET rank = ? WHERE username = ?", [$rank, $username]);
+                mysqli_stmt_close($stmt);
+                mysqli_close($link);
                 header("location: login.php");
+                exit;
             } else{
                 echo "Something went wrong. Please try again later.";
             }
         }
 
-        $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
-        db_query($link, $sql1, [$rank, $username]);
-         
         // Close statement
         mysqli_stmt_close($stmt);
     }
-    
-        $sql2 = "INSERT INTO custom (UID) VALUES (LAST_INSERT_ID())";
-        mysqli_query($link, $sql2);
 
     // Close connection
     mysqli_close($link);
