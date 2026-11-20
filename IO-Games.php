@@ -33,47 +33,19 @@ if (isset($_GET['image'])){
     $bgImg = $_GET['image'];
 }
 
-$isD = "SELECT Donor FROM custom WHERE UID = ?";
-$result10 = db_query($link, $isD, [$id]);
-while($row = mysqli_fetch_assoc($result10)) {
-  $isDonor = $row["Donor"];
-}
+$isDonor = player_custom($link, $id ?? null)['Donor'];
 
-$ot = "SELECT ownTrail FROM custom WHERE UID = ?";
-$result4 = db_query($link, $ot, [$id]);
-while($row = mysqli_fetch_assoc($result4)) {
-  $ownTrail = $row["ownTrail"];
-}
+$ownTrail = player_custom($link, $id ?? null)['ownTrail'];
 
-$oi = "SELECT ownImg FROM custom WHERE UID = ?";
-$result3 = db_query($link, $oi, [$id]);
-while($row = mysqli_fetch_assoc($result3)) {
-  $ownImg = $row["ownImg"];
-}
+$ownImg = player_custom($link, $id ?? null)['ownImg'];
 
-$ob = "SELECT ownBg FROM custom WHERE UID = ?";
-$result2 = db_query($link, $ob, [$id]);
-while($row = mysqli_fetch_assoc($result2)) {
-  $ownBg = $row["ownBg"];
-}
+$ownBg = player_custom($link, $id ?? null)['ownBg'];
 
-$oc = "SELECT ownCursor FROM custom WHERE UID = ?";
-$result5 = db_query($link, $oc, [$id]);
-while($row = mysqli_fetch_assoc($result5)) {
-  $ownCursor = $row["ownCursor"];
-}
+$ownCursor = player_custom($link, $id ?? null)['ownCursor'];
 
-$bgC = "SELECT BgColor FROM custom WHERE UID = ?";
-$result6 = db_query($link, $bgC, [$id]);
-while($row = mysqli_fetch_assoc($result6)) {
-  $bgColor = $row["bgColor"];
-}
+$bgColor = player_custom($link, $id ?? null)['BgColor'];
 
-$fontf = "SELECT Font FROM custom WHERE UID = ?";
-$result7 = db_query($link, $fontf, [$id]);
-while($row = mysqli_fetch_assoc($result7)) {
-  $font = $row["Font"];
-}
+$font = player_custom($link, $id ?? null)['Font'];
 
 $mmsgStats = player_stats($link, $username ?? null);
 $points = $mmsgStats['points'];

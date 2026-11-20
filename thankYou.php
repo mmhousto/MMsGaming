@@ -20,11 +20,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     $isDonor = $_SESSION['Donor'];
     $pointsRecieved = "";
 
-  $isD = "SELECT Donor FROM custom WHERE UID = ?";
-  $result2 = db_query($link, $isD, [$id]);//"SELECT points FROM users WHERE username = $username";
-  while($row = mysqli_fetch_assoc($result2)) {
-    $isDonor = $row["Donor"];
-  }
+  $isDonor = player_custom($link, $id ?? null)['Donor'];
 $mmsgStats = player_stats($link, $username ?? null);
 $points = $mmsgStats['points'];
 $totalPoints = $mmsgStats['totalPoints'];

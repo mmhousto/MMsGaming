@@ -120,3 +120,15 @@ test('harmful values already in the database are never printed', async ({ reques
     expect(body, page).not.toMatch(/<script>alert\(9[1-4]\)/);
   }
 });
+
+test("the player's saved items reach the page (one shared lookup)", async ({ request }) => {
+  const name = await player(request, 0);
+  mysql(`UPDATE custom SET ownBg = 1, BgColor = '#123abc', lastSet = 'Background', Donor = 1 WHERE UID = ${userId(name)}`);
+  const body = await (await request.get('/index.php')).text();
+  // Page script settings (these read the wrong column name before Phase 2, so BgColor was always empty).
+  expect(body).toContain('BgColor : "#123abc"');
+  expect(body).toContain('hasBg   : "1"');
+  expect(body).toContain('Donor   : "1"');
+  // And the background CSS uses it.
+  expect(body).toContain('#123abc; background-image: none');
+});

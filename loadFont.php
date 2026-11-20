@@ -10,17 +10,9 @@
 	$ownFont = $_SESSION['ownFont'];
 	$font = $_SESSION['Font'];
 
-$of = "SELECT ownFont FROM custom WHERE UID = ?";
-$result1 = db_query($link, $of, [$id]);
-while($row = mysqli_fetch_assoc($result1)) {
-	$ownFont = $row["ownFont"];
-}
+$ownFont = player_custom($link, $id ?? null)['ownFont'];
 
-$f = "SELECT Font FROM custom WHERE UID = ?";
-$result2 = db_query($link, $f, [$id]);
-while($row = mysqli_fetch_assoc($result2)) {
-	$font = $row["Font"];
-}
+$font = player_custom($link, $id ?? null)['Font'];
 
 $font = safe_font_name($font);
 if ($ownFont == 1 && $font !== null) {

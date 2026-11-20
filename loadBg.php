@@ -13,35 +13,15 @@
 	$ownImg = $_SESSION['ownImg'];
 	$lastSet = $_SESSION['lastSet'];
 
-$ls = "SELECT lastSet FROM custom WHERE UID = ?";
-$result1 = db_query($link, $ls, [$id]);
-while($row = mysqli_fetch_assoc($result1)) {
-	$lastSet = $row["lastSet"];
-}
+$lastSet = player_custom($link, $id ?? null)['lastSet'];
 
-$bg = "SELECT BgColor FROM custom WHERE UID = ?";
-$result3 = db_query($link, $bg, [$id]);
-while($row = mysqli_fetch_assoc($result3)) {
-	$bgColor = $row["BgColor"];
-}
+$bgColor = player_custom($link, $id ?? null)['BgColor'];
 
-$bgi = "SELECT BgImg FROM custom WHERE UID = ?";
-$result4 = db_query($link, $bgi, [$id]);
-while($row = mysqli_fetch_assoc($result4)) {
-	$bgImg = $row["BgImg"];
-}
+$bgImg = player_custom($link, $id ?? null)['BgImg'];
 
-$ob = "SELECT ownBg FROM custom WHERE UID = ?";
-$result2 = db_query($link, $ob, [$id]);
-while($row = mysqli_fetch_assoc($result2)) {
-	$ownBg = $row["ownBg"];
-}
+$ownBg = player_custom($link, $id ?? null)['ownBg'];
 
-$oi = "SELECT ownImg FROM custom WHERE UID = ?";
-$result5 = db_query($link, $oi, [$id]);
-while($row = mysqli_fetch_assoc($result5)) {
-	$ownImg = $row["ownImg"];
-}
+$ownImg = player_custom($link, $id ?? null)['ownImg'];
 
 $bgColor = safe_css_color($bgColor);
 $bgImg = safe_image_url($bgImg);

@@ -11,11 +11,7 @@ $id = $_SESSION['id'];
 $username = $_SESSION['username'];
 $rank = $_SESSION['rank'];
 $donor = $_SESSION['Donor'];
-$isD = "SELECT Donor FROM custom WHERE UID = ?";
-$result10 = db_query($link, $isD, [$id]);
-while($row = mysqli_fetch_assoc($result10)) {
-  $isDonor = $row["Donor"];
-}
+$isDonor = player_custom($link, $id ?? null)['Donor'];
 $mmsgStats = player_stats($link, $username ?? null);
 $points = $mmsgStats['points'];
 $totalPoints = $mmsgStats['totalPoints'];
