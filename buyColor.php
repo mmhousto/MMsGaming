@@ -18,8 +18,8 @@ while($row = mysqli_fetch_assoc($result2)) {
 	$ownBg = $row["ownBg"];
 }
 
-if ($points >= 2500 && $ownBg == 0) {
-$points = $points - 2500;
+if ($points >= 1000 && $ownBg == 0) {
+$points = $points - 1000;
 $sql2 = "UPDATE users SET points = '$points' WHERE username = '$username'";
 mysqli_query($link, $sql2) or die('Error querying database.');
 

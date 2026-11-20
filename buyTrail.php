@@ -18,8 +18,8 @@ while($row = mysqli_fetch_assoc($result2)) {
 	$ownTrail = $row["ownTrail"];
 }
 
-if ($points >= 5000 && $ownTrail == 0) {
-$points = $points - 5000;
+if ($points >= 2500 && $ownTrail == 0) {
+$points = $points - 2500;
 $sql2 = "UPDATE users SET points = '$points' WHERE username = '$username'";
 mysqli_query($link, $sql2) or die('Error querying database.');
 

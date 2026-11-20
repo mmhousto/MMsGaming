@@ -4,8 +4,7 @@
 
     $total = "";
     $username = $_SESSION['username'];
-    $rank = $_SESSION['rank'];
-
+    
     $p = "SELECT points FROM users WHERE username = '$username'";
 	$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
 	while($row = mysqli_fetch_assoc($result1)) {
@@ -66,14 +65,13 @@
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 } else {
-    $rank = "Holy shit get a life!";
+    $rank = "Gaming God!";
     $total = 104000;
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 }    
 
 echo $points;
-
 
 
 ?>

@@ -12,8 +12,8 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 require_once "config.php";
  
 // Define variables and initialize with empty values
-$points = $totalPoints = $ownTrail = $ownBg = $ownImg = $ownCursor = $isDonor = 0;
-$username = $password = $rank = $lastSet = "";
+$points = $totalPoints = $ownTrail = $ownBg = $ownImg = $ownCursor = $ownFont = $isDonor = 0;
+$email = $username = $password = $rank = $lastSet = "";
 $bgColor = $TrailC = $bgImg = $CursorC = $font = "";
 $username_err = $password_err = "";
  
@@ -63,6 +63,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
                             $_SESSION["id"] = $id;
+                            $_SESSION["Email"] = $email;
                             $_SESSION["username"] = $username; 
                             $_SESSION["totalPoints"] = $totalPoints;
                             $_SESSION["points"] = $points;
@@ -111,21 +112,36 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162871090-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-162871090-1');
+</script>
+
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
-    <title>Login</title>
+    <title>Login | Free Online Games</title>
+    <meta name="description" content="Login or sign up to start earning points playing the best multiplayer games. Then buy items in my custom store to customize the site your way! Free Online Games!">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="canonical" href="https://mms-gaming.com/login.php">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     
     <style type="text/css">
         html{
             min-height: 100%;
             margin: 0;
             font-family: Arial;
+            overflow: auto;
             }
         body {
             background-color: #38b6ff;
@@ -135,11 +151,27 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             font-family: Arial;
             overflow: hidden;
             }
-        .wrapper{ 
-            width: 350px;
-            padding: 20px;
-            font: 14px sans-serif;
-            border: dashed black 2px; }
+            #page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.form-control {
+    width: 50%;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+.wrapper{ 
+    width: 600px;
+    padding: 20px;
+    font: 14px sans-serif;
+    border: solid 2px black;
+    border-radius: 25px;
+    background-color: white;
+    }
+    
         .btn-primary {
           color: #fff;
           background-color: #35CD34;
@@ -150,9 +182,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
           background-color: #01A800;
           border-color: #204d74;
         }
+        
+.blue {
+  color: #38b6ff;
+}
+
+.blue:visited {
+  color: #38b6ff;
+}
+
+.blue:hover, .blue:active, .blue:focus {
+  color: #000000;
+}
+
 .footer {
             display: block;
-            position: fixed;
+            position: absolute;
             left: 0;
             bottom: 0;
             width: 100%;
@@ -172,19 +217,117 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 #a7fbfc, #ff80bd
                 );
         }
+        
+@media screen and (max-width: 1220px) {
+    .form-control {
+    width: 50%;
+    }
+}
+
+.bgB {
+    width: 65%;
+    height: auto;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+}
+        
+@media screen and (max-width: 800px) {
+
+.form-control {
+    width: 50%;
+}
+
+    .wrapper, .bgB {
+        max-width: 80%;
+    }
+
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+input[type=text], input[type=password] {
+    outline: none;
+    background-color: #333;
+    color: white;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  border: 3px solid white;
+  background-color: #333;
+    color: white;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid white;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  background-color: white;
+}
+
+input::-webkit-credentials-auto-fill-button:hover {
+  background-color: #38b6ff;
+}
+
     </style>
     
 </head>
 <body>
+    <div id="page-container">
+   <div id="content-wrap">
     <center>
-     <img src="MMsGCoo.png" alt="MM Gaming"  height="150" width="400" vspace="10">
-     
-     <h1>Welcome Gamers!</h1>
-     <h3>Login or register to earn points while you play below!</h3>
-     <p>For those of you who just want to play games and not earn points while ranking up, Click <a href="index.php">Here</a> to continue to the site!</p>
-     <div class="wrapper" border="">
-        <h2>Login</h2>
+     <picture>
+            <source srcset="MMsGCoo.webp" type="image/webp">
+            <source srcset="MMsGCoo.jp2" type="image/jp2">
+	  	    <a href="index.php" ><img src="MMsGCoo.png" alt="The logo of MMs Gaming company, meant to look like a controller and the letters 'MM'" title="MMs Gaming Logo" style="max-width:100%;max-height:300px;" vspace="0"></a>
+	     </picture>
+    <div class="bgB">
+     <h2>Welcome Gamers!</h2>
+     <p><font size="+1">Login or register to earn points while you play online games with multiplayer for free!</font></p>
+    </div>
+    <br>
+     <div class="wrapper">
+        <h1>Login to Earn Points</h1>
         <p>Please fill in your credentials to login.</p>
+                <?php 
+    if(isset($_GET["newpwd"])) {
+        if ($_GET["newpwd"] == "passwordupdated") {
+            echo '<p class="signupsuccess">Your password has been reset!</p>';
+        }
+    }
+?>
         <form class="frm" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
             <input type="hidden" name="points" value="<?php echo $points; ?>">
             <input type="hidden" name="totalPoints" value="<?php echo $totalPoints; ?>">
@@ -213,13 +356,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Login">
             </div>
-            <p>Don't have an account? <a href="register.php">Sign up now</a>.</p>
+            <p>Don't have an account? <a class="blue" href="register.php">Sign up now!</a></p><br>
+            <p><a class="blue" href="forgot-password.php">Forgot Password?</a></p>
         </form>
      </div>
      <br>
+     <div class="bgB">
+         <h2> <a class="blue" href="index.php"><strong>Continue to Free Online Games!</strong></a></h2>
+     <p>For those of you, whom just want to play games and not earn points while ranking up. Click the header above, but beware you will not be able to customize the site!</p>
+     </div>
+     <br>
+     
     </center> 
+    
+    </div>
 <footer id="gradient" class="footer">
-  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+  <span class="alignLeft">© 2019-2024 MM's Gaming Community LLC. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
 </footer>
+</div>
+
 </body>
+
 </html>

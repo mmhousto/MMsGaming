@@ -4,7 +4,6 @@
 
     $total = "";
     $username = $_SESSION['username'];
-    $rank = $_SESSION['rank'];
 
     $p = "SELECT points FROM users WHERE username = '$username'";
 	$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
@@ -17,7 +16,7 @@
 	while($row = mysqli_fetch_assoc($result)) {
 		$totalPoints = $row["totalPoints"];
 	}
-    if($totalPoints < 100){
+	if($totalPoints < 100){
     $rank = "Noob";
     $total = 100;
 } else if($totalPoints >= 100 && $totalPoints < 200){                            
@@ -71,7 +70,7 @@
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 } else {
-    $rank = "Holy Shit, Get a Life!";
+    $rank = "Gaming God";
     $total = 208000;
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
@@ -85,6 +84,6 @@
         $totalPoints += 2;
         
         if($total == 100){
-        echo $totalPoints;
+        echo $points;
         }else{echo ($totalPoints - ($total/2));}
     ?>

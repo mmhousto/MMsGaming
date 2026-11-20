@@ -76,14 +76,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
-    <title>Reset Password</title>
+    <title>Change Passcode for MM's Gaming Co. [Reset Password]</title>
+    <meta name="description" content="Reset your password, for MM's Gaming Co, to help protect against hackers. Change Passcode Here!">
 
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" href="footer.css">
+    <link rel="canonical" href="https://mms-gaming.com/reset-password.php">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
     
     <script data-ad-client="ca-pub-8251399081266327" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <script type="text/javascript" src="mouseFollow.js"></script>
@@ -91,7 +95,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <style type="text/css">
 
         body {
-  background-color: #38b6ff;
+  background-color: <?php include "loadBg.php";?>;
   height: 100%;
   font-family: Arial;
   background-image: none;
@@ -139,7 +143,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   width: 20px;
   height: 20px;
 }
-        .wrapper{ width: 350px; padding: 20px; }
+        .wrapper{ 
+    width: 600px;
+    padding: 20px;
+    font: 14px sans-serif;
+    border: solid 2px black;
+    border-radius: 25px;
+    background-color: white;
+    }
+    
+    .form-control {
+        width:50%;
+    }
+        
         .footer {
             display: block;
             position: fixed;
@@ -162,16 +178,81 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 #a7fbfc, #ff80bd
                 );
         }
+        
+        @media screen and (max-width: 800px) {
+            
+            .wrapper {width: 80%;}
+
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+input[type=text], input[type=password] {
+    outline: none;
+    background-color: #333;
+    color: white;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  border: 3px solid white;
+  background-color: #333;
+    color: white;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 1px solid white;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input::-webkit-credentials-auto-fill-button {
+  background-color: white;
+}
+
+input::-webkit-credentials-auto-fill-button:hover {
+  background-color: #38b6ff;
+}
+
+.help-block {
+    color: red;
+}
     </style>
 </head>
 <body style="background-color: <?php include "loadBg.php"; ?>;">
 
 <div id="page-container">
    <div id="content-wrap">
-       
-
+       <br><br><br>
+<center>
     <div class="wrapper">
-        <h2>Reset Password</h2>
+        <h1>Reset Password for your account</h1>
         <p>Please fill out this form to reset your password.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
             <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
@@ -190,9 +271,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
         </form>
     </div>  
+    </center>
 </div>
 <footer id="gradient" class="footer">
-  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
 </footer>
 </div>
 </body>
