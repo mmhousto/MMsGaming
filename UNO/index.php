@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
 	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Multiplayer Gaming Online | Play UNO with Friends Free</title>
     <meta name="description" content="Play the best online card game, UNO with friends! This is a HTML5 game with multiplayer. Playable at MM's Gaming Co.">

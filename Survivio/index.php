@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>IO Gaming | Play Surviv io Online</title>
     <meta name="description" content="Earn points playing Surviv io. An io, online game you can play with your friends. Choose to play only the best, at MM's Gaming Co.">

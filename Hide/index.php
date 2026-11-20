@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>IO Gaming | Play Hide IO Online with Friends</title>
     <meta name="description" content="While playing Hide Online with friends, earn points. This is a HTML5 online game with multiplayer. Play only at MM's Gaming Co.">

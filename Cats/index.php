@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Free Online Gaming | Play Cats 1010</title>
     <meta name="description" content="Earn points playing Cats 1010 for free. It is an online HTML5 game, you can play at MM's Gaming Co.">

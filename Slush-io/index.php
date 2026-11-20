@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>IO Gaming | Play Slush io Online</title>
     <meta name="description" content="While playing Slush.io earn point. This is a epic io, online game with multiplayer. Choose to play only at MM's Gaming Co.">

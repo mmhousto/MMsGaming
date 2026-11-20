@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Online Gaming Free | Play Super Bowmasters</title>
     <meta name="description" content="Super Bowmasters is a free, archery, online game playable at MM's Gaming Co. Precision is key!">
