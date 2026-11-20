@@ -821,56 +821,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <div class="pointer pointer5"></div>
   </div>
     	
-        <div id="heading1" class="heading1">
-        <div id="info" class="info">
-        <h3><b><?php if($isDonor){echo "Donor";}else{echo "Gamer";} ?>:</b> <span id="Gamer"><a href="profile.php"><?php echo htmlspecialchars($username); ?></a></span></h3>
-        <h4><b>Rank:</b> <span id="Rank"><?php echo htmlspecialchars($rank); ?></span></h4>
-        <h4><b>Points:</b> <span id="points" class="pointCount"><?php echo $points; ?></span></h4>
-        <div class="Progress"><b>Next Rank:</b> <div id="pntCount" class="pointCount"><?php echo progress_for($totalPoints, $total)['count']; ?>	
-        																			 </div>/<div id="total" class="total"><?php echo progress_for($totalPoints, $total)['goal']; ?></div>
-          <div class="meter">
-  			<span id="myBar" style="width: <?php echo progress_for($totalPoints, $total)['percent']; ?>%"></span>
-		      </div>
-		    </div>
-        </div>
-    <div id="rightHd">
-        <div class="ctrlBtns" align="right">
-	 	    <p style="width: 100%;" align="right">
-	 	    <?php
-            if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-               echo '<a href="register.php" class="btn btn-success" style="width: 125px;">Sign Up!</a>&nbsp;';
-                echo '<a href="login.php" class="btn btn-warning" style="width: 125px;">Login!</a>';
-            } else {
-             echo '<a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>&nbsp;';
-             echo '<a href="logout.php" class="btn btn-danger">Sign Out</a>';
-            }
-            ?>
-    	    </p>
-    	</div>
-        <div id="logo" class="logo" align="center">
-         <picture>
-            <source srcset="MMsGCoo.webp" type="image/webp">
-            <source srcset="MMsGCoo.jp2" type="image/jp2">
-	  	    <a href="index.php" ><img src="MMsGCoo.png" alt="The logo of MMs Gaming company, meant to look like a controller and the letters 'MM'" title="MMs Gaming Logo" style="max-width:100%;max-height:300px;" vspace="0"></a>
-	     </picture>
-	    </div>
-	 </div>
-	 
-    </div>
+        <?php include __DIR__ . '/templates/topbar.php'; ?>
     <br>
-    <header class="topnav" id="myTopnav">
-        <a class="tablink" href="index.php">Home</a>
-        <a class="tablink" href="Free-Games.php">Games</a>
-        <a class="tablink" href="Unity-Games.php">My Games</a>
-        <a class="tablink" href="Store.php">Store</a>
-        <a class="tablink" href="Scoreboard.php">Scoreboard</a>
-        <a class="tablink" href="blog">Blog</a>
-        <a class="tablink" href="about.php">About</a>
-        <div class="fb-share-button" data-href="https://mms-gaming.com/IO-Games.php" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmms-gaming.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-        </a>
-    </header>
+    <?php $shareUrl = 'https://mms-gaming.com/IO-Games.php'; include __DIR__ . '/templates/menu.php'; ?>
 
 	<center>
 <div id="tabs">

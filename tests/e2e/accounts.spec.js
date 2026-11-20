@@ -31,7 +31,7 @@ test('a visitor can register, log in and log out', async ({ page }) => {
   await expect(page).toHaveURL(/index\.php/);
   await expect(page.locator('#Gamer')).toHaveText(name);
 
-  await page.click('a[href="logout.php"]');
+  await page.getByRole('link', { name: 'Sign Out' }).click();
   await expect(page).toHaveURL(/login\.php/);
 });
 
