@@ -273,9 +273,7 @@ input::-webkit-credentials-auto-fill-button:hover {
     </div>  
     </center>
 </div>
-<footer id="gradient" class="footer">
-  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
-</footer>
+<?php include __DIR__ . '/templates/footer.php'; ?>
 </div>
 </body>
 </html>

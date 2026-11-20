@@ -3,7 +3,8 @@
   "private": true,
   "description": "Automated tests for mms-gaming.com. Not deployed as part of the site.",
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test --project=e2e",
+    "test:visual": "playwright test --project=visual",
     "test:report": "playwright show-report"
   },
   "devDependencies": {

@@ -73,6 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["ownBg"] = $ownBg;
                             $_SESSION["ownImg"] = $ownImg;
                             $_SESSION["ownCursor"] = $ownCursor;
+                            $_SESSION["ownFont"] = $ownFont;
                             $_SESSION["lastSet"] = $lastSet;
                             $_SESSION["BgColor"] = $bgColor;
                             $_SESSION["Trail"] = $TrailC;
@@ -370,9 +371,7 @@ input::-webkit-credentials-auto-fill-button:hover {
     </center> 
     
     </div>
-<footer id="gradient" class="footer">
-  <span class="alignLeft">© 2019-2024 MM's Gaming Community LLC. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
-</footer>
+<?php include __DIR__ . '/templates/footer.php'; ?>
 </div>
 
 </body>

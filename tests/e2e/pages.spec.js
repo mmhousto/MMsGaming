@@ -13,7 +13,7 @@ const NOT_PAGES = /^(config|addPoints|points|rank|total|gamer|Bar|donate|logout|
 function listPages() {
   const pages = fs.readdirSync(ROOT).filter((f) => f.endsWith('.php') && !NOT_PAGES.test(f));
   for (const dir of fs.readdirSync(ROOT, { withFileTypes: true })) {
-    if (!dir.isDirectory() || ['lib', 'tests', 'db', 'node_modules'].includes(dir.name) || dir.name.startsWith('.')) continue;
+    if (!dir.isDirectory() || ['lib', 'tests', 'db', 'templates', 'node_modules'].includes(dir.name) || dir.name.startsWith('.')) continue;
     const sub = path.join(ROOT, dir.name);
     for (const f of fs.readdirSync(sub)) {
       if (f.endsWith('.php')) pages.push(`${dir.name}/${f}`);
@@ -44,7 +44,18 @@ for (const who of ['guest', 'player']) {
         const body = await res.text();
         const match = body.match(PHP_ERROR);
         expect(match ? body.slice(Math.max(0, match.index - 100), match.index + 300) : null, `PHP error on ${page}`).toBeNull();
+
+        // Pages with the site footer use the shared one (working links, current year).
+        if (body.includes('<footer id="gradient"')) {
+          expect(body, `footer contact link on ${page}`).toContain('<a href="/contactform.html">Contact Me!</a>');
+          expect(body, `footer year on ${page}`).toContain(`© 2019-${new Date().getFullYear()}`);
+        }
       });
     }
   });
 }
+
+test('ZombCube links to its own privacy policy', async ({ request }) => {
+  const body = await (await request.get('/ZombCube/index.php')).text();
+  expect(body).toContain('<a href="/ZombCube/PrivacyPolicy.html">Privacy Policy</a>');
+});

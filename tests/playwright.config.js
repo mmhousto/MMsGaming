@@ -6,7 +6,6 @@ const { defineConfig } = require('@playwright/test');
 const PORT = process.env.TEST_PORT || '8099';
 
 module.exports = defineConfig({
-  testDir: './e2e',
   // Tests share one database, so run them one at a time for predictable results.
   workers: 1,
   fullyParallel: false,
@@ -14,6 +13,18 @@ module.exports = defineConfig({
   timeout: 60_000,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
   globalSetup: require.resolve('./global-setup.js'),
+  projects: [
+    // The normal suite (what GitHub runs).
+    { name: 'e2e', testDir: './e2e' },
+    // Screenshot comparison for layout changes; only run with --project=visual.
+    {
+      name: 'visual',
+      testDir: './visual',
+      testMatch: /\.visual\.js$/,
+      snapshotPathTemplate: '{testDir}/__screenshots__/{arg}{ext}',
+      use: { viewport: { width: 1280, height: 800 } },
+    },
+  ],
   use: {
     baseURL: `http://127.0.0.1:${PORT}`,
     trace: 'off',

@@ -16,3 +16,4 @@ pem
 node_modules/
 tests/test-results/
 tests/playwright-report/
+tests/visual/__screenshots__/
