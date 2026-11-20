@@ -4,5 +4,15 @@ Disallow:
 User-Agent: Googlebot-image
 Disallow:
 
+User-Agent: Bingbot
+Disallow:
+
 User-Agent: Mediapartners-Google
+Disallow:
+
+User-agent: *
+
+Sitemap: https://mms-gaming.com/sitemap.xml
+Sitemap: https://mms-gaming.com/image-sitemap.xml
+User-agent:*
 Disallow:

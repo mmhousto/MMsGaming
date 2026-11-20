@@ -66,7 +66,7 @@
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 } else {
-    $rank = "Holy shit get a life!";
+    $rank = "INSANE";
     $total = 104000;
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);

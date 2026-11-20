@@ -11,9 +11,9 @@ $p = "SELECT points FROM users WHERE username = '$username'";
 	}
 
 
-$sql2 = "UPDATE users SET points = points - 5000 WHERE username = '$username'";
+$sql2 = "UPDATE users SET points = points - 2500 WHERE username = '$username'";
 mysqli_query($link, $sql2);
-$points = $points - 5000;
+$points = $points - 2500;
 
 
 echo $points;

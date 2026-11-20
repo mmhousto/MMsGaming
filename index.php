@@ -1,12 +1,12 @@
-<?php
+<?php 
 // Initialize the session
 session_start();   
 require_once "config.php";
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-}
-
+    
+}else {
 $total = "";
 $secure = "1";
 $username = $_SESSION['username'];
@@ -14,6 +14,7 @@ $rank = $_SESSION['rank'];
 $ownTrail = $_SESSION['ownTrail'];
 $ownBg = $_SESSION['ownBg'];
 $ownImg = $_SESSION['ownImg'];
+$ownFont = $_SESSION['ownFont'];
 $bgColor = $_SESSION['BgColor'];
 $bgImg = $_SESSION['BgImg'];
 $TrailC = $_SESSION['Trail'];
@@ -26,10 +27,16 @@ if (isset($_GET['box'])) {
   $TrailC = $_GET['box'];
 } 
 if (isset($_POST['box2'])) {
-  $bgColor = $_POST['box2'];
+  $bgColor = $_GET['box2'];
 }
 if (isset($_GET['image'])){
     $bgImg = $_GET['image'];
+}
+
+$isD = "SELECT Donor FROM custom WHERE UID = '$id'";
+$result10 = mysqli_query($link, $isD);
+while($row = mysqli_fetch_assoc($result10)) {
+  $isDonor = $row["Donor"];
 }
 
 $ot = "SELECT ownTrail FROM custom WHERE UID = '$id'";
@@ -57,6 +64,16 @@ while($row = mysqli_fetch_assoc($result5)) {
 }
 
 $bgC = "SELECT BgColor FROM custom WHERE UID = '$id'";
+$result6 = mysqli_query($link, $bgC);
+while($row = mysqli_fetch_assoc($result6)) {
+  $bgColor = $row["bgColor"];
+}
+
+$fontf = "SELECT Font FROM custom WHERE UID = '$id'";
+$result7 = mysqli_query($link, $fontf);
+while($row = mysqli_fetch_assoc($result7)) {
+  $font = $row["Font"];
+}
 
 $p = "SELECT points FROM users WHERE username = '$username'";
 $result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
@@ -122,7 +139,7 @@ if($totalPoints < 100){
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 } else {
-    $rank = "Holy Shit, Get a Life!";
+    $rank = "INSANE";
     $total = 208000;
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
@@ -150,6 +167,7 @@ function hasTrail() {
   }
 }
 $_SESSION['secure'] = $secure;
+}
 
 ?>
 
@@ -157,619 +175,122 @@ $_SESSION['secure'] = $secure;
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
-  <meta name="viewport" content="width=1250, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-162871090-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    <title>MM's Gaming Co.</title>
+  gtag('config', 'UA-162871090-1');
+</script>
+
+
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- Optimal Internet Explorer compatibility -->
+  
+  <!-- For facebook share button -->
+  <meta property="og:url" content="https://mms-gaming.com" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title" content="Indie Game Development & Publishing Services [MM's Gaming Co.]" />
+  <meta property="og:description" content="We provide indie developers with game development and publishing services @ MM's Gaming Community!" />
+  <meta property="og:image" content="https://mms-gaming.com/MM.png" />
+  <!--- ----->
+
+    <title>Indie Game Development & Publishing Services [MM's Gaming Co.]</title>
+    <meta name="description" content="We provide indie developers with game development and publishing services @ MM's Gaming Community!">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <link rel="manifest" href="site.webmanifest">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="mouse.js" type="text/javascript"></script>
-    <script src="layout.js" type="text/javascript"></script>
-    <script src="jquery.js" type="text/javascript"></script>
-    <script data-ad-client="ca-pub-8251399081266327" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="stylesheet" href="basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="canonical" href="https://mms-gaming.com/">
     
-   
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-function startTab() {
-    document.getElementById("defaultOpen").click();
-}
+    
+    
+    <script defer type="text/javascript">
 
-function setTrail() {
-  if (<?php echo $ownTrail = 0; ?>) {
-    $('#circleBuy').prop('disabled', true);
-    $('#circleSelect').prop('disabled', false );
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
   } else {
-    $('.trail').css("display", "none");
-    $('#circleBuy').prop('disabled', false);
-    $('#circleSelect').prop('disabled', true );
+    x.className = "topnav";
   }
 }
 
-function setBg() {
-  if ( <?php echo $ownBg = 0; ?>) {
-    $('#bgBuy').prop('disabled', true);
-    $('#bgSelect').prop('disabled', false );
-  } else {
-    $('#bgBuy').prop('disabled', false);
-    $('#bgSelect').prop('disabled', true );
-  }
-}
-
-function setImg() {
-  if ( <?php echo $ownImg = 0; ?>) {
-    $('#bgImgBuy').prop('disabled', true);
-    $('#bgImgSelect').prop('disabled', false );
-  } else {
-    $('#bgImgBuy').prop('disabled', false);
-    $('#bgImgSelect').prop('disabled', true );
-  }
-}
-
-function setCursor() {
-  if ( <?php echo $ownCursor = 0; ?>) {
-    $('#cursorBuy').prop('disabled', true);
-    $('#cursorSelect').prop('disabled', false );
-  } else {
-    $('#cursorBuy').prop('disabled', false);
-    $('#cursorSelect').prop('disabled', true );
-  }
-}
-
-window.onload = function () {
-  startTab();
-  setTrail();
-  setBg();
-  setImg();
-  setCursor();
-};
+//mouse follow
+$(document).mousemove(function(e){
+      $(".pointer").css({left:(window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft), top:(window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)});
+    });
+/////////////////
 
 //=========================================================================================================//
-</script>
-
-
-
-</head>
-
-<style type="text/css">
-	html{
-  height: 100%;
-  font-family: Arial;
-  overflow: hidden;
-}
-
-body {
-  cursor: <?php include 'loadCursor.php'; ?>;
-  background-color: #38b6ff;
-  height: 100%;
-  font-family: Arial;
-  background-image: none;
-  overflow: auto;
-  overflow-x:hidden;
-  overflow-y:scroll;
-}
-
-ul {
-  text-align: center;
-  columns: 4;
-  -webkit-columns: 4;
-  -moz-columns: 4;
-}
-
-.btn-warning {
-  margin-top: 3px;
-  margin-right: 3px;
-  font-size: 18px;
-}
-
-.btn-danger {
-  margin-top: 3px;
-  margin-right: 3px;
-  font-size: 18px;
-}
-
-.btn-success {
-  font-size: 18px;
-  margin-top: 3px;
-  margin-right: 3px;
-}
-
-/* Style tab links */
-.tablink {
-  background-color: #555;
-  color: black;
-  float: left;
-  border: solid black 1px;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
-}
-
-.tablink:hover {
-  background-color: #777;
-  color: white;
-}
-
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: black;
-  display: left;
-  padding: 50px 20px;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.columns{
-    float: center;
-    position: relative;
-    margin-right: 20px;
-}
-
-.columns1{
-    float: center;
-    position: relative;
-    margin-left: 0;
-    margin-right: 0;
-    padding-left: 275px;
-}
-
-.meter { 
-	margin-left: -2px;
-	margin-top: 2px;
-	height: 26px;  /* Can be anything */
-	position: relative;
-	background: #555;
-	-moz-border-radius: 25px;
-	-webkit-border-radius: 25px;
-	border-radius: 25px;
-	padding: 3px;
-	box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
-}
-
-.meter > span {
-  display: block;
-  height: 100%;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  background-color: rgb(43,194,83);
-  background-image: linear-gradient(
-    center bottom,
-    rgb(43,194,83) 37%,
-    rgb(84,240,84) 69%
-  );
-  box-shadow: 
-    inset 0 2px 9px  rgba(255,255,255,0.3),
-    inset 0 -2px 6px rgba(0,0,0,0.4);
-  position: relative;
-  overflow: hidden;
-}
-
-.meter > span:after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background-image: linear-gradient(
-    -45deg, 
-    rgba(255, 255, 255, .2) 25%, 
-    transparent 25%, 
-    transparent 50%, 
-    rgba(255, 255, 255, .2) 50%, 
-    rgba(255, 255, 255, .2) 75%, 
-    transparent 75%, 
-    transparent
-  );
-  z-index: 1;
-  background-size: 50px 50px;
-  animation: move 2s linear infinite;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
-  overflow: hidden;
-}
-
-.heading {
-    width: 445px;
-    position: relative;
-  float: right;
-  padding: 3px;
-  display: inline;
-  vertical-align: right;
-}
-
-.pointCount {
-  display: inline-block;
-}
-
-.total {
-  display: inline-block;
-}
-
-.Progress {
-  margin-bottom: -10px;
-}
-
-.info {
-  display: inline;
-  float: left;
-  height: 150px;  
-  width: 275px; 
-  margin-left: 0px;
-  padding: 12px;
-  vertical-align: left;
-}
-.logo {
-  display: inline;
-  vertical-align: middle;
-  height: 150px; 
-  width: 350px; 
-  margin-bottom: -20px;
-  margin-left: 150px;
-}
-
-.selection {
-  position: relative;
-  padding: 2px;
-}
-
-input { margin-bottom: 10px; }
-
-.select-items {
-  width: 20px;
-  height: 10px;
-}
-.pointer {
-  position: fixed;
-  display: block;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 40px;
-  height: 40px;
-  background: <?php include "loadTrail.php";?>;
-  border: 1px solid <?php include "loadTrail.php";?>;
-  opacity: 0.4;
-  border-radius: 50%;
-  pointer-events: none;
-  box-sizing: border-box;
-}
-
-.pointer1{
-  transition: 0.05s;
-}
-
-.pointer2{
-  transition: 0.10s;
-  width: 35px;
-  height: 35px;
-}
-
-.pointer3{
-  transition: 0.15s;
-  width: 30px;
-  height: 30px;
-}
-
-.pointer4{
-  transition: 0.20s;
-  width: 25px;
-  height: 25px;
-}
-
-.pointer5{
-  transition: 0.25s;
-  width: 20px;
-  height: 20px;
-}
-
-#logo {float: center;} 
-
-#info-logo {float: left; display: inline; height: 150px; width: 100%;}
-#tabs {height: 100vh;}
-#Home {background-color: yellow; height: 300vh;}
-#MyGames {background-color: green;}
-#Store {background-color: cyan;}
-#About {background-color: orange; height: 175vh;}
-
-#myStore {
-  height: 25%; 
-  width: 75%; 
-  table-layout: fixed;
-}
-
-td {
-  position: relative;
-  word-wrap: break-word;
-  text-align: center;
-  vertical-align: top;
-  font-size: 24px;
-}
-#page-container {
-  position: relative;
-  min-height: 100%;
-}
-
-#content-wrap {
-  padding-bottom: 3rem;    /* Footer height */
-}
-.footer {
-            display: block;
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 3rem;
-            background-color: gray;
-            color: black;
-            padding: 5px;
+  (function($){
+    var initialContainer = $('.columns'),
+        columnItems = $('.columns li'),
+        columns = null,
+        column = 1; // account for initial column
+    function updateColumns(){
+        column = 0;
+        columnItems.each(function(idx, el){
+            if (idx !== 0 && idx > (columnItems.length / columns.length) + (column * idx)){
+                column += 1;
+            }
+            $(columns.get(column)).append(el);
+        });
+    }
+    function setupColumns(){
+        columnItems.detach();
+        while (column++ < initialContainer.data('columns')){
+            initialContainer.clone().insertBefore(initialContainer);
+            column++;
         }
-        .alignLeft {
-            float: left;
-        }
-        .alignRight {
-            float: right;
-        }
-        #gradient {
-            background-image: linear-gradient(
-                to top right, 
-                #a7fbfc, #ff80bd
-                );
-        }
+        columns = $('.columns');
+    }
 
-</style>
+    $(function(){
+        setupColumns();
+        updateColumns();
+    });
+})(jQuery);
+//======================================================================================================//
+//TabStuffs==============================================================================================//
+function openPage(pageName, elmnt, color) {
 
-<?php
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    echo '<style type="text/css">.info{display: none;} .logo{margin-left:445px;}</style>';
-} else {
-}
-?>
-<body id="body" style="background-color: <?php include "loadBg.php"; ?>;">
-    
-<div id="page-container">
-   <div id="content-wrap">
-  <div id="trail" class="trail" style="disa">
-    <div class="pointer pointer1"></div>
-    <div class="pointer pointer2"></div>
-    <div class="pointer pointer3"></div>
-    <div class="pointer pointer4"></div>
-    <div class="pointer pointer5"></div>
-  </div>
-    	
-    <div class="info-logo" id="info-logo">
-        <div class="heading">
-	 	<p align="right">
-	 	<?php
-        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-            echo '<a href="register.php" class="btn btn-success" style="width: 125px;">Sign Up!</a>&nbsp;';
-            echo '<a href="../login.php" class="btn btn-warning" style="width: 125px;">Login!</a>';
-        } else {
-         echo '<a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>&nbsp;';
-         echo '<a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>';
-        }
-        ?>
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
 
-    	</p>
-</div>
-        <div id="info" class="info">
-        <h3>Gamer: <b><?php echo htmlspecialchars($username); ?></b></h3>
-        <h4>Rank: <?php echo htmlspecialchars($rank); ?></h4>
-        <h4>Points: <div id="points" class="pointCount"><?php echo $points; ?></div></h4>
-        <div class="Progress">Next Rank: <div id="pntCount" class="pointCount"><?php if($total == 100){
-        																				echo $totalPoints;
-        																			 }else{echo ($totalPoints - ($total/2));}?>	
-        																			 </div>/<div id="total" class="total"><?php if($total == 100){
-        																				echo $total;}else{echo ($total-($total/2));} ?></div>
-          <div class="meter">
-  			<span id="myBar" style="width: <?php if($total == 100){echo $totalPoints;}
-  				else{echo ((($totalPoints - ($total/2))/($total/2)) * 100);}?>%"></span>
-		      </div>
-		    </div>
-        </div><br>
-        <center>
-        <div id="logo" class="logo" align="center">
-	  	<img src="MMsGCoo.png" alt="MM Gaming"  height="150" width="400" vspace="5">
-	    </div>
-        </center>
-    </div>
-<br>
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+    tablinks[i].style.color = "white";
+  }
 
-	<center>
-<br><br><br><br><br><br><br><br>
-<button class="tablink" onclick="openPage('Home', this, 'yellow')"><b>Home</b></button>
-<button class="tablink" onclick="openPage('MyGames', this, 'green')" id="//defaultOpen"><b>My Games</b></button>
-<button class="tablink" onclick="openPage('Store', this, 'cyan')"><b>Store</b></button>
-<button class="tablink" onclick="openPage('About', this, 'orange')"><b>About</b></button>
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
 
-<div id="tabs">
-<div id="Home" class="tabcontent">
-      <a href="Scoreboard.php" target="popup" onclick="window.open('Scoreboard.php', 'popup', 'width=1000, height=1000'); return false;"><font size="+3">Scoreboard</a></font>
-  <h3><font size="+7">Play Games & Earn Points!</font></h3>
-  <p><font size="+2">The points you earn can be used in the store to buy items to customize the site your way.<br>You can change the background color or add an image, as well as purchase a trail or custom cursor!<br>Note: You MUST be actively playing to earn points!</font></p>
-  	<ul class="columns" data-columns="2" style="list-style-type:none;">
-      <li><a href="Krunker"><img src="Krunker.jpg"><br><font size="+3">Krunker.io</font></a></li>
-      <br>
-      <li><a href="Krew"><img src="Krew.png"><br><font size="+3">Krew.io</font></a></li>
-      <br>
-      <li><a href="WinterClash"><img src="WinterClash.jpg"><br><font size="+3">Winter Clash 3D</font></a></li>
-      <br>
-  		<li><a href="SA2"><img src="SA2.jpg"><br><font size="+3">Soldier Attack 2</font></a></li>
-  		<br>
-  		<li><a href="Pinball"><img src="Pinball.jpg"><br><font size="+3">Pinball</font></a></li>
-  		<br>
-  		<li><a href="NeonJump"><img src="NeonJump.jpg"><br><font size="+3">Neon Jump</font></a></li>
-  		<br>
-  		<li><a href="UNO"><img src="UNO.jpg"><br><font size="+3">UNO Online</font></a></li>
-  		<br>
-  		<li><a href="Slither"><img src="Slither.jpg"><br><font size="+3">Slither.io</font></a></li>
-  		<br>
-  		<li><a href="Minecraft"><img src="Minecraft.jpg"><br><font size="+3">Paper Minecraft</font></a></li>
-  		<br>
-  		<li><a href="Survivio"><img src="Survivio.jpg"><br><font size="+3">Surviv.io</font></a></li>
-  		<br>
-  		<li><a href="LA2"><img src="LA2.png"><br><font size="+3">Little Alchemy 2</font></a></li>
-  		<br>
-  		<li><a href="Cats"><img src="Cats.jpg"><br><font size="+3">Cats 1010</font></a></li>
-      <br>
-  		<li><a href="CartoonStrike"><img src="CartoonStrike.png"><br><font size="+3">Cartoon Strike</font></a></li>
-  		<br>
-  		<li><a href="8Ball"><img src="8Ball.jpg"><br><font size="+3">8 Ball Pool Multiplayer</font></a></li>
-  		<br>
-  		<li><a href="SBK2"><img src="SBK2.jpg"><br><font size="+3">Super Buddy Kick 2</font></a></li>
-  		<br>
-  		<li><a href="AngryBirds"><img src="AngryBirds.jpg"><br><font size="+3">Angry Birds</font></a></li>
-  		<br>
-  		<li><a href="SuperBowmasters"><img src="SuperBowmasters.jpg"><br><font size="+3">Super Bowmasters</font></a></li>
-  		<br>
-  		<li><a href="BattleRoyale"><img src="BattleRoyale.jpg"><br><font size="+3">Battle Royale</font></a></li>
-  		<br>
-  		<li><a href="Hide"><img src="Hide.jpg"><br><font size="+3">Hide Online</font></a></li>
-  		<br>
-  		<li><a href="CityTycoon"><img src="CityTycoon.jpg"><br><font size="+3">City Tycoon</font></a></li>
-  		<br>
-  		<li><a href="FlyWings"><img src="FlyWings.jpg"><br><font size="+3">Flight Simulator - FlyWings 2016</font></a></li>
-  		<br>
-  		<li><a href="Madalin"><img src="Madalin.jpg"><br><font size="+3">Madalin Stunt Cars 2</font></a></li>
-  		<br>
-  		<li><a href="CoV"><img src="CoV.jpg"><br><font size="+3">Clash of Vikings</font></a></li>
-  		<br>
-      <li><a href="SwordHit"><img src="swordHit.jpg"><br><font size="+3">Sword Hit</font></a></li>
-      <br>
-	</ul>
-	<h3><font size="+4">See a HTML5 game not on here you would love to play?</font></h3><br>
-	<p><font size="+2">Send me an email through my <a href="contactform.htm">contact page</a> for ease of access or email me directly at:<br>morgan.houston@mms-gaming.com<br>I will add it as soon as I get a chance!</font></p>
-
-</div>
-
-<div id="MyGames" class="tabcontent">
-  <h3><font size="+7">These are games I have made/worked on</font></h3>
-    <ol style="list-style-type:none;">
-  		<li><a href="HGWK"><font size="+3">Have Gun, Will Kill<br>
-  		(Assets didn't load right when converted to WebGL)</font></a></li>
-	</ol>
-	<p><font size="+2">***Will be updating HGWK soon to display all enemies and buttons so you can actually play the game***</font></p>
-	<p><font size="+2">Have Gun, Will Kill was my first game developed in the Unity Engine. It was a group project I worked on while I attended Rogers State University, in Claremore. I learned a lot about Unity, but due to school and work I have not had much time to work on games. During this summer I plan to create a few new titles with Unity and upload them to my site!<br><br>If you have a good idea for a game and are passionate about Game Development <a href="contactform">contact me!</a></font></p>
-	
-</div>
-
-<div id="Store" class="tabcontent">
-  <h3><font size="+7">Welcome to my store!</font></h3>
-  <table border='2' style='width:75%, height: 10px;' id='myStore'>
-    <tr>
-      <td style='padding: 20px'>Colored Background<br>Cost: 2500
-                        <div class="selection">
-                          <form name="myForm" action="setBgColor.php" method="POST">
-                            <input type="text" placeholder="Enter color" id="box2" name="box2" size="6">
-                            
-                            <input type="submit" id="bgSelect" value="Select">
-                            
-                          </form>
-                          <form name="myForm2" action="buyColor.php" method="POST">
-                            <input type="hidden" id="own1" name="own1" value="<?php echo $ownBg;?>">
-                            <input type="submit" id="bgBuy" value="Buy">
-                          </form>
-                        </div>
-                        Click <a href="http://www.colors.commutercreative.com/grid/"  target="_blank">Here</a> For A List Of Colors!
-      </td>
-      <td style='padding: 20px'>Image Background<br>Cost: 5000
-          <div class="selection">
-              <form name="myForm" action="setBgImg.php" method="POST">
-                  <input type="url" placeholder="Enter url" id="image" name="image" size="6">
-                  <input type="submit" id="bgImgSelect" value="Select">
-                            
-              </form>
-              <form name="myForm2" action="buyImg.php" method="POST">
-                  <input type="hidden" id="own2" name="own2" value="<?php echo $ownImg;?>">
-                  <input type="submit" id="bgImgBuy" value="Buy">
-              </form>
-          </div>
-
-      </td>
-      <td style='padding: 20px'>Colored Circle Trail<br>Cost: 5000
-                                <span id="circlePrice"></span>
-                        <div class="selection">
-                          <form name="myForm" action="setTrail.php" method="POST">
-                            <input type="text" placeholder="Enter color" id="color" name="color" size="6">
-                            <input type="submit" id="circleSelect" value="Select">
-                            
-                          </form>
-                          <form name="myForm3" action="buyTrail.php" method="POST">
-                            <input type="hidden" id="own3" name="own3" value="<?php echo $ownTrail;?>">
-                            <input type="submit" id="circleBuy" value="Buy">
-                          </form>
-                        </div>
-      </td>
-      <td style='padding: 20px'>Custom Cursor<br>Cost: 5000
-          <div class="selection">
-              <form name="myForm" action="setCursor.php" method="POST">
-                    <input type="url" placeholder="Enter url" id="cursorC" name="cursorC" size="6">
-                    <input type="submit" id="cursorSelect" value="Select">
-              </form>
-              <form name="myForm2" action="buyCursor.php" method="POST">
-                  <input type="hidden" id="own4" name="own4" value="<?php echo $ownCursor;?>">
-                    <input type="submit" id="cursorBuy" value="Buy">
-              </form>
-          </div>
-          Click <a href="http://www.cursors-4u.com/" target="_blank">Here</a> For Custom Cursors!
-      </td>
-      <td style='padding: 20px'>Donate<br>Recieve: $Donated x 1000 in Points<br><br>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-          <input type="hidden" name="cmd" value="_s-xclick" />
-          <input type="hidden" name="hosted_button_id" value="Y9PERZA6GR25A" />
-          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-          <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
-        </form>
-
-      </td>
-    </tr>
-  </table>
-  <br>
-  <p><font size="+2">After playing games and accumulating a good amount of points or donating to recieve points,<br> you can buy items to customize the website any way you like. Tired of the same boring background?<br> Spice it up with vibrant colors from a long list you can choose from and even buy a trail that follows your mouse wherever it goes. Soon I will be adding more ways to customize the site, like different fonts and new trails!</font></p>
-
-</div>
-
-<div id="About" class="tabcontent">
-  <h3><font size="+7">About Page</font></h3>
-  <p><font size="+3">Gamers welcome to MM's Gaming Company!<br>
-  	I have created this site for you to play free games on. You can customize the website anyway you like by buying items in the store, after gaining points by playing the games. Not only was this a fun project for me, I am using it as a portfolio to show off my work and what I can do.<br>I Hope you enjoy!<br><br>
-  	Game Development is my career goal. I have been playing games my whole life and am determined to make a living off of them. I know the following languages pretty well:<br>
-  	<ul align="center" class="columns1">
-  		<li>JavaScript</li>
-  		<li>C/C++</li>
-  		<li>C#</li>
-  		<li>PHP</li>
-  		<li>MySQL</li>
-  		<li>HTML & CSS</li>
-  		<li>Swift</li>
-  	</ul>
-  I am a Computer Science Major studying at Oklahoma State University - Tulsa & Stillwater!<br> GO Pokes!</font></p>
-  <img src="osu.png" alt="OSU"  height="250" width="450" vspace="5">
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+  elmnt.style.color = "black";
   
-      <h2><font size="+5"><a href="contactform.htm">Contact Me</a></font></h2>
-  <p><font size="+2" align="left">If you want to see another HTML5 game or your very own game on my website,<br> feel free to contact me by clicking the 'Contact Me' header above.<br>Then fill out the form on the next page and I will get back to you shortly...<br>I look forward to hearing from you, your feedback helps improve my website!<br></font></p>
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+    
+/*function startTab() {
+    document.getElementById("defaultOpen").click();
+}*/
 
-</div>
-
-</div></center>
-</div>
-<footer id="gradient" class="footer">
-  <span class="alignLeft">MM's Gaming Co © 2019-2020. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
-</footer>
-</div>
-
-</body>
-
-<script type="text/javascript">
     //Column layout=====================================================================================//
 var bgBuy = document.getElementById("bgBuy");
 var bgSelect = document.getElementById("bgSelect");
@@ -779,35 +300,859 @@ var circleBuy = document.getElementById("circleBuy");
 var circleSelect = document.getElementById("circleSelect");
 var points = document.getElementById("points");
 var bodyColor = document.getElementById("body");
-</script>
 
 <?php
         if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-
+            
         } else {
-            echo '<script type="text/javascript">';
-            echo 'var custom = {';
-            echo "Points  : $points,";
-            echo "BgColor : $bgColor,";
-            echo "Trail   : $TrailC,";
-            echo "BgImg   : $bgImg,";
-            echo "Cursor  : $cursor,";
-            echo "Font    : $font,";
-            echo "Donor   : $isDonor,";
-            echo "hasTrail: $ownTrail,";
-            echo "hasBg   : $ownBg,";
-            echo "hasImg  : $ownImg";
-            echo '}</script>';
-        }
-        ?>
+echo "function setTrail() {
+  if ($ownTrail) {
+    $('#circleBuy').prop('disabled', true);
+    $('#circleSelect').prop('disabled', false );
+  } else {
+    $('.trail').css('display', 'none');
+    $('#circleBuy').prop('disabled', false);
+    $('#circleSelect').prop('disabled', true );
+  }
+}
 
-<script type="text/javascript">
+function setBg() {
+  if ($ownBg) {
+    $('#bgBuy').prop('disabled', true);
+    $('#bgSelect').prop('disabled', false );
+  } else {
+    $('#bgBuy').prop('disabled', false);
+    $('#bgSelect').prop('disabled', true );
+  }
+}
+
+function setImg() {
+  if ($ownImg) {
+    $('#bgImgBuy').prop('disabled', true);
+    $('#bgImgSelect').prop('disabled', false );
+  } else {
+    $('#bgImgBuy').prop('disabled', false);
+    $('#bgImgSelect').prop('disabled', true );
+  }
+}
+
+function setCursor() {
+  if ($ownCursor) {
+    $('#cursorBuy').prop('disabled', true);
+    $('#cursorSelect').prop('disabled', false );
+  } else {
+    $('#cursorBuy').prop('disabled', false);
+    $('#cursorSelect').prop('disabled', true );
+  }
+}
 
 window.onload = function () {
+//  startTab();
+  setTrail();
+  setBg();
+  setImg();
+  setCursor();
+}
+    var custom = { ";
+            echo "Points  : '$points', ";
+            echo "BgColor : '$bgColor', ";
+            echo "Trail   : '$TrailC', ";
+            echo "BgImg   : '$bgImg', ";
+            echo "Cursor  : '$cursor', ";
+            echo "Font    : '$font', ";
+            echo "Donor   : '$isDonor', ";
+            echo "hasTrail: '$ownTrail', ";
+            echo "hasBg   : '$ownBg', ";
+            echo "hasImg  : '$ownImg'";
+            echo "};";
+        }?>
+        
+</script>
+
+</head>
+<?php include 'games.inc.php'; ?>
+<style type="text/css">
+
+body {
+  cursor: <?php include 'loadCursor.php'; ?>;
+  font-family: <?php include 'loadFont.php'; ?>;
+}
+
+.pointer{
+  background: <?php include "loadTrail.php";?>;
+  border: 1px solid <?php include "loadTrail.php";?>;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: left;
+  padding: 50px 20px;
+  height: auto;
+  width:auto;
+  overflow-x: auto;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    position: -webkit-sticky; /* Safari */  
+position: sticky;
+    width: 100%;
+    z-index: 1;
+    top: 0px;
+  left: 0px;
+  background-color: #333;
+  overflow: hidden;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+.topnav button {
+  float: left;
+  display: block;
+  background-color: #333;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+a.tablink {
+    height: 100%;
+} 
+
+/* Add a color to the active/current link */
+a.tablink:active {
+  color: black;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.green {
+  color: #00fffb;
+}
+
+.green:visited {
+  color: #00fffb;
+}
+
+.green:hover, .green:active, .green:focus {
+  color: #000000;
+}
+
+.yellow {
+  color: #002BEB;
+}
+
+.yellow:visited {
+  color: #002BEB;
+}
+
+.yellow:hover, .yellow:active, .yellow:focus {
+  color: #000000;
+}
+
+.blue {
+  color: #0025CC;
+}
+
+.blue:visited {
+  color: #0025CC;
+}
+
+.blue:hover, .blue:active, .blue:focus {
+  color: #000000;
+}
+
+.orange {
+  color: #0023BD;
+}
+
+.orange:visited {
+  color: #0023BD;
+}
+
+.orange:hover, .orange:active, .orange:focus {
+  color: #000000;
+}
+
+.col-lg-10{
+  column-count:4;
+}
+
+.col-lg-12{
+  column-count:4;
+}
+
+.col-lg-14{
+    column-count:1;
+}
+
+#logo { min-width: 50%;
+    width:50%;
+}
+
+#rightHd {
+    width: 66.6%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.heading1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    top:0;
+    left:0;
+    padding-bottom: 10px;
+}
+
+.noGoogle > .google-auto-placed {
+display:none !important;
+}
+
+.adsbygoogle {
+    width: 85%;
+    }
+
+.info {
+    float:left;
+  font-size: 18px;
+  text-align: left;
+  justify-content: left;
+  height: 100%;  
+  width: 33.3%;
+  margin-left: 0px;
+  padding: 12px;
+  left:0;
+}
+
+.logo {
+    float:left;
+  text-align: center;
+  align-items:center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 10px 0;
+}
+.ctrlBtns {
+    float:left;
+  text-align: right;
+  align-items: right;
+  height: 100%; 
+  width: 50%; 
+  margin: 10px 0;
+}
+
+div.meter {
+    width:275px;
+}
+
+.services {
+    width:65%;
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+}
+
+ul {
+    column-count:1;
+    float: left;
+    text-align: center;
+    align-items:center;
+    width:100%;
+}
+
+ul li {
+    display: inline-block;
+    width:100%;
+}
+
+.button {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px;
+    padding: 12px 24px;
+    border: 1px solid #113fd8;
+    border-radius: 25px;
+    background: #2076ff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#2076ff), to(#113fd8));
+    background: -moz-linear-gradient(top, #2076ff, #113fd8);
+    background: linear-gradient(to bottom, #2076ff, #113fd8);
+    -webkit-box-shadow: #268eff 0px 0px 40px 0px;
+    -moz-box-shadow: #268eff 0px 0px 40px 0px;
+    box-shadow: #268eff 0px 0px 40px 0px;
+    text-shadow: #0a257f 1px 1px 1px;
+    font: normal normal bold 20px arial;
+    color: #ffffff;
+    text-decoration: none;
+}
+.button:hover,
+.button:focus {
+    border: 1px solid ##144afe;
+    background: #268eff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#268eff), to(#144cff));
+    background: -moz-linear-gradient(top, #268eff, #144cff);
+    background: linear-gradient(to bottom, #268eff, #144cff);
+    color: #ffffff;
+    text-decoration: none;
+}
+.button:active {
+    background: #113fd8;
+    background: -webkit-gradient(linear, left top, left bottom, from(#113fd8), to(#113fd8));
+    background: -moz-linear-gradient(top, #113fd8, #113fd8);
+    background: linear-gradient(to bottom, #113fd8, #113fd8);
+}
+
+.fb-share-button {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    top: 15px;
+    left: 0px;
+}
+
+.footer {position: static; margin-top: -48px;}
+
+@media screen and (max-width: 1240px) {
+
+    #heading1 {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+    
+    #rightHd{
+        width: 100%;
+    }
+    
+    #logo{width: 66.6%;float: left;
+        display: inline;
+        align-items:right;
+        justify-content:right;
+        text-align:right;}
+    #info { width: 50%;}
+    
+    .info {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+    .ctrlBtns {
+        display: inline;
+        float: left;
+        width:33.3%;
+    }
+    
+  .col-lg-10{
+    column-count:3;
+  }
+
+  .col-lg-12{
+    column-count:3;
+  }
+}
+
+@media screen and (max-width: 916px) {
+    .ctrlBtns {
+        width:45%;
+    }
+    
+    #logo{
+        width: 55%;
+    }
+    
+    #info { width: 50%;}
+    
+    .adsbygoogle {
+    width: 600px;
+    }
+}
+
+@media screen and (max-width: 898px) {
+    
+        .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    padding: 15px;
+    float: right;
+    display: block;
+    height: 100%;
+  }
+  
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25%;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    width: 75%;
+  }
+  
+  .topnav.responsive div {
+    float: none;
+    display: block;
+    width: 75%;
+    top: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+    
+}
+
+@media screen and (max-width: 800px) {
+    
+    .ctrlBtns {
+        width:50%;
+    }
+    
+    #logo{
+        width: 50%;
+    }
+    
+    #info { width: 50%;}
+
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+  .col-lg-10{
+    column-count:2;
+  }
+
+  .col-lg-12{
+    column-count:2;
+  }
+}
+
+@media screen and (max-width: 620px) {
+    #logo {
+        width:; 50%;
+    }
+
+    .col-lg-10{
+    column-count:1;
+  }
+    
+    .col-lg-12{
+        column-count:1;
+    }
+    
+        .info {
+        width: 100%;
+        display: block;
+        align-items: baseline;
+        text-align: left;
+    }
+    
+    .logo {
+        width: 100%;
+        left: 50%;
+        display: block;
+        align-items: center;
+        text-align: center;
+        vertical-align: left;
+    }
+    
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+    
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .tablink {
+        width: 100%;
+    }
   
 }
 
-  </script>
+#tabs {height: 100%; width:100%}
+#Home {background-color: transparent; height: auto;}
+#MyGames {background-color: #009E00; height: auto;}
+#Store {background-color: cyan; height: auto;}
+#About {background-color: orange; height: auto;}
+
+td {
+  position: relative;
+  word-wrap: break-word;
+  text-align: center;
+  vertical-align: top;
+  font-size: 24px;
+}
+
+#myStore {
+  height: 75px; 
+  width: 1020px; 
+  table-layout: fixed;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  width: 90%;
+  line-height: 200%;
+}
+
+.col-lg-10, .col-lg-12, .col-lg-14 {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.col-lg-12 {
+  text-decoration: underline;
+}
+
+.bestGames {
+    width:65%;
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+}
+
+ol {
+    column-count:1;
+    float: left;
+    text-align: center;
+    align-items:center;
+    width:100%;
+}
+
+ol li {
+    display: inline-block;
+    width:100%;
+}
+
+ol a {
+    text-decoration:underline;
+}
+
+.bgO {
+    width:90%;
+    height: auto;
+    background-color: #FFC675;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.bgY {
+    width:90%;
+    height: auto;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+}
+
+.bgB {
+    width:90%;
+    height: auto;
+    background-color: #8affff;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.bgG {
+    width:90%;
+    height: auto;
+    background-color: #32e34a;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.bgBl {
+    width: 65%;
+    height: auto;
+    background-color: #80ccff;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+}
+
+#myTable {
+    counter-reset: tableCount;     
+}
+.counterCell:before {              
+    content: counter(tableCount); 
+    counter-increment: tableCount; 
+}
+
+#myTable td {
+  position: relative;
+  word-wrap: normal;
+  text-align: left;
+  vertical-align: center;
+  font-size: 48px;
+}
+
+@font-face {
+    font-family: 'Arial';
+    font-style: normal;
+    font-display: swap;
+}
+
+<?php
+$useragent=$_SERVER['HTTP_USER_AGENT'];
+if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4))) {
+    echo '.topnav {position: static;}
+    .topnav div {display: none;}
+    .topnav i {height: 100%;}
+    .topnav a {width: 33%; height: 100%;}
+    .topnav button {width: 33%;}
+    .footer {position: static; margin-top: -50px;}';
+}
+?>
+
+</style>
+
+<?php
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    echo '<style type="text/css">.info{display: none;} #logo { min-width: 60%; width:60%; align-items: right; text-align: right;}
+    #rightHd { width: 100%;} .ctrlBtns {width: 40%;}</style>';
+} else {
+}
+?>
+<body id="body" style="background-color: <?php include "loadBg.php"; ?>;">
+    
+<main class="page-container">
+    <div class="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
+       
+    
+   <div id="content-wrap">
+<div class="noGoogle">
+  <div id="trail" class="trail" style="disa">
+    <div class="pointer pointer1"></div>
+    <div class="pointer pointer2"></div>
+    <div class="pointer pointer3"></div>
+    <div class="pointer pointer4"></div>
+    <div class="pointer pointer5"></div>
+  </div>
+    	
+        <div id="heading1" class="heading1">
+        <div id="info" class="info">
+        <h3><b><?php if($isDonor){echo "Donor";}else{echo "Gamer";} ?>:</b> <span id="Gamer"><a href="profile.php"><?php echo htmlspecialchars($username); ?></a></span></h3>
+        <h4><b>Rank:</b> <span id="Rank"><?php echo htmlspecialchars($rank); ?></span></h4>
+        <h4><b>Points:</b> <span id="points" class="pointCount"><?php echo $points; ?></span></h4>
+        <div class="Progress"><b>Next Rank:</b> <div id="pntCount" class="pointCount"><?php if($total == 100){
+        																				echo $totalPoints;
+        																			 }else{echo ($totalPoints - ($total/2));}?>	
+        																			 </div>/<div id="total" class="total"><?php if($total == 100){
+        																				echo $total;}else{echo ($total-($total/2));} ?></div>
+          <div class="meter">
+  			<span id="myBar" style="width: <?php if($total == 100){echo $totalPoints;}
+  				else{echo ((($totalPoints - ($total/2))/($total/2)) * 100);}?>%"></span>
+		      </div>
+		    </div>
+        </div>
+    <div id="rightHd">
+        <div class="ctrlBtns" align="right">
+	 	    <p style="width: 100%;" align="right">
+	 	    <?php
+            if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+               echo '<a href="register.php" class="btn btn-success" style="width: 125px;">Sign Up!</a>&nbsp;';
+                echo '<a href="login.php" class="btn btn-warning" style="width: 125px;">Login!</a>';
+            } else {
+             echo '<a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>&nbsp;';
+             echo '<a href="logout.php" class="btn btn-danger">Sign Out</a>';
+            }
+            ?>
+    	    </p>
+    	</div>
+        <div id="logo" class="logo" align="center">
+         <picture>
+            <source srcset="MMsGCoo.webp" type="image/webp">
+            <source srcset="MMsGCoo.jp2" type="image/jp2">
+	  	    <a href="index.php" ><img src="MMsGCoo.png" alt="The logo of MMs Gaming company, free online games, meant to look like a controller and the letters 'MM'" title="MMs Gaming Logo" style="max-width:100%;max-height:300px;" vspace="0"></a>
+	     </picture>
+	    </div>
+	 </div>
+	 
+	 </div>
+
+
+<br>
+
+<header class="topnav" id="myTopnav">
+        <a class="tablink" onclick="openPage('Home', this, 'white')" style="color: black; background-color: white;">Home</a>
+        <a class="tablink" href="Free-Games.php">Games</a>
+        <a class="tablink" href="Unity-Games.php">My Games</a>
+        <a class="tablink" href="Store.php">Store</a>
+        <a class="tablink" href="Scoreboard.php">Scoreboard</a>
+        <a class="tablink" href="blog">Blog</a>
+        <a class="tablink" href="about.php">About</a>
+        <div class="fb-share-button" data-href="https://mms-gaming.com" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmms-gaming.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+        <a href="javascript:void(0);" class="icon tablink" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </header>
+</div>
+
+<center>
+    
+<div id="tabs">
+
+
+
+<div id="Home" class="tabcontent">
+<br>
+
+<div class="bgY" style="text-align: middle;">
+    
+    <h1><font size="+3"><strong>WELCOME TO MM's GAMING COMMUNITY!<br/>We are an independent game development & publishing studio! Need help developing or publishing your indie game? <a href='contactform.html'>Reach out to us!</a></strong></font></h1>
+    <h2><strong>PRICING INFO</strong></h2>
+    <p><font size="+2">Host Your Free Browser Game = FREE</font></p>
+    <p><font size="+2">Blog Post = $5</font></p>
+    
+    <h3><strong>Publishing Services:</strong></h3>
+    <ul><font size="+2">
+        <li>iOS Publishing Package</li>
+        <li>Android Publishing Package</li>
+        <li>MacOS Publishing Package</li>
+        <li>Meta Quest Publishing Package</li>
+        <li>Microsoft Creators Program Publishing Package</li>
+        <li>Steam Publishing Package</li>
+        <li>Premium Publishing Package</li>
+        <li>Post-Launch Support and Updates</li>
+    </font></ul>
+    <p><font size="+2">Publishing Package includes Game/App Store Page Creation, Initial App Submission, Compliance Checks and Social Media Post. $20/platform</font></p>
+    <p><font size="+2">Premium Publishing Package includes all publishing packages and unlimited updates with weekly Social Media Posts. MM's Gaming Community uses a Revenue Share Model: We take 10% of the revenue generated from the game sales.</font></p>
+    
+    <h3><strong>Unity Game Development Services</strong></h3>
+    <ul><font size="+2">
+        <li>iOS Game Center Integration</li>
+        <li>Android Google Play Game Services Integration</li>
+        <li>Steam SDK Integration</li>
+        <li>Cross-Platform Development</li>
+        <li>Multiplayer with PUN</li>
+        <li>Multiplayer with Netcode for GameObjects</li>
+        <li>Consultation and assistance with game design, mechanics, and user experience.</li>
+        <li>Code review and optimization to improve game performance and stability.</li>
+        <li>QA Testing</li>
+    </font></ul>
+    <p><font size="+2"><a href='contactform.html'>Contact us</a> for pricing and payment!</font></p>
+<br>
+	</div>
+<br>
+
+    <div class="bgY" style="text-align: left;">
+	<h2><strong>WE ARE A COMMUNITY</strong></h2>
+	<p><font size="+2">MM’s Gaming Co. is a gaming community with members from various corners of the globe. You can play free online games and make friends from all over the world at the same time. Join our <a href="https://discord.gg/BvEqRUh" rel="nofollow" target="_blank">Discord server</a> where you can talk about games, suggest new games, meet awesome people, promote your indie game and help shape the development of games we are creating!</font></p>
+	<h3><strong>CUSTOMIZE THE SITE</strong></h3>
+	<p><font size="+2">This is one of the best features of MM’s Gaming Community, which holds it a step ahead of other gaming websites. Once you actively start playing, you can earn points. These points can be used as virtual vouchers to buy amazing items from our custom shop. You can customize our site using these items, in a lot of ways. For example- you can get access to customizing the background color, image background, your cursor, colored trail that follows the cursor and many more. The best part is, you can upload pictures of your customized layout to showcase it in front of your friends.</font></p>
+	<h4><strong>ADD YOUR GAME</strong></h4>
+	<p><font size="+2">MM’s Gaming Co. lets you add games created by you! Accepted forms are: WebGL, HTML5, .io, and Unity Games. <a href='contactform.html'>Contact us</a> and get your game added into our gaming community today. It’s your turn to let the world explore your game.</font></p>
+	</div>
+
+</div>
+
+<div id="PaddleBalls" class="tabcontent">
+    <div class="bgY" style="text-align: middle;">
+        <img alt='A first/third person action-adventure rogue-lite.' src='ImprecisionLogoTilt.png' width='120px'/>
+        <h2 style="text-align: middle;"><a href='Imprecision/index.php'><strong><u>Imprecision</u></strong></a></h2>
+        <h3 style="text-align: middle;">Imprecision is a first/third person, action game set in The Middle Ages. In Imprecision, you play as a lone archer, Örvar, who is training to take down The Black Knights of Bjørn and their kingdom. You are determined to defeat King Bjørn the Bloodthirsty and take back what is yours.</h3>
+        <a href='https://play.google.com/store/apps/details?id=com.MorganHouston.Imprecision'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='275px'/></a>
+        <a href='https://testflight.apple.com/join/6XiUZTWe'><img alt='Download in App Store' src='appStore.svg' width='225px'/></a>
+        <br>
+        <iframe src="https://store.steampowered.com/widget/2466820/" frameborder="0" width="646" height="190"></iframe>
+    </div>
+</div>
+
+<script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- square -->
+<ins class="adsbygoogle"
+     style="display:block; width: 90%;"
+     data-ad-client="ca-pub-8251399081266327"
+     data-ad-slot="9538800012"
+     data-ad-format="horizontal"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<br>
+
+</div></center>
+</div>
+<footer id="gradient" class="footer">
+  <span class="alignLeft">© 2019-2024 MM's Gaming Community LLC. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.html">Contact Me!</a></span>
+</footer>
+</main>
+
+</body>
 
 
 </html>

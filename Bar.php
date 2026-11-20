@@ -67,7 +67,7 @@
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
 } else {
-    $rank = "Holy shit get a life!";
+    $rank = "INSANE";
     $total = 104000;
     $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
         mysqli_query($link, $sql1);
@@ -78,16 +78,7 @@
             }else{
                $percent = ((($totalPoints - ($total/2))/($total/2)) * 100);
             }
-    echo '<span id="myBar" class="myBar" style="width:'.$percent.'%">';
-    echo "<center>";
-if($total == 100){
-    echo round($percent,2); echo "%";
-}else{
-    echo round($percent,2);
-    echo "%";
-}
-    echo "</center>";
-    echo "</span>";
+    echo $percent."%";
 
 
 

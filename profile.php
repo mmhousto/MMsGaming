@@ -1,0 +1,1036 @@
+<?php 
+// Initialize the session
+session_start();   
+require_once "config.php";
+ 
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    header("Location: index.php");
+}
+
+$total = "";
+$secure = "1";
+$username = $_SESSION['username'];
+$rank = $_SESSION['rank'];
+$ownTrail = $_SESSION['ownTrail'];
+$ownBg = $_SESSION['ownBg'];
+$ownImg = $_SESSION['ownImg'];
+$ownFont = $_SESSION['ownFont'];
+$bgColor = $_SESSION['BgColor'];
+$bgImg = $_SESSION['BgImg'];
+$TrailC = $_SESSION['Trail'];
+$CursorC = $_SESSION['CursorC'];
+$font = $_SESSION['Font'];
+$isDonor = $_SESSION['Donor'];
+$id = $_SESSION['id'];
+
+if (isset($_GET['box'])) {
+  $TrailC = $_GET['box'];
+} 
+if (isset($_POST['box2'])) {
+  $bgColor = $_GET['box2'];
+}
+if (isset($_GET['image'])){
+    $bgImg = $_GET['image'];
+}
+
+$isD = "SELECT Donor FROM custom WHERE UID = '$id'";
+$result10 = mysqli_query($link, $isD);
+while($row = mysqli_fetch_assoc($result10)) {
+  $isDonor = $row["Donor"];
+}
+
+$ot = "SELECT ownTrail FROM custom WHERE UID = '$id'";
+$result4 = mysqli_query($link, $ot);
+while($row = mysqli_fetch_assoc($result4)) {
+  $ownTrail = $row["ownTrail"];
+}
+
+$oi = "SELECT ownImg FROM custom WHERE UID = '$id'";
+$result3 = mysqli_query($link, $oi);
+while($row = mysqli_fetch_assoc($result3)) {
+  $ownImg = $row["ownImg"];
+}
+
+$ob = "SELECT ownBg FROM custom WHERE UID = '$id'";
+$result2 = mysqli_query($link, $ob);
+while($row = mysqli_fetch_assoc($result2)) {
+  $ownBg = $row["ownBg"];
+}
+
+$oc = "SELECT ownCursor FROM custom WHERE UID = '$id'";
+$result5 = mysqli_query($link, $oc);
+while($row = mysqli_fetch_assoc($result5)) {
+  $ownCursor = $row["ownCursor"];
+}
+
+$bgC = "SELECT BgColor FROM custom WHERE UID = '$id'";
+$result6 = mysqli_query($link, $bgC);
+while($row = mysqli_fetch_assoc($result6)) {
+  $bgColor = $row["bgColor"];
+}
+
+$fontf = "SELECT Font FROM custom WHERE UID = '$id'";
+$result7 = mysqli_query($link, $fontf);
+while($row = mysqli_fetch_assoc($result7)) {
+  $font = $row["Font"];
+}
+
+$sql6 = "SELECT Email FROM users WHERE username = '$username'";
+$result12 = mysqli_query($link, $sql6);//"SELECT points FROM users WHERE username = $username";
+while($row = mysqli_fetch_assoc($result12)) {
+	$email = $row["Email"];
+}
+
+$p = "SELECT points FROM users WHERE username = '$username'";
+$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
+while($row = mysqli_fetch_assoc($result1)) {
+	$points = $row["points"];
+}
+$tp = "SELECT totalPoints FROM users WHERE username = '$username'";
+$result = mysqli_query($link, $tp);//"SELECT points FROM users WHERE username = $username";
+while($row = mysqli_fetch_assoc($result)) {
+	$totalPoints = $row["totalPoints"];
+}
+if($totalPoints < 100){
+    $rank = "Noob";
+    $total = 100;
+} else if($totalPoints >= 100 && $totalPoints < 200){                            
+    $rank = "Novice";
+    $total = 200;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 200 && $totalPoints < 400){
+    $rank = "Experienced";
+    $total = 400;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 400 && $totalPoints < 800){
+    $rank = "Specialist";
+    $total = 800;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 800 && $totalPoints < 1600){
+    $rank = "Expert";
+    $total = 1600;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 1600 && $totalPoints < 3200){
+    $rank = "Bada**";
+    $total = 3200;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 3200 && $totalPoints < 6400){
+    $rank = "Noble";
+    $total = 6400;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 6400 && $totalPoints < 12800){
+    $rank = "Spartan";
+    $total = 12800;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 12800 && $totalPoints < 25600){
+    $rank = "Legend";
+    $total = 25600;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 25600 && $totalPoints < 52000){
+    $rank = "Game Game Junkie";
+    $total = 52000;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else if($totalPoints >= 52000 && $totalPoints < 104000){
+    $rank = "Godsent";
+    $total = 104000;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+} else {
+    $rank = "INSANE";
+    $total = 208000;
+    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
+        mysqli_query($link, $sql1);
+}  
+
+function hasBg() {
+  if ($ownBg = 1) {
+    echo '$ownBg';
+  } else {
+    echo '$ownBg';
+  }
+}
+function hasImg() {
+  if ($ownImg = 1) {
+    echo true;
+  } else {
+    echo false;
+  }
+}
+function hasTrail() {
+  if ($ownTrail = 1) {
+    echo true;
+  } else {
+    echo false;
+  }
+}
+$_SESSION['secure'] = $secure;
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- Optimal Internet Explorer compatibility -->
+  
+   <!-- For facebook share button -->
+  <meta property="og:url" content="https://mms-gaming.com/Car-Games.php" />
+  <meta property="og:type"  content="website" />
+  <meta property="og:title" content="Play Car Games for Free with Friends [Racing Gaming]" />
+  <meta property="og:description" content="Play online car games for free with friends, such as Madalin Stunt Cars 2, and receive points to spend in my store. Best Racing Fun @ MM's Gaming Co!" />
+  <meta property="og:image" content="https://mms-gaming.com/MM.png" />
+  <!--- ----->
+
+    <title>Profile Page for MM's Gaming Co. [Account Information]</title>
+    <meta name="description" content="Check your account profile information, and update any incorrect data on this page for MM's Gaming Co.">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="basic.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="canonical" href="https://mms-gaming.com/profile.php">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+
+
+    <script type="text/javascript">
+    function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+
+//mouse follow
+$(document).mousemove(function(e){
+      $(".pointer").css({left:(window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft), top:(window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop)});
+    });
+/////////////////
+
+//=========================================================================================================//
+  (function($){
+    var initialContainer = $('.columns'),
+        columnItems = $('.columns li'),
+        columns = null,
+        column = 1; // account for initial column
+    function updateColumns(){
+        column = 0;
+        columnItems.each(function(idx, el){
+            if (idx !== 0 && idx > (columnItems.length / columns.length) + (column * idx)){
+                column += 1;
+            }
+            $(columns.get(column)).append(el);
+        });
+    }
+    function setupColumns(){
+        columnItems.detach();
+        while (column++ < initialContainer.data('columns')){
+            initialContainer.clone().insertBefore(initialContainer);
+            column++;
+        }
+        columns = $('.columns');
+    }
+
+    $(function(){
+        setupColumns();
+        updateColumns();
+    });
+})(jQuery);
+//======================================================================================================//
+
+
+    //Column layout=====================================================================================//
+var bgBuy = document.getElementById("bgBuy");
+var bgSelect = document.getElementById("bgSelect");
+var bgImgBuy = document.getElementById("bgImgBuy");
+var bgImgSelect = document.getElementById("bgImgSelect");
+var circleBuy = document.getElementById("circleBuy");
+var circleSelect = document.getElementById("circleSelect");
+var points = document.getElementById("points");
+var bodyColor = document.getElementById("body");
+
+<?php
+        if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+            
+        } else {
+
+    echo "var custom = { ";
+            echo "Points  : '$points', ";
+            echo "BgColor : '$bgColor', ";
+            echo "Trail   : '$TrailC', ";
+            echo "BgImg   : '$bgImg', ";
+            echo "Cursor  : '$cursor', ";
+            echo "Font    : '$font', ";
+            echo "Donor   : '$isDonor', ";
+            echo "hasTrail: '$ownTrail', ";
+            echo "hasBg   : '$ownBg', ";
+            echo "hasImg  : '$ownImg'";
+            echo "};";
+        }?>
+</script>
+
+
+
+</head>
+
+<style type="text/css">
+
+body {
+  cursor: <?php include 'loadCursor.php'; ?>;
+  font-family: <?php include 'loadFont.php'; ?>;
+}
+
+.pointer{
+  background: <?php include "loadTrail.php";?>;
+  border: 1px solid <?php include "loadTrail.php";?>;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: black;
+  display: left;
+  padding: 50px 20px;
+  height: 100%;
+  width:auto;
+  overflow-x: auto;
+}
+
+.green {
+  color: #00fffb;
+}
+
+.green:visited {
+  color: #00fffb;
+}
+
+.green:hover, .green:active, .green:focus {
+  color: #000000;
+}
+
+.yellow {
+  color: #002BEB;
+}
+
+.yellow:visited {
+  color: #002BEB;
+}
+
+.yellow:hover, .yellow:active, .yellow:focus {
+  color: #000000;
+}
+
+.blue {
+  color: #0025CC;
+}
+
+.blue:visited {
+  color: #0025CC;
+}
+
+.blue:hover, .blue:active, .blue:focus {
+  color: #000000;
+}
+
+.orange {
+  color: #0023BD;
+}
+
+.orange:visited {
+  color: #0023BD;
+}
+
+.orange:hover, .orange:active, .orange:focus {
+  color: #000000;
+}
+
+.col-lg-10{
+  column-count:4;
+}
+
+.col-lg-12{
+  column-count:4;
+}
+
+.col-lg-14{
+    column-count:1;
+}
+
+#logo { min-width: 50%;
+    width:50%;
+}
+
+#rightHd {
+    width: 66.6%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.heading1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    top:0;
+    left:0;
+    padding-bottom: 10px;
+}
+
+.noGoogle > .google-auto-placed {
+display:none !important;
+}
+.adsbygoogle {
+    width: 85%;
+    }
+
+.info {
+    float:left;
+  font-size: 18px;
+  text-align: left;
+  justify-content: left;
+  height: 100%;  
+  width: 33.3%;
+  margin-left: 0px;
+  padding: 12px;
+  left:0;
+}
+
+.logo {
+    float:left;
+  text-align: center;
+  align-items:center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 10px 0;
+}
+.ctrlBtns {
+    float:left;
+  text-align: right;
+  align-items: right;
+  height: 100%; 
+  width: 50%; 
+  margin: 10px 0;
+}
+
+div.meter {
+    width:275px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    position: -webkit-sticky; /* Safari */  
+position: sticky;
+    width: 100%;
+    z-index: 1;
+    top: 0px;
+  left: 0px;
+  background-color: #333;
+  overflow: hidden;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+.topnav button {
+  float: left;
+  display: block;
+  background-color: #333;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tablink {
+} 
+
+/* Add a color to the active/current link */
+a.tablink:active {
+  color: black;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.fb-share-button {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    top: 15px;
+    left: 0px;
+}
+
+#sep {border-bottom: dashed; border-width: 5px;}
+
+.footer {position: static; margin-top: -48px;}
+
+@media screen and (max-width: 1240px) {
+
+    #heading1 {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+    
+    #rightHd{
+        width: 100%;
+    }
+    
+    #logo{width: 66.6%;float: left;
+        display: inline;
+        align-items:right;
+        justify-content:right;
+        text-align:right;}
+    #info { width: 50%;}
+    
+    .info {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+    .ctrlBtns {
+        display: inline;
+        float: left;
+        width:33.3%;
+    }
+    
+  .col-lg-10{
+    column-count:3;
+  }
+
+  .col-lg-12{
+    column-count:3;
+  }
+}
+
+@media screen and (max-width: 916px) {
+    .ctrlBtns {
+        width:45%;
+    }
+    
+    #logo{
+        width: 55%;
+    }
+    
+    #info { width: 50%;}
+    
+    .adsbygoogle {
+    width: 600px;
+    }
+}
+
+@media screen and (max-width: 898px) {
+    
+        .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    padding: 15px;
+    float: right;
+    display: block;
+  }
+  
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25%;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    width: 75%;
+  }
+  
+  .topnav.responsive div {
+    float: none;
+    display: block;
+    width: 75%;
+    top: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+    
+}
+
+@media screen and (max-width: 800px) {
+    
+    .ctrlBtns {
+        width:50%;
+    }
+    
+    #logo{
+        width: 50%;
+    }
+    
+    #info { width: 50%;}
+
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+  .col-lg-10{
+    column-count:2;
+  }
+
+  .col-lg-12{
+    column-count:2;
+  }
+}
+
+@media screen and (max-width: 620px) {
+    #logo {
+        width:; 50%;
+    }
+
+    .col-lg-10{
+    column-count:1;
+  }
+    
+    .col-lg-12{
+        column-count:1;
+    }
+    
+        .info {
+        width: 100%;
+        display: block;
+        align-items: baseline;
+        text-align: left;
+    }
+    
+    .logo {
+        width: 100%;
+        left: 50%;
+        display: block;
+        align-items: center;
+        text-align: center;
+        vertical-align: left;
+    }
+    
+    .footer {
+        display:inline-block;
+        height: auto;
+    }
+    
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .tablink {
+        width: 100%;
+    }
+}
+
+#tabs {height: 100%;}
+#Home {background-color: transparent; height: auto;}
+#MyGames {background-color: #009E00; height: auto;}
+#Store {background-color: cyan; height: auto;}
+#About {background-color: orange; height: auto;}
+
+td {
+  position: relative;
+  word-wrap: break-word;
+  text-align: center;
+  vertical-align: top;
+  font-size: 24px;
+}
+
+#myStore {
+  height: 75px; 
+  width: 1020px; 
+  table-layout: fixed;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  width: 90%;
+  line-height: 200%;
+}
+
+ul {
+    height:100%;
+}
+
+.col-lg-10, .col-lg-12, .col-lg-14 {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.col-lg-12 {
+  text-decoration: underline;
+}
+
+.bestGames {
+    width:65%;
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+}
+
+ol {
+    column-count:1;
+    float: left;
+    text-align: center;
+    align-items:center;
+    width:100%;
+}
+
+ol li {
+    display: inline-block;
+    width:100%;
+}
+
+ol a {
+    text-decoration:underline;
+}
+
+.bgO {
+    width:90%;
+    height: auto;
+    background-color: #FFC675;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.bgY {
+    width:90%;
+    height: auto;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 20px;
+    margin: 15px;
+}
+
+.bgB {
+    width:90%;
+    height: 100%;
+    background-color: #8affff;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.bgG {
+    width:90%;
+    height: auto;
+    background-color: #32e34a;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+}
+
+.button {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px;
+    padding: 12px 24px;
+    border: 1px solid #113fd8;
+    border-radius: 25px;
+    background: #2076ff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#2076ff), to(#113fd8));
+    background: -moz-linear-gradient(top, #2076ff, #113fd8);
+    background: linear-gradient(to bottom, #2076ff, #113fd8);
+    -webkit-box-shadow: #268eff 0px 0px 40px 0px;
+    -moz-box-shadow: #268eff 0px 0px 40px 0px;
+    box-shadow: #268eff 0px 0px 40px 0px;
+    text-shadow: #0a257f 1px 1px 1px;
+    font: normal normal bold 20px arial;
+    color: #ffffff;
+    text-decoration: none;
+}
+.button:hover,
+.button:focus {
+    border: 1px solid ##144afe;
+    background: #268eff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#268eff), to(#144cff));
+    background: -moz-linear-gradient(top, #268eff, #144cff);
+    background: linear-gradient(to bottom, #268eff, #144cff);
+    color: #ffffff;
+    text-decoration: none;
+}
+.button:active {
+    background: #113fd8;
+    background: -webkit-gradient(linear, left top, left bottom, from(#113fd8), to(#113fd8));
+    background: -moz-linear-gradient(top, #113fd8, #113fd8);
+    background: linear-gradient(to bottom, #113fd8, #113fd8);
+}
+
+.accountInfo {
+    width: 100%;
+    height: 100%;
+    columns: 2;
+    -webkit-columns: 2;
+  -moz-columns: 2;
+  justify-content: left;
+    align-items: left;
+    text-align: left;
+    display: inline-block;
+}
+
+.accountInfo h2 {
+    float: left;
+}
+
+.accountInfo p {
+    float: left;
+    font-size: 22px;
+}
+
+.data {
+    display: block;
+    width: 100%;
+}
+
+.footer{
+    margin-top: 50px;
+    position: static;
+}
+
+<?php
+$useragent=$_SERVER['HTTP_USER_AGENT'];
+if(preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i',$useragent)||preg_match('/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i',substr($useragent,0,4))) {
+    echo '.topnav {position: static;}
+    .topnav div {display: none;}
+    .footer {position: static; margin-top: 0px; bottom: 50px;}';
+}
+?>
+
+</style>
+
+<?php
+if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+    echo '<style type="text/css">.info{display: none;} #logo { min-width: 60%; width:60%; align-items: right; text-align: right;}
+    #rightHd { width: 100%;} .ctrlBtns {width: 40%;}</style>';
+} else {
+}
+?>
+<body id="body" style="background-color: <?php include "loadBg.php"; ?>;">
+    
+<main id="page-container">
+    <div class="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0"></script>
+        
+   <div id="content-wrap">
+<div class="noGoogle">
+    
+  <div id="trail" class="trail" style="disa">
+    <div class="pointer pointer1"></div>
+    <div class="pointer pointer2"></div>
+    <div class="pointer pointer3"></div>
+    <div class="pointer pointer4"></div>
+    <div class="pointer pointer5"></div>
+  </div>
+    	
+        <div id="heading1" class="heading1">
+        <div id="info" class="info">
+        <h3><b><?php if($isDonor){echo "Donor";}else{echo "Gamer";} ?>:</b> <span id="Gamer"><a href="profile.php"><?php echo htmlspecialchars($username); ?></a></span></h3>
+        <h4><b>Rank:</b> <span id="Rank"><?php echo htmlspecialchars($rank); ?></span></h4>
+        <h4><b>Points:</b> <span id="points" class="pointCount"><?php echo $points; ?></span></h4>
+        <div class="Progress"><b>Next Rank:</b> <div id="pntCount" class="pointCount"><?php if($total == 100){
+        																				echo $totalPoints;
+        																			 }else{echo ($totalPoints - ($total/2));}?>	
+        																			 </div>/<div id="total" class="total"><?php if($total == 100){
+        																				echo $total;}else{echo ($total-($total/2));} ?></div>
+          <div class="meter">
+  			<span id="myBar" style="width: <?php if($total == 100){echo $totalPoints;}
+  				else{echo ((($totalPoints - ($total/2))/($total/2)) * 100);}?>%"></span>
+		      </div>
+		    </div>
+        </div>
+    <div id="rightHd">
+        <div class="ctrlBtns" align="right">
+	 	    <p style="width: 100%;" align="right">
+	 	    <?php
+            if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
+               echo '<a href="register.php" class="btn btn-success" style="width: 125px;">Sign Up!</a>&nbsp;';
+                echo '<a href="login.php" class="btn btn-warning" style="width: 125px;">Login!</a>';
+            } else {
+             echo '<a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>&nbsp;';
+             echo '<a href="logout.php" class="btn btn-danger">Sign Out</a>';
+            }
+            ?>
+    	    </p>
+    	</div>
+        <div id="logo" class="logo" align="center">
+         <picture>
+            <source srcset="MMsGCoo.webp" type="image/webp">
+            <source srcset="MMsGCoo.jp2" type="image/jp2">
+	  	    <a href="index.php" ><img src="MMsGCoo.png" alt="The logo of MMs Gaming company, meant to look like a controller and the letters 'MM'" title="MMs Gaming Logo" style="max-width:100%;max-height:300px;" vspace="0"></a>
+	     </picture>
+	    </div>
+	 </div>
+	 
+    </div>
+    <br>
+    <header class="topnav" id="myTopnav">
+        <a class="tablink" href="index.php">Home</a>
+        <a class="tablink" href="Free-Games.php">Games</a>
+        <a class="tablink" href="Unity-Games.php">My Games</a>
+        <a class="tablink" href="Store.php">Store</a>
+        <a class="tablink" href="Scoreboard.php">Scoreboard</a>
+        <a class="tablink" href="blog">Blog</a>
+        <a class="tablink" href="about.php">About</a>
+        <div class="fb-share-button" data-href="https://mms-gaming.com/Car-Games.php" data-layout="button_count" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fmms-gaming.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+    </header>
+    </div>
+<br>
+	<center>
+<div class="bgY">
+    <h1>Account Information</h1>
+    <?php 
+    if(isset($_GET["update"])) {
+        if ($_GET["update"] == "success") {
+            echo '<br><p class="changed">E-mail updated!</p>';
+        } elseif ($_GET["update"] == "fail") {
+            echo '<br><p class="changed">E-mail is invalid!</p>';
+        } 
+    }
+?>
+    <div class="accountInfo" align="left">
+        <div class="data">
+        <h2>Username:</h2> <p><?php echo htmlspecialchars($username); ?></p>
+        </div>
+        <div class="data">
+        <h2>Email:</h2> <p><?php echo htmlspecialchars($email); ?></p>
+        <form method="post" action="changeEmail.inc.php">
+            <label>Update Email:</label><br>
+            <input type="hidden" name="uid" value="<?php echo $id; ?>">
+            <input type="text" name="newEmail" placeholder="Enter new e-mail..."><br><br>
+            <span class="help-block"><?php echo $email_err; ?></span>
+            <button type="submit" name="emailSubmit">Change</button>
+        </form>
+        </div>
+        <div class="data">
+        <h2>Rank:</h2> <p><?php echo htmlspecialchars($rank); ?></p>
+        </div>
+        <div class="data">
+        <h2>Points:</h2> <p><?php echo $points; ?></p>
+        </div>
+        <div class="data">
+        <h2>Total Points:</h2> <p><?php echo $totalPoints; ?></p>
+        </div>
+        <div class="data">
+        <h2>Background Color:</h2> <p><?php echo $bgColor; ?></p>
+        </div>
+        <div class="data">
+        <h2>Trail Color:</h2> <p><?php echo $TrailC; ?></p>
+        </div>
+        <div class="data">
+        <h2>Background Image:</h2> <p><?php if($ownImg){echo "Own Item!";}else { echo "Don't own Item!";} ?></p>
+        </div>
+        <div class="data">
+        <h2>Cursor:</h2> <p><?php if($ownCursor){echo "Own Item!";}else { echo "Don't own Item!";} ?></p>
+        </div>
+        <div class="data">
+        <h2>Status:</h2> <p><?php if($isDonor){echo "Donor";}else{echo "Gamer";} ?></p>
+        </div>
+        <div class="data">
+        <h2>Font:</h2> <p><?php echo $font; ?></p>
+        </div>
+    </div>
+</div>
+<br>
+
+<script defer src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- square -->
+<ins class="adsbygoogle"
+     style="display:block; width: 90%;"
+     data-ad-client="ca-pub-8251399081266327"
+     data-ad-slot="9538800012"
+     data-ad-format="horizontal"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</center>
+
+</div>
+<footer id="gradient" class="footer">
+  <span class="alignLeft">© 2019-2024 MM's Gaming Community LLC. All Rights Reserved.</span><span class="alignRight"><a href="sitemap.xml">Sitemap</a> | <a href="terms.html">Terms & Conditions</a> | <a href="privacyPolicy.html">Privacy Policy</a> | <a href="contactform.htm">Contact Me!</a></span>
+</footer>
+</main>
+
+</body>
+
+</html>
