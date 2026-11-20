@@ -40,8 +40,9 @@ for (const who of ['guest', 'player']) {
           await login(request, name);
         }
         const res = await request.get(`/${page}`, { maxRedirects: 0 });
-        // verify-email.php without a link correctly answers 400 ("This link didn't work").
-        const okStatuses = page === 'verify-email.php' ? [400] : [200, 301, 302];
+        // Pages that need something in the address correctly refuse without it:
+        // verify-email.php needs a link (400), game.php needs a game (404).
+        const okStatuses = { 'verify-email.php': [400], 'game.php': [404] }[page] || [200, 301, 302];
         expect(okStatuses, `HTTP status for ${page}`).toContain(res.status());
         const body = await res.text();
         const match = body.match(PHP_ERROR);

@@ -96,3 +96,34 @@ CREATE TABLE email_verifications (
   UNIQUE KEY selector (selector),
   KEY user_id (user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE unity_games (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  slug varchar(50) NOT NULL,
+  title varchar(100) NOT NULL,
+  tagline varchar(255) NOT NULL DEFAULT '',
+  description text,
+  how_to_play text,
+  controls text,
+  tips text,
+  thumbnail varchar(255) NOT NULL DEFAULT '',
+  play_type varchar(20) NOT NULL DEFAULT 'unity',
+  build_path varchar(255) NOT NULL DEFAULT '',
+  build_name varchar(100) NOT NULL DEFAULT '',
+  build_ext varchar(20) NOT NULL DEFAULT '',
+  template_path varchar(255) NOT NULL DEFAULT '',
+  streaming_assets varchar(255) NOT NULL DEFAULT '',
+  embed_url varchar(500) NOT NULL DEFAULT '',
+  width int NOT NULL DEFAULT 960,
+  height int NOT NULL DEFAULT 600,
+  steam_url varchar(255) NOT NULL DEFAULT '',
+  itch_url varchar(255) NOT NULL DEFAULT '',
+  xbox_url varchar(255) NOT NULL DEFAULT '',
+  app_store_url varchar(255) NOT NULL DEFAULT '',
+  play_store_url varchar(255) NOT NULL DEFAULT '',
+  privacy_url varchar(255) NOT NULL DEFAULT '',
+  meta_description varchar(300) NOT NULL DEFAULT '',
+  published tinyint NOT NULL DEFAULT 1,
+  sort_order int NOT NULL DEFAULT 0,
+  UNIQUE KEY slug (slug)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

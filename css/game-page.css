@@ -1,0 +1,399 @@
+/* Styles shared by every game page (game.php). Moved from the game pages' inline CSS.
+   Per-player parts (cursor, font, trail colour) stay in game.php. */
+/* Set height of body and the document to 100% to enable "full page tabs" */
+html{
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+body {
+  cursor: auto;
+  background-color: #38b6ff;
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+.pointer{
+  background: none;
+  border: 1px solid transparent;
+}
+
+#logo { width: 50%;}
+
+#rightHd {
+    width: 66.6%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.heading1 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    text-align:center;
+    top:0;
+    left:0;
+    padding-bottom: 10px;
+}
+
+.info {
+    float:left;
+  font-size: 18px;
+  text-align: left;
+  justify-content: left;
+  height: 100%;  
+  width: 33.3%;
+  margin-left: 0px;
+  padding: 12px;
+  left:0;
+}
+
+div.meter {
+    width:275px;
+}
+
+.logo {
+    float:left;
+  text-align: center;
+  align-items:center;
+  justify-content: center;
+  max-width: 100%;
+  margin: 10px 0;
+}
+.ctrlBtns {
+    float:left;
+  text-align: right;
+  align-items: right;
+  height: 100%; 
+  width: 50%; 
+  margin: 10px 0;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  width: 100%;
+  line-height: 200%;
+}
+
+.heading1 > .google-auto-placed {
+display:none !important;
+}
+
+.footer2 {
+            display: block;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 3rem;
+            background-color: gray;
+            color: black;
+            padding: 5px;
+        }
+        .alignLeft {
+            float: left;
+        }
+        .alignRight {
+            float: right;
+        }
+        #gradient {
+            background-image: linear-gradient(
+                to top right, 
+                #a7fbfc, #ff80bd
+                );
+        }
+        
+        #bookmark-this {
+  padding: 25px 10px;
+  background-color: #ec971f;
+  border: 1px solid #eea236;
+  font-size: 12px;
+  color: #fff;
+  vertical-align: center;
+  text-decoration: none;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .2);
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+}
+
+#bookmark-this:hover {
+  background-color: #f0ad4e;
+  border: 1px solid #d58512;
+  text-decoration: none;
+}
+
+#bookmark-this:active {
+  background-color: #ec971f;
+  border: 1px solid #d58512;
+  -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    position: -webkit-sticky; /* Safari */  
+position: sticky;
+    width: 100%;
+    z-index: 1;
+    top: 0px;
+  left: 0px;
+  background-color: #333;
+  overflow: hidden;
+  align-items:center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+.topnav button {
+  float: left;
+  display: block;
+  background-color: #333;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px;
+  text-decoration: none;
+  font-size: 17px;
+  vertical-align: center;
+  height: 64px;
+  width: 134px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #4CAF50;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.tablink {
+} 
+
+/* Add a color to the active/current link */
+a.tablink:active {
+  color: black;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+.fb-share-button {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    top: 15px;
+    left: 0px;
+}
+
+@media screen and (max-width: 938px) {
+    
+        .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    padding: 15px;
+    float: right;
+    display: block;
+  }
+  
+  .topnav.responsive {position: relative;}
+  .topnav.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 25%;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    width: 75%;
+  }
+  
+  .topnav.responsive div {
+    float: none;
+    display: block;
+    width: 75%;
+    top: 0px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+    
+}
+
+@media screen and (max-width: 1222px) {
+    
+    #heading1 {
+        display:flex;
+        flex-direction: column-reverse;
+    }
+    
+    #rightHd{
+        width: 100%;
+    }
+    
+    #logo{width: 66.6%;float: left;
+        display: inline;
+        align-items:right;
+        justify-content:right;
+        text-align:right;}
+    #info { width: 50%;}
+    
+    .info {
+        display: block;
+        float: none;
+        width: 100%;
+    }
+    .ctrlBtns {
+        display: inline;
+        float: left;
+        width:33.3%;
+    }
+}
+
+@media screen and (max-width: 916px) {
+    .ctrlBtns {
+        width:45%;
+    }
+    
+    #logo{
+        width: 55%;
+    }
+    
+    #info { width: 50%;}
+}
+
+@media screen and (max-width: 800px) {
+    
+    .ctrlBtns {
+        width:50%;
+    }
+    
+    #logo{
+        width: 50%;
+    }
+    
+    #info { width: 50%;}
+
+    .footer2 {
+        display:inline-block;
+        height: auto;
+    }
+
+    .alignLeft {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    .alignRight {
+        width: 100%;
+        display: inline-block;
+        justify-contents: center;
+        align-items: center;
+        text-align: center;
+    }
+    
+}
+
+@media screen and (max-width: 620px) {
+    
+    #info { width: 50%;}
+
+    .info {
+        width: 100%;
+        display: block;
+        align-items: baseline;
+        text-align: left;
+    }
+    
+    .logo {
+        width: 100%;
+        left: 50%;
+        display: block;
+        align-items: center;
+        text-align: center;
+        vertical-align: left;
+    }
+    
+}
+
+#sep {border-bottom: dashed; border-width: 5px;}
+
+#game {
+  border: dashed;
+  border-width: 5px;
+  width: 1025px;
+  height: 700px;
+  padding-top: 5px;
+}
+
+.desc-box {
+    width:90%;
+    height: auto;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+    align-items: left;
+    text-align: left;
+}
+
+kbd {
+    background-color: #eee;
+    border-radius: 3px;
+    border: 1px solid #b4b4b4;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .2), 0 2px 0 0 rgba(255, 255, 255, .7) inset;
+    color: #333;
+    display: inline-block;
+    font-size: .85em;
+    font-weight: 700;
+    line-height: 1;
+    padding: 2px 4px;
+    white-space: nowrap;
+   }
+
+   p {
+    font-size: 16px;
+}
+
+.adsbygoogle {
+    width: 85%;
+    }
+
+
+
+/* Intro box above the game: logo, title, tagline, store buttons. */
+.paddle-box {
+    width: 90%;
+    height: auto;
+    background-color: white;
+    border: solid black 1px;
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px;
+    text-align: center;
+}
+.store-badge { display: inline-block; margin: 6px; vertical-align: middle; }

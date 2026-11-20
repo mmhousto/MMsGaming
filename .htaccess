@@ -8,7 +8,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 # Developer files are deployed with the site but must not be public:
 # tests, database schema, CI config and dotfiles like .gitignore / .user.ini
-RewriteRule ^(tests|db|templates|\.github|node_modules)(/|$) - [R=404,L]
+RewriteRule ^(tests|db|docs|templates|\.github|node_modules)(/|$) - [R=404,L]
 RewriteRule (^|/)(package(-lock)?\.json|\.git[^/]*|\.user\.ini)$ - [R=404,L]
 
 
