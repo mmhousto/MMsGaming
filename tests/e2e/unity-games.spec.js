@@ -110,7 +110,7 @@ test('Retro Space Ball shows its itch.io build in a frame', async ({ request }) 
   expect(body).toContain('<iframe src="https://v6p9d9t4.ssl.hwcdn.net/html/2032191/WebGL_b1.2.0/index.html"');
 });
 
-test('My Games lists every published game from the table, and only those', async ({ request }) => {
+test('Our Games lists every published game from the table, and only those', async ({ request }) => {
   const body = await (await request.get('/Unity-Games.php')).text();
   const list = body.match(/<ul[^>]*id="my-games-list">([\s\S]*?)<\/ul>/)[1];
   for (const slug of ['Imprecision', 'HGWK', 'Gravity-Balls', 'ZombCube', 'Magnet-Destroyer', 'RetroSpaceBall']) {
@@ -120,4 +120,35 @@ test('My Games lists every published game from the table, and only those', async
   // Shown in sort order: Imprecision (5) before HGWK (10) before Paddle Balls (20).
   expect(list.indexOf('/Imprecision/')).toBeLessThan(list.indexOf('/HGWK/'));
   expect(list.indexOf('/HGWK/')).toBeLessThan(list.indexOf('/Gravity-Balls/'));
+});
+
+test.describe('our games come first', () => {
+  test('the homepage opens with a "Play Our Games" card for every published game', async ({ request }) => {
+    const body = await (await request.get('/index.php')).text();
+    const showcase = body.indexOf('id="our-games"');
+    expect(showcase).toBeGreaterThan(-1);
+    // Before the studio/pricing introduction.
+    expect(showcase).toBeLessThan(body.indexOf("WELCOME TO MM's GAMING COMMUNITY"));
+    const section = body.slice(showcase, body.indexOf('</section>', showcase));
+    for (const slug of ['Imprecision', 'HGWK', 'Gravity-Balls', 'ZombCube', 'Magnet-Destroyer']) {
+      expect(section, slug).toContain(`class="showcase-card" href="/${slug}/"`);
+    }
+    expect(section).not.toContain('TestHiddenGame');
+    // Store-only games say "Get it", playable ones "Play".
+    expect(section).toMatch(/href="\/Imprecision\/"[\s\S]*?Get it/);
+    expect(section).toMatch(/href="\/ZombCube\/"[\s\S]*?>Play</);
+  });
+
+  test('the Games page starts with a strip of our own games', async ({ request }) => {
+    const body = await (await request.get('/Free-Games.php')).text();
+    expect(body).toContain('class="showcase showcase-compact" id="our-games"');
+    expect(body).toContain('OUR OWN GAMES');
+  });
+
+  test('the menu lists Our Games before the third-party Games', async ({ request }) => {
+    const body = await (await request.get('/Store.php')).text();
+    const menu = body.match(/<header class="topnav"[\s\S]*?<\/header>/)[0];
+    expect(menu.indexOf('>Our Games<')).toBeLessThan(menu.indexOf('>Games<'));
+    expect(menu.indexOf('>Home<')).toBeLessThan(menu.indexOf('>Our Games<'));
+  });
 });

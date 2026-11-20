@@ -15,7 +15,7 @@ if ($game === null) {
     http_response_code(404);
     echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Game not found</title></head>'
         . '<body style="font-family: Arial; background-color: #38b6ff; text-align: center; padding: 60px 16px;">'
-        . '<h1>Game not found</h1><p><a href="/Unity-Games.php">See all my games</a></p></body></html>';
+        . '<h1>Game not found</h1><p><a href="/Unity-Games.php">See all our games</a></p></body></html>';
     exit;
 }
 
@@ -187,7 +187,7 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
 <br>
 <div class="desc-box" align="center" style="text-align: center;">
     <h4 style="text-align: center;"><font size="+3"><strong>More Games</strong></font></h4>
-    <a class="button" href="/Unity-Games.php">My Games</a>
+    <a class="button" href="/Unity-Games.php">Our Games</a>
     <a class="button" href="/IO-Games.php">IO Gaming</a>
     <a class="button" href="/Strategy-Games.php">Strategy Gaming</a>
     <a class="button" href="/Multiplayer-Games.php">Multiplayer Gaming Online</a>

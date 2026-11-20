@@ -886,7 +886,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     
  <div class="bgW">
      
- <h1 style="text-align: center;"><font size="+5"><strong>Unity Games</strong></font></h1>
+ <h1 style="text-align: center;"><font size="+5"><strong>Our Games</strong></font></h1>
 <p style="text-align: left;"><font size="+3">Play games developed & published by MM's Gaming Community LLC! These are Unity games I have made/worked on:</font></p><br/>
     <ul style="display: flex; list-style-type: none;" id="my-games-list">
 <?php foreach (unity_games_published($link) as $mmsgGame) { ?>
