@@ -45,6 +45,7 @@ $canonical = 'https://mms-gaming.com/' . rawurlencode($game['slug']) . '/';
     <title><?php echo e($pageTitle); ?></title>
     <meta name="description" content="<?php echo e($game['meta_description'] ?: $game['tagline']); ?>">
     <link rel="canonical" href="<?php echo e($canonical); ?>">
+    <?php echo seo_game_json_ld($game, $canonical, $storeLinks); ?>
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">

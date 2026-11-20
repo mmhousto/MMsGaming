@@ -219,5 +219,9 @@ function csrf_protect(): void
             . '<p><a href="/index.php">Back to MM\'s Gaming</a></p></body></html>';
         exit;
     }
-    ob_start('csrf_inject_forms');
+    // One output filter for every page: form tokens, then search/social tags (lib/seo.php).
+    ob_start(function (string $html): string {
+        $html = csrf_inject_forms($html);
+        return function_exists('seo_enrich_head') ? seo_enrich_head($html) : $html;
+    });
 }

@@ -62,4 +62,5 @@ require_once __DIR__ . '/lib/accounts.php';
 require_once __DIR__ . '/lib/verify.php';
 require_once __DIR__ . '/lib/unity-games.php';
 require_once __DIR__ . '/lib/donations.php';
+require_once __DIR__ . '/lib/seo.php';
 csrf_protect();

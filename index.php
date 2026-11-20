@@ -109,6 +109,15 @@ $_SESSION['secure'] = $secure;
     <link rel="stylesheet" href="basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="canonical" href="https://mms-gaming.com/">
+    <?php echo seo_json_ld([
+        '@context' => 'https://schema.org',
+        '@graph' => [
+            ['@type' => 'Organization', '@id' => SITE_URL . '/#org', 'name' => SITE_NAME, 'url' => SITE_URL . '/',
+             'logo' => SITE_URL . SITE_DEFAULT_IMAGE, 'sameAs' => ['https://discord.gg/BvEqRUh']],
+            ['@type' => 'WebSite', '@id' => SITE_URL . '/#site', 'name' => SITE_NAME, 'url' => SITE_URL . '/',
+             'publisher' => ['@id' => SITE_URL . '/#org']],
+        ],
+    ]); ?>
     
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>

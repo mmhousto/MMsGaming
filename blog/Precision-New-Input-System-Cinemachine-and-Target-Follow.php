@@ -92,7 +92,7 @@ $_SESSION['secure'] = $secure;
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
     <link rel="manifest" href="../site.webmanifest">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <link rel="canonical" href="https://mms-gaming.com/blog/Precision-New-Input-System-Cinemachine-and-Follow-Target.php">
+    <link rel="canonical" href="https://mms-gaming.com/blog/Precision-New-Input-System-Cinemachine-and-Target-Follow.php">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script> 

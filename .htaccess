@@ -11,6 +11,9 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteRule ^(tests|db|docs|templates|\.github|node_modules)(/|$) - [R=404,L]
 RewriteRule (^|/)(package(-lock)?\.json|\.git[^/]*|\.user\.ini)$ - [R=404,L]
 
+# The sitemap is built from the site itself (sitemap.php).
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 
 </IfModule>
 
