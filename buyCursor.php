@@ -1,41 +1,17 @@
 <?php
-    session_start(); 
-    require_once "config.php";
+session_start();
+require_once "config.php";
+require_login_post();
 
-    $ownCursor = $_SESSION['ownCursor'];   
-    $id = $_SESSION['id']; 
-    $username = $_SESSION['username'];
-    $points = $_SESSION['points'];
-
-$p = "SELECT points FROM users WHERE username = '$username'";
-$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
-while($row = mysqli_fetch_assoc($result1)) {
-	$points = $row["points"];
-}
-$oc = "SELECT ownCursor FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $oc);
-while($row = mysqli_fetch_assoc($result2)) {
-	$ownCursor = $row["ownCursor"];
-}
-
-if ($points >= 1000 && $ownCursor == 0) {
-$points = $points - 1000;
-$sql2 = "UPDATE users SET points = '$points' WHERE username = '$username'";
-mysqli_query($link, $sql2) or die('Error querying database.');
-
-$ownCursor = 1;
-$sql = "UPDATE custom SET ownCursor = '$ownCursor' WHERE UID = '$id'";
-mysqli_query($link, $sql) or die('Error querying database.');
-
-header("location: index.php");
-}else if ($ownCursor == 1) {
+$result = buy_item($link, (int) $_SESSION['id'], 'ownCursor', 1000);
+if ($result === 'ok') {
+	$_SESSION['ownCursor'] = 1;
+	header("location: index.php");
+} else if ($result === 'owned') {
 	echo '<script type="text/javascript">alert("Already Own!");</script>';
 	echo '<meta http-equiv="refresh" content="1;url=index.php">';
-}else {
+} else {
 	echo '<script type="text/javascript">alert("Not enough points!");</script>';
 	echo '<meta http-equiv="refresh" content="1;url=index.php">';
 }
 exit();
-
-
-?>

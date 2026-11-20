@@ -5,7 +5,8 @@ require_once "config.php";
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    
+    // Guest: safe defaults for the (hidden) points bar, avoids division by zero
+    $total = 100; $totalPoints = 0; $points = 0;
 }else {
 $total = "";
 $secure = "1";
@@ -33,61 +34,61 @@ if (isset($_GET['image'])){
     $bgImg = $_GET['image'];
 }
 
-$isD = "SELECT Donor FROM custom WHERE UID = '$id'";
-$result10 = mysqli_query($link, $isD);
+$isD = "SELECT Donor FROM custom WHERE UID = ?";
+$result10 = db_query($link, $isD, [$id]);
 while($row = mysqli_fetch_assoc($result10)) {
   $isDonor = $row["Donor"];
 }
 
-$ot = "SELECT ownTrail FROM custom WHERE UID = '$id'";
-$result4 = mysqli_query($link, $ot);
+$ot = "SELECT ownTrail FROM custom WHERE UID = ?";
+$result4 = db_query($link, $ot, [$id]);
 while($row = mysqli_fetch_assoc($result4)) {
   $ownTrail = $row["ownTrail"];
 }
 
-$oi = "SELECT ownImg FROM custom WHERE UID = '$id'";
-$result3 = mysqli_query($link, $oi);
+$oi = "SELECT ownImg FROM custom WHERE UID = ?";
+$result3 = db_query($link, $oi, [$id]);
 while($row = mysqli_fetch_assoc($result3)) {
   $ownImg = $row["ownImg"];
 }
 
-$of = "SELECT ownFont FROM custom WHERE UID = '$id'";
-$result30 = mysqli_query($link, $of);
+$of = "SELECT ownFont FROM custom WHERE UID = ?";
+$result30 = db_query($link, $of, [$id]);
 while($row = mysqli_fetch_assoc($result30)) {
   $ownFont = $row["ownFont"];
 }
 
-$ob = "SELECT ownBg FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $ob);
+$ob = "SELECT ownBg FROM custom WHERE UID = ?";
+$result2 = db_query($link, $ob, [$id]);
 while($row = mysqli_fetch_assoc($result2)) {
   $ownBg = $row["ownBg"];
 }
 
-$oc = "SELECT ownCursor FROM custom WHERE UID = '$id'";
-$result5 = mysqli_query($link, $oc);
+$oc = "SELECT ownCursor FROM custom WHERE UID = ?";
+$result5 = db_query($link, $oc, [$id]);
 while($row = mysqli_fetch_assoc($result5)) {
   $ownCursor = $row["ownCursor"];
 }
 
-$bgC = "SELECT BgColor FROM custom WHERE UID = '$id'";
-$result6 = mysqli_query($link, $bgC);
+$bgC = "SELECT BgColor FROM custom WHERE UID = ?";
+$result6 = db_query($link, $bgC, [$id]);
 while($row = mysqli_fetch_assoc($result6)) {
   $bgColor = $row["bgColor"];
 }
 
-$fontf = "SELECT Font FROM custom WHERE UID = '$id'";
-$result7 = mysqli_query($link, $fontf);
+$fontf = "SELECT Font FROM custom WHERE UID = ?";
+$result7 = db_query($link, $fontf, [$id]);
 while($row = mysqli_fetch_assoc($result7)) {
   $font = $row["Font"];
 }
 
-$p = "SELECT points FROM users WHERE username = '$username'";
-$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
+$p = "SELECT points FROM users WHERE username = ?";
+$result1 = db_query($link, $p, [$username]);//"SELECT points FROM users WHERE username = $username";
 while($row = mysqli_fetch_assoc($result1)) {
 	$points = $row["points"];
 }
-$tp = "SELECT totalPoints FROM users WHERE username = '$username'";
-$result = mysqli_query($link, $tp);//"SELECT points FROM users WHERE username = $username";
+$tp = "SELECT totalPoints FROM users WHERE username = ?";
+$result = db_query($link, $tp, [$username]);//"SELECT points FROM users WHERE username = $username";
 while($row = mysqli_fetch_assoc($result)) {
 	$totalPoints = $row["totalPoints"];
 }
@@ -97,58 +98,58 @@ if($totalPoints < 100){
 } else if($totalPoints >= 100 && $totalPoints < 200){                            
     $rank = "Novice";
     $total = 200;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 200 && $totalPoints < 400){
     $rank = "Experienced";
     $total = 400;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 400 && $totalPoints < 800){
     $rank = "Specialist";
     $total = 800;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 800 && $totalPoints < 1600){
     $rank = "Expert";
     $total = 1600;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 1600 && $totalPoints < 3200){
     $rank = "Bada**";
     $total = 3200;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 3200 && $totalPoints < 6400){
     $rank = "Noble";
     $total = 6400;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 6400 && $totalPoints < 12800){
     $rank = "Spartan";
     $total = 12800;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 12800 && $totalPoints < 25600){
     $rank = "Legend";
     $total = 25600;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 25600 && $totalPoints < 52000){
     $rank = "Game Game Junkie";
     $total = 52000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 52000 && $totalPoints < 104000){
     $rank = "Godsent";
     $total = 104000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else {
     $rank = "INSANE";
     $total = 208000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 }  
 
 function hasBg() {
@@ -367,16 +368,16 @@ window.onload = function () {
   setFont();
 }
     var custom = { ";
-            echo "Points  : '$points', ";
-            echo "BgColor : '$bgColor', ";
-            echo "Trail   : '$TrailC', ";
-            echo "BgImg   : '$bgImg', ";
-            echo "Cursor  : '$cursor', ";
-            echo "Font    : '$font', ";
-            echo "Donor   : '$isDonor', ";
-            echo "hasTrail: '$ownTrail', ";
-            echo "hasBg   : '$ownBg', ";
-            echo "hasImg  : '$ownImg'";
+            echo "Points  : " . js((string) $points) . ", ";
+            echo "BgColor : " . js((string) $bgColor) . ", ";
+            echo "Trail   : " . js((string) $TrailC) . ", ";
+            echo "BgImg   : " . js((string) $bgImg) . ", ";
+            echo "Cursor  : " . js((string) $cursor) . ", ";
+            echo "Font    : " . js((string) $font) . ", ";
+            echo "Donor   : " . js((string) $isDonor) . ", ";
+            echo "hasTrail: " . js((string) $ownTrail) . ", ";
+            echo "hasBg   : " . js((string) $ownBg) . ", ";
+            echo "hasImg  : " . js((string) $ownImg);
             echo "};";
         }?>
         

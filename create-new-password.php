@@ -158,8 +158,8 @@ input::-webkit-credentials-auto-fill-button:hover {
                 if ((ctype_xdigit($selector) !== false) && (ctype_xdigit($validator) !== false)) {
                     
                     echo '<form action="resets-password.inc.php" method="post">
-                        <input type="hidden" name="selector" value="'.$selector.'">
-                        <input type="hidden" name="validator" value="'.$validator.'">
+                        <input type="hidden" name="selector" value="'.e($selector).'">
+                        <input type="hidden" name="validator" value="'.e($validator).'">
                         <input type="password" name="pwd" placeholder="Enter a new password...">
                         <input type="password" name="pwd-repeat" placeholder="Repeat new password...">
                         <button type="submit" name="reset-password-submit">Reset Password</button>

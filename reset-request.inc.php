@@ -13,8 +13,8 @@ if(isset($_POST["forgot-password"])){
 		
 	$userEmail = $_POST["user-email"];
 	
-	$sql1 = "SELECT * from users WHERE Email ='$userEmail'";
-	$result = mysqli_query($link, $sql1);
+	$sql1 = "SELECT * from users WHERE Email =?";
+	$result = db_query($link, $sql1, [$userEmail]);
 	if(mysqli_num_rows($result)>0){
 	
 	$sql = "DELETE FROM pwdReset WHERE pwdResetEmail=?;";

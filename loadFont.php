@@ -10,19 +10,20 @@
 	$ownFont = $_SESSION['ownFont'];
 	$font = $_SESSION['Font'];
 
-$of = "SELECT ownFont FROM custom WHERE UID = '$id'";
-$result1 = mysqli_query($link, $of);
+$of = "SELECT ownFont FROM custom WHERE UID = ?";
+$result1 = db_query($link, $of, [$id]);
 while($row = mysqli_fetch_assoc($result1)) {
 	$ownFont = $row["ownFont"];
 }
 
-$f = "SELECT Font FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $f);
+$f = "SELECT Font FROM custom WHERE UID = ?";
+$result2 = db_query($link, $f, [$id]);
 while($row = mysqli_fetch_assoc($result2)) {
 	$font = $row["Font"];
 }
 
-if ($ownFont == 1) {
+$font = safe_font_name($font);
+if ($ownFont == 1 && $font !== null) {
 	echo $font;
 } 	else {
 	echo 'arial';

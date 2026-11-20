@@ -24,8 +24,8 @@ function getArticle($link) {
     if (isset($_POST['readSubmit'])) {
     $aid = $_POST['aid'];
     }
-    $sql = "SELECT * FROM posts WHERE aid = '$aid'";
-    $result = mysqli_query($link, $sql);
+    $sql = "SELECT * FROM posts WHERE aid = ?";
+    $result = db_query($link, $sql, [$aid]);
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<div class='card'>
       <h1>".$row['title']."</h1>

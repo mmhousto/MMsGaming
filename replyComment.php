@@ -258,8 +258,8 @@ if (isset($_POST['reply'])) {
 }
 
     echo "<form method='POST' action='".replyComments($link)."'>
-            <input type='hidden' name='cid' value='".$cid."'>
-            <input type='hidden' name='uid' value='".$username."'>
+            <input type='hidden' name='cid' value='".e($cid)."'>
+            <input type='hidden' name='uid' value='".e($username)."'>
             <input type='hidden' name='date' value='".date('Y-m-d H:i:s')."'>
             <textarea class='myTextArea' name='message'></textarea><br>
             <button class='comment-btn' name='replySubmit' type='submit'>Reply</button>
