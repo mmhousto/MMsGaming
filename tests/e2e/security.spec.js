@@ -1,6 +1,6 @@
 // Regression tests for the Phase 0 security fixes.
 const { test, expect } = require('@playwright/test');
-const { registerUser, login, insertUserDirect, userId } = require('../helpers/site');
+const { registerUser, login, insertUserDirect, userId, postForm } = require('../helpers/site');
 const { query, scalar, q } = require('../helpers/db');
 
 test('changing email only changes your own account, whatever user id the form sends', async ({ playwright, baseURL }) => {
@@ -9,7 +9,7 @@ test('changing email only changes your own account, whatever user id the form se
   await login(alice, aliceName);
   const bobName = await registerUser(alice);
 
-  await alice.post('/changeEmail.inc.php', {
+  await postForm(alice, '/changeEmail.inc.php', {
     form: { emailSubmit: '1', uid: String(userId(bobName)), newEmail: 'attacker@example.com' },
     maxRedirects: 0,
   });
@@ -21,7 +21,7 @@ test('changing email only changes your own account, whatever user id the form se
 
 test('guests cannot change any email', async ({ request }) => {
   const name = await registerUser(request);
-  const res = await request.post('/changeEmail.inc.php', {
+  const res = await postForm(request, '/changeEmail.inc.php', {
     form: { emailSubmit: '1', uid: String(userId(name)), newEmail: 'attacker@example.com' },
     maxRedirects: 0,
   });

@@ -3,16 +3,23 @@ require_once "config.php";
 
 if (isset($_POST["reset-password-submit"])) {
     
-    $selector = $_POST["selector"];
-    $validator = $_POST["validator"];
-    $password = $_POST["pwd"];
-    $passwordRepeat = $_POST["pwd-repeat"];
-    
+    $selector = (string) ($_POST["selector"] ?? '');
+    $validator = (string) ($_POST["validator"] ?? '');
+    // Trimmed like the login form does, so the new password always works there.
+    $password = trim((string) ($_POST["pwd"] ?? ''));
+    $passwordRepeat = trim((string) ($_POST["pwd-repeat"] ?? ''));
+
+    // On a problem, go back to the form WITH the reset link's codes so the
+    // person can simply try again.
+    $back = "Location: create-new-password.php?selector=" . urlencode($selector) . "&validator=" . urlencode($validator) . "&newpwd=";
     if (empty($password) || empty($passwordRepeat)) {
-        header("Location: create-new-password.php?newpwd=empty");
+        header($back . "empty");
         exit();
     } else if ($password != $passwordRepeat) {
-        header("Location: create-new-password.php?newpwd=pwdnotsame");
+        header($back . "pwdnotsame");
+        exit();
+    } else if (password_problem($password) !== null) {
+        header($back . "weak");
         exit();
     }
     

@@ -149,14 +149,21 @@ input::-webkit-credentials-auto-fill-button:hover {
     <div class="wrapper">
         
         <?php
-            $selector = $_GET['selector'];
-            $validator = $_GET['validator'];
+            $selector = (string) ($_GET['selector'] ?? '');
+            $validator = (string) ($_GET['validator'] ?? '');
             
             if (empty($selector) || empty($validator)) {
                 echo "We could not validate your request!";
             } else {
                 if ((ctype_xdigit($selector) !== false) && (ctype_xdigit($validator) !== false)) {
-                    
+                    $mmsgMessages = [
+                        'empty' => 'Please enter your new password twice.',
+                        'pwdnotsame' => 'The two passwords did not match.',
+                        'weak' => 'Please choose a stronger password: at least ' . PASSWORD_MIN_LENGTH . ' characters and not a common one.',
+                    ];
+                    if (isset($mmsgMessages[$_GET['newpwd'] ?? ''])) {
+                        echo '<p style="color: #a00; font-weight: bold;">' . e($mmsgMessages[$_GET['newpwd']]) . '</p>';
+                    }
                     echo '<form action="resets-password.inc.php" method="post">
                         <input type="hidden" name="selector" value="'.e($selector).'">
                         <input type="hidden" name="validator" value="'.e($validator).'">
@@ -169,7 +176,6 @@ input::-webkit-credentials-auto-fill-button:hover {
                 }
             }
         ?>
-        <form 
 </div>
     </div>  
     </center>

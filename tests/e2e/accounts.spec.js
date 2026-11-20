@@ -1,6 +1,6 @@
 // Sign-up, login and logout, driven through the real pages in a browser.
 const { test, expect } = require('@playwright/test');
-const { uniqueName, PASSWORD, registerUser } = require('../helpers/site');
+const { uniqueName, PASSWORD, registerUser, postForm } = require('../helpers/site');
 const { scalar, q } = require('../helpers/db');
 
 // Don't load ads, analytics or other outside scripts during tests.
@@ -31,7 +31,7 @@ test('a visitor can register, log in and log out', async ({ page }) => {
   await expect(page).toHaveURL(/index\.php/);
   await expect(page.locator('#Gamer')).toHaveText(name);
 
-  await page.click('a[href="logout.php"]');
+  await page.getByRole('link', { name: 'Sign Out' }).click();
   await expect(page).toHaveURL(/login\.php/);
 });
 
@@ -47,7 +47,7 @@ test('wrong password is rejected', async ({ page, request }) => {
 
 test('usernames must be 3-20 letters, numbers or underscores', async ({ request }) => {
   for (const bad of ["a'b", 'ab', 'x'.repeat(21), '<script>', 'has space']) {
-    const res = await request.post('/register.php', {
+    const res = await postForm(request, '/register.php', {
       form: { username: bad, email: 'x@example.com', password: PASSWORD, confirm_password: PASSWORD },
       maxRedirects: 0,
     });
@@ -60,7 +60,7 @@ test('login issues a new session ID (prevents session fixation)', async ({ reque
   const name = await registerUser(request);
   await request.get('/login.php');
   const before = (await request.storageState()).cookies.find((c) => c.name === 'PHPSESSID')?.value;
-  await request.post('/login.php', { form: { username: name, password: PASSWORD }, maxRedirects: 0 });
+  await postForm(request, '/login.php', { form: { username: name, password: PASSWORD }, maxRedirects: 0 });
   const after = (await request.storageState()).cookies.find((c) => c.name === 'PHPSESSID')?.value;
   expect(before).toBeTruthy();
   expect(after).not.toBe(before);
@@ -71,11 +71,11 @@ test('sign-up mistakes show a message instead of crashing (taken name, short or 
   const attempts = [
     { username: taken, password: PASSWORD, confirm_password: PASSWORD, expect: 'already taken' },
     { username: taken, password: PASSWORD, confirm_password: PASSWORD, expect: 'already taken' },
-    { username: 'fresh_name_1', password: '123', confirm_password: '123', expect: 'atleast 6 characters' },
+    { username: 'fresh_name_1', password: '123', confirm_password: '123', expect: 'at least 10 characters' },
     { username: 'fresh_name_2', password: PASSWORD, confirm_password: 'different1', expect: 'did not match' },
   ];
   for (const a of attempts) {
-    const res = await request.post('/register.php', {
+    const res = await postForm(request, '/register.php', {
       form: { username: a.username, email: `${a.username}@example.com`, password: a.password, confirm_password: a.confirm_password },
       maxRedirects: 0,
     });

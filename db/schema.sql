@@ -75,3 +75,13 @@ CREATE TABLE pwdReset (
   pwdResetId int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   pwdResetEmail text, pwdResetSelector text, pwdResetToken longtext, pwdResetExpires text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE rate_limits (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  kind varchar(20) NOT NULL,
+  subject varchar(255) NOT NULL,
+  ip varchar(45) NOT NULL DEFAULT '',
+  attempted_at datetime NOT NULL,
+  KEY kind_subject (kind, subject, attempted_at),
+  KEY kind_ip (kind, ip, attempted_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

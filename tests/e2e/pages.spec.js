@@ -72,3 +72,42 @@ for (const htmlPage of ['terms.html', 'privacyPolicy.html', 'contactform.html'])
     }
   });
 }
+
+test.describe('shared header', () => {
+  const MENU_LINKS = ['/Free-Games.php', '/Unity-Games.php', '/Scoreboard.php', '/blog/', '/about.php'];
+
+  test('game pages: menu links work from the game folder, Bookmark button, no highlighted tab', async ({ request }) => {
+    const body = await (await request.get('/8Ball/index.php')).text();
+    for (const href of MENU_LINKS) expect(body).toContain(`<a class="tablink" href="${href}">`);
+    expect(body).toContain('id="bookmark-this"');
+    expect(body).not.toContain('background-color: white;">');
+    expect(body).toContain('<a href="/index.php"><img src="/MMsGCoo.png"');
+  });
+
+  for (const [page, label, extra] of [
+    ['Store.php', 'Store', `onclick="openPage(&#039;Store&#039;, this, &#039;white&#039;)"`],
+    ['Scoreboard.php', 'Scoreboard', 'id="Scoreboard"'],
+    ['about.php', 'About', 'id="About"'],
+    ['blog/index.php', 'Blog', 'href="/blog/"'],
+  ]) {
+    test(`${page} highlights the ${label} tab and has the Share button`, async ({ request }) => {
+      const body = await (await request.get(`/${page}`)).text();
+      const tab = body.match(new RegExp(`<a class="tablink"[^>]*>${label}</a>`))[0];
+      expect(tab).toContain('background-color: white;');
+      expect(tab).toContain(extra);
+      expect(body).toContain('class="fb-share-button"');
+    });
+  }
+
+  test('sign-in buttons change when logged in', async ({ request }) => {
+    let body = await (await request.get('/8Ball/index.php')).text();
+    expect(body).toContain('href="/register.php"');
+    expect(body).not.toContain('href="/logout.php"');
+
+    const name = await registerUser(request);
+    await login(request, name);
+    body = await (await request.get('/8Ball/index.php')).text();
+    expect(body).toContain('href="/logout.php"');
+    expect(body).toContain(`<span id="Gamer"><a href="/profile.php">${name}</a></span>`);
+  });
+});

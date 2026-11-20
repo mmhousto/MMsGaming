@@ -1,6 +1,6 @@
 // The points store: buying items and applying customizations.
 const { test, expect } = require('@playwright/test');
-const { registerUser, login, setPoints, userId } = require('../helpers/site');
+const { registerUser, login, setPoints, userId, postForm } = require('../helpers/site');
 const { query, scalar, mysql, q } = require('../helpers/db');
 
 // Item, endpoint and live price (must match the Store page).
@@ -30,19 +30,19 @@ for (const item of ITEMS) {
   test(`${item.file}: buy once for ${item.price}, second buy says "Already Own"`, async ({ request }) => {
     const name = await player(request, item.price + 50);
 
-    const first = await request.post(`/${item.file}`, { maxRedirects: 0 });
+    const first = await postForm(request, `/${item.file}`, { maxRedirects: 0 });
     expect(first.status()).toBe(302);
     expect(owned(name, item.flag)).toBe('1');
     expect(points(name)).toBe(50);
 
-    const second = await request.post(`/${item.file}`, { maxRedirects: 0 });
+    const second = await postForm(request, `/${item.file}`, { maxRedirects: 0 });
     expect(await second.text()).toContain('Already Own!');
     expect(points(name)).toBe(50);
   });
 
   test(`${item.file}: not enough points`, async ({ request }) => {
     const name = await player(request, item.price - 1);
-    const res = await request.post(`/${item.file}`, { maxRedirects: 0 });
+    const res = await postForm(request, `/${item.file}`, { maxRedirects: 0 });
     expect(await res.text()).toContain('Not enough points!');
     expect(owned(name, item.flag)).toBe('0');
     expect(points(name)).toBe(item.price - 1);
@@ -55,7 +55,7 @@ test('buying requires a form submit (GET does nothing) and a login', async ({ re
   expect(points(name)).toBe(5000);
 
   const guest = await playwright.request.newContext({ baseURL });
-  const res = await guest.post('/buyColor.php', { maxRedirects: 0 });
+  const res = await postForm(guest, '/buyColor.php', { maxRedirects: 0 });
   expect(res.headers()['location']).toContain('login.php');
   await guest.dispose();
 });
@@ -69,7 +69,7 @@ test('8 simultaneous purchases only charge once', async ({ request, playwright, 
     await login(ctx, name);
     sessions.push(ctx);
   }
-  await Promise.all(sessions.map((ctx) => ctx.post('/buyTrail.php', { maxRedirects: 0 })));
+  await Promise.all(sessions.map((ctx) => postForm(ctx, '/buyTrail.php', { maxRedirects: 0 })));
   await Promise.all(sessions.map((ctx) => ctx.dispose()));
 
   expect(points(name)).toBe(0);
@@ -88,14 +88,14 @@ test.describe('customization values are validated', () => {
   for (const c of CASES) {
     test(`${c.set}`, async ({ request }) => {
       const name = await player(request, 5000);
-      await request.post(`/${c.buy}`, { maxRedirects: 0 });
+      await postForm(request, `/${c.buy}`, { maxRedirects: 0 });
 
-      const bad = await request.post(`/${c.set}`, { form: { [c.field]: c.bad }, maxRedirects: 0 });
+      const bad = await postForm(request, `/${c.set}`, { form: { [c.field]: c.bad }, maxRedirects: 0 });
       expect(bad.status()).toBe(200);
       expect(await bad.text()).toContain('Please enter');
       expect(scalar(`SELECT ${c.column} FROM custom WHERE UID = ${userId(name)}`) ?? '').toBe('');
 
-      const good = await request.post(`/${c.set}`, { form: { [c.field]: c.good }, maxRedirects: 0 });
+      const good = await postForm(request, `/${c.set}`, { form: { [c.field]: c.good }, maxRedirects: 0 });
       expect(good.status()).toBe(302);
       expect(scalar(`SELECT ${c.column} FROM custom WHERE UID = ${userId(name)}`)).toBe(c.good);
     });
@@ -103,7 +103,7 @@ test.describe('customization values are validated', () => {
 
   test('setting a customization you do not own is refused', async ({ request }) => {
     const name = await player(request, 0);
-    const res = await request.post('/setBgColor.php', { form: { box2: '#00ff00' }, maxRedirects: 0 });
+    const res = await postForm(request, '/setBgColor.php', { form: { box2: '#00ff00' }, maxRedirects: 0 });
     expect(await res.text()).toContain('You Do Not Own');
     expect(scalar(`SELECT BgColor FROM custom WHERE UID = ${userId(name)}`) ?? '').toBe('');
   });

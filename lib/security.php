@@ -147,3 +147,77 @@ function buy_item(mysqli $link, int $userId, string $flagColumn, int $cost): str
         throw $t;
     }
 }
+
+/*
+ * Protection against forged form submissions (CSRF).
+ *
+ * Every page that loads config.php gets csrf_protect():
+ *  - a POST without the session's secret token is refused, and
+ *  - every <form method="post"> on the page that submits to this site
+ *    automatically gets the token as a hidden field.
+ * So new forms are protected without any extra code.
+ */
+const CSRF_FIELD = 'csrf_token';
+
+/** Requests that legitimately arrive without a browser session. */
+const CSRF_EXEMPT_SCRIPTS = [
+    'donate.php', // PayPal's server-to-server payment notification
+];
+
+function csrf_token(): string
+{
+    if (empty($_SESSION[CSRF_FIELD])) {
+        $_SESSION[CSRF_FIELD] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION[CSRF_FIELD];
+}
+
+function csrf_valid(): bool
+{
+    $sent = $_POST[CSRF_FIELD] ?? '';
+    return is_string($sent) && !empty($_SESSION[CSRF_FIELD])
+        && hash_equals($_SESSION[CSRF_FIELD], $sent);
+}
+
+/** Output filter: add the hidden token to this site's POST forms. */
+function csrf_inject_forms(string $html): string
+{
+    if (stripos($html, '<form') === false || session_status() !== PHP_SESSION_ACTIVE) {
+        return $html;
+    }
+    $field = '<input type="hidden" name="' . CSRF_FIELD . '" value="' . csrf_token() . '">';
+    return preg_replace_callback('/<form\b[^>]*>/i', function ($m) use ($field) {
+        $tag = $m[0];
+        if (!preg_match('/\bmethod\s*=\s*["\']?post\b/i', $tag)) {
+            return $tag; // GET forms (search etc.) don't change anything
+        }
+        if (preg_match('/\baction\s*=\s*["\']?\s*(https?:)?\/\//i', $tag)
+            && !preg_match('/\baction\s*=\s*["\']?\s*(https?:)?\/\/(www\.)?mms-gaming\.com\b/i', $tag)) {
+            return $tag; // submits to another site (e.g. PayPal): don't leak the token
+        }
+        return $tag . $field;
+    }, $html);
+}
+
+function csrf_protect(): void
+{
+    static $done = false;
+    if ($done) {
+        return;
+    }
+    $done = true;
+
+    if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+        session_start();
+    }
+    $script = basename($_SERVER['SCRIPT_NAME'] ?? '');
+    if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && !in_array($script, CSRF_EXEMPT_SCRIPTS, true) && !csrf_valid()) {
+        http_response_code(403);
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Form expired</title></head>'
+            . '<body style="font-family: Arial; background-color: #38b6ff; text-align: center; padding: 60px 16px;">'
+            . '<h1>This form has expired</h1><p>For your security, please go back, refresh the page and try again.</p>'
+            . '<p><a href="/index.php">Back to MM\'s Gaming</a></p></body></html>';
+        exit;
+    }
+    ob_start('csrf_inject_forms');
+}

@@ -34,6 +34,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $password = trim($_POST["password"]);
     }
     
+    // Pause logins after too many wrong passwords (per account and per IP)
+    if(empty($username_err) && empty($password_err) && login_blocked($link, $username)){
+        $password_err = "Too many failed attempts. Please wait 15 minutes and try again, or reset your password.";
+    }
+
     // Validate credentials
     if(empty($username_err) && empty($password_err)){
         // Prepare a select statement
@@ -59,6 +64,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
                             session_regenerate_id(true); // fresh session ID on login (prevents session fixation)
+                            rate_clear($link, 'login', $username);
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
@@ -88,13 +94,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             // Redirect user to welcome page
                             header("location: index.php");
                         } else{
-                            // Display an error message if password is not valid
-                            $password_err = "The password you entered was not valid.";
+                            // Same message as an unknown username, so it doesn't reveal which accounts exist
+                            rate_record($link, 'login', $username);
+                            $password_err = "The username or password you entered was not valid.";
                         }
                     }
                 } else{
-                    // Display an error message if username doesn't exist
-                    $username_err = "No account found with that username.";
+                    // Same message as a wrong password, so it doesn't reveal which accounts exist
+                    rate_record($link, 'login', $username);
+                    $password_err = "The username or password you entered was not valid.";
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -106,7 +114,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     
     // Close connection
-    mysqli_close($link);
+    // (the connection closes by itself at the end; closing it here broke the rest of the page)
 }
 ?>
  

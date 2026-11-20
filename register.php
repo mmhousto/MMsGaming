@@ -90,8 +90,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate password
     if(empty(trim($_POST["password"]))){
         $password_err = "Please enter a password.";     
-    } elseif(strlen(trim($_POST["password"])) < 6){
-        $password_err = "Password must have atleast 6 characters.";
+    } elseif(($mmsgProblem = password_problem(trim($_POST["password"]), trim($_POST["username"] ?? ''))) !== null){
+        $password_err = $mmsgProblem;
     } else{
         $password = trim($_POST["password"]);
     }
@@ -140,7 +140,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Close connection
-    mysqli_close($link);
+    // (the connection closes by itself at the end; closing it here broke the rest of the page)
 }
 
 function test_input($data) {
