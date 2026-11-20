@@ -655,9 +655,9 @@ $(document).mousemove(function(e){
 /////////////////
     
   var info = {
-    Gamer   : '$username',
-    Rank    : '$rank',
-    Points  : '$points',
+    Gamer   : " . js((string) $username) . ",
+    Rank    : " . js((string) $rank) . ",
+    Points  : " . js((string) $points) . ",
     PntCount: " . progress_for($totalPoints, $total)['count'] . ",
     Total   : " . progress_for($totalPoints, $total)['goal'] . ",
     Prog    : " . progress_for($totalPoints, $total)['percent'] . ',
