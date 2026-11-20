@@ -4,6 +4,8 @@
 const { defineConfig } = require('@playwright/test');
 
 const PORT = process.env.TEST_PORT || '8099';
+// Emails the site sends during tests are written here instead of sent.
+process.env.MMSG_MAIL_LOG = process.env.MMSG_MAIL_LOG || require('path').join(require('os').tmpdir(), 'mmsg-test-mail.log');
 
 module.exports = defineConfig({
   // Tests share one database, so run them one at a time for predictable results.

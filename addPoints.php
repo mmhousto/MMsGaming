@@ -21,7 +21,8 @@ $rank = $mmsgStats['rank'];
 $total = $mmsgStats['total'];
    
 
-    if ($mmsgCanAward) {
+    // Players earn points only after confirming their email address.
+    if ($mmsgCanAward && !needs_email_verification($link)) {
         $_SESSION['lastPointAward'] = $now;
         $u1 = "UPDATE users SET points = points + 2, totalPoints = totalPoints + 2 WHERE id = ?";
         db_query($link, $u1, [(int) $_SESSION['id']]) or die('Error querying database.');

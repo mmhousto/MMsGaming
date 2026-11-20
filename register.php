@@ -124,11 +124,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Create the new user's store/customization row, then go to login
-                db_query($link, "INSERT INTO custom (UID) VALUES (?)", [(int) mysqli_insert_id($link)]);
+                $mmsgNewId = (int) mysqli_insert_id($link);
+                db_query($link, "INSERT INTO custom (UID) VALUES (?)", [$mmsgNewId]);
+                send_verification_email($link, $mmsgNewId, $email);
                 db_query($link, "UPDATE users SET rank = ? WHERE username = ?", [$rank, $username]);
                 mysqli_stmt_close($stmt);
                 mysqli_close($link);
-                header("location: login.php");
+                header("location: login.php?verify=sent");
                 exit;
             } else{
                 echo "Something went wrong. Please try again later.";

@@ -40,7 +40,9 @@ for (const who of ['guest', 'player']) {
           await login(request, name);
         }
         const res = await request.get(`/${page}`, { maxRedirects: 0 });
-        expect([200, 301, 302], `HTTP status for ${page}`).toContain(res.status());
+        // verify-email.php without a link correctly answers 400 ("This link didn't work").
+        const okStatuses = page === 'verify-email.php' ? [400] : [200, 301, 302];
+        expect(okStatuses, `HTTP status for ${page}`).toContain(res.status());
         const body = await res.text();
         const match = body.match(PHP_ERROR);
         expect(match ? body.slice(Math.max(0, match.index - 100), match.index + 300) : null, `PHP error on ${page}`).toBeNull();
