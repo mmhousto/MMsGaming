@@ -17,6 +17,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate username
     if(empty(trim($_POST["username"]))){
         $username_err = "Please enter a username.";
+    } elseif(!preg_match('/^[A-Za-z0-9_]{3,20}$/', trim($_POST["username"]))){
+        $username_err = "Username must be 3-20 letters, numbers or underscores.";
     } else{
         // Prepare a select statement
         $sql = "SELECT id FROM users WHERE username = ?";
@@ -90,8 +92,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             }
         }
 
-        $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+        $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
          
         // Close statement
         mysqli_stmt_close($stmt);
@@ -181,7 +183,7 @@ input {
             <input type="hidden" name="rank" value="<?php echo $rank; ?>">
             <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" value="<?php echo $username; ?>">
+                <input type="text" name="username" class="form-control" value="<?php echo e($username); ?>">
                 <span class="help-block"><?php echo $username_err; ?></span>
             </div>    
             <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">

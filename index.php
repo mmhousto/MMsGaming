@@ -32,39 +32,39 @@ if (isset($_GET['image'])){
     $bgImg = $_GET['image'];
 }
 
-$ot = "SELECT ownTrail FROM custom WHERE UID = '$id'";
-$result4 = mysqli_query($link, $ot);
+$ot = "SELECT ownTrail FROM custom WHERE UID = ?";
+$result4 = db_query($link, $ot, [$id]);
 while($row = mysqli_fetch_assoc($result4)) {
   $ownTrail = $row["ownTrail"];
 }
 
-$oi = "SELECT ownImg FROM custom WHERE UID = '$id'";
-$result3 = mysqli_query($link, $oi);
+$oi = "SELECT ownImg FROM custom WHERE UID = ?";
+$result3 = db_query($link, $oi, [$id]);
 while($row = mysqli_fetch_assoc($result3)) {
   $ownImg = $row["ownImg"];
 }
 
-$ob = "SELECT ownBg FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $ob);
+$ob = "SELECT ownBg FROM custom WHERE UID = ?";
+$result2 = db_query($link, $ob, [$id]);
 while($row = mysqli_fetch_assoc($result2)) {
   $ownBg = $row["ownBg"];
 }
 
-$oc = "SELECT ownCursor FROM custom WHERE UID = '$id'";
-$result5 = mysqli_query($link, $oc);
+$oc = "SELECT ownCursor FROM custom WHERE UID = ?";
+$result5 = db_query($link, $oc, [$id]);
 while($row = mysqli_fetch_assoc($result5)) {
   $ownCursor = $row["ownCursor"];
 }
 
-$bgC = "SELECT BgColor FROM custom WHERE UID = '$id'";
+$bgC = "SELECT BgColor FROM custom WHERE UID = ?";
 
-$p = "SELECT points FROM users WHERE username = '$username'";
-$result1 = mysqli_query($link, $p);//"SELECT points FROM users WHERE username = $username";
+$p = "SELECT points FROM users WHERE username = ?";
+$result1 = db_query($link, $p, [$username]);//"SELECT points FROM users WHERE username = $username";
 while($row = mysqli_fetch_assoc($result1)) {
 	$points = $row["points"];
 }
-$tp = "SELECT totalPoints FROM users WHERE username = '$username'";
-$result = mysqli_query($link, $tp);//"SELECT points FROM users WHERE username = $username";
+$tp = "SELECT totalPoints FROM users WHERE username = ?";
+$result = db_query($link, $tp, [$username]);//"SELECT points FROM users WHERE username = $username";
 while($row = mysqli_fetch_assoc($result)) {
 	$totalPoints = $row["totalPoints"];
 }
@@ -74,58 +74,58 @@ if($totalPoints < 100){
 } else if($totalPoints >= 100 && $totalPoints < 200){                            
     $rank = "Novice";
     $total = 200;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 200 && $totalPoints < 400){
     $rank = "Experienced";
     $total = 400;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 400 && $totalPoints < 800){
     $rank = "Specialist";
     $total = 800;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 800 && $totalPoints < 1600){
     $rank = "Expert";
     $total = 1600;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 1600 && $totalPoints < 3200){
     $rank = "Bada**";
     $total = 3200;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 3200 && $totalPoints < 6400){
     $rank = "Noble";
     $total = 6400;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 6400 && $totalPoints < 12800){
     $rank = "Spartan";
     $total = 12800;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 12800 && $totalPoints < 25600){
     $rank = "Legend";
     $total = 25600;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 25600 && $totalPoints < 52000){
     $rank = "Game Game Junkie";
     $total = 52000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else if($totalPoints >= 52000 && $totalPoints < 104000){
     $rank = "Godsent";
     $total = 104000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 } else {
     $rank = "Holy Shit, Get a Life!";
     $total = 208000;
-    $sql1 = "UPDATE users SET rank = '$rank' WHERE username = '$username'";
-        mysqli_query($link, $sql1);
+    $sql1 = "UPDATE users SET rank = ? WHERE username = ?";
+        db_query($link, $sql1, [$rank, $username]);
 }  
 
 function hasBg() {

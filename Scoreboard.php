@@ -16,12 +16,13 @@ $u = "SELECT username, totalPoints, rank FROM users ORDER BY totalPoints DESC";
 $result1 = mysqli_query($link, $u);//"SELECT points FROM users WHERE username = $username";
 while($row = mysqli_fetch_assoc($result1)) {
 	$users = $row["username"];
+	$usersSafe = e($users);
 	$totalPoints = $row["totalPoints"];
   $rank = $row["rank"];
 	if($username === $users){
-	echo"<tr><td class='counterCell' style='padding: 10px; font-size:48px'></td><td style='padding: 10px; font-size:48px'><b>{$users}</b></td><td style='padding: 10px; font-size:48px'><b>{$totalPoints}</b></td><td style='padding: 10px; font-size:48px'><b>{$rank}</b></td></tr>\n";
+	echo"<tr><td class='counterCell' style='padding: 10px; font-size:48px'></td><td style='padding: 10px; font-size:48px'><b>{$usersSafe}</b></td><td style='padding: 10px; font-size:48px'><b>{$totalPoints}</b></td><td style='padding: 10px; font-size:48px'><b>{$rank}</b></td></tr>\n";
 	}else {
-	echo"<tr><td class='counterCell' style='padding: 10px; font-size:48px'></td><td style='padding: 10px; font-size:48px'>{$users}</td><td style='padding: 10px; font-size:48px'>{$totalPoints}</td><td style='padding: 10px; font-size:48px'>{$rank}</td></tr>\n";
+	echo"<tr><td class='counterCell' style='padding: 10px; font-size:48px'></td><td style='padding: 10px; font-size:48px'>{$usersSafe}</td><td style='padding: 10px; font-size:48px'>{$totalPoints}</td><td style='padding: 10px; font-size:48px'>{$rank}</td></tr>\n";
 	}
 }
 echo"</table>";

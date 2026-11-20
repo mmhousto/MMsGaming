@@ -1,0 +1,7 @@
+# Secrets: never commit real credentials
+MMsGamingconfig.php
+*.env
+.env*
+
+# OS clutter
+.DS_Store

@@ -1,35 +1,28 @@
 <?php
-    session_start(); 
-    require_once "config.php";
+session_start();
+require_once "config.php";
+require_login_post();
 
-    $username = $_SESSION['username'];
-    $bgColor = $_SESSION['BgColor'];   
-    $id = $_SESSION['id']; 
-	$color = "$_POST[box2]";
-	$ownBg = $_SESSION['ownBg'];
-	$lastSet = $_SESSION['lastSet'];
-
-$ls = "SELECT lastSet FROM custom WHERE UID = '$id'";
-$result1 = mysqli_query($link, $ls);
-while($row = mysqli_fetch_assoc($result1)) {
-	$lastSet = $row["lastSet"];
+$id = (int) $_SESSION['id'];
+$owned = 0;
+$res = db_query($link, "SELECT ownBg FROM custom WHERE UID = ?", [$id]);
+if ($res && ($row = mysqli_fetch_assoc($res))) {
+	$owned = (int) $row['ownBg'];
 }
 
-$ob = "SELECT ownBg FROM custom WHERE UID = '$id'";
-$result2 = mysqli_query($link, $ob);
-while($row = mysqli_fetch_assoc($result2)) {
-	$ownBg = $row["ownBg"];
-}
-
-if ($ownBg == 1) {
-$sql = "UPDATE custom SET BgColor = '$_POST[box2]' WHERE UID = '$id'";
-mysqli_query($link, $sql) or die('Error querying database.');
-$sql2 = "UPDATE custom SET lastSet = 'Background' WHERE UID = '$id'";
-mysqli_query($link, $sql2) or die('Error querying database.');
-header("location: index.php");
-} else {
-	echo '<script type="text/javascript"> alert("You Do Not Own Background Color!"); </script>';
+if ($owned !== 1) {
+	echo '<script type="text/javascript">alert("You Do Not Own Background Color!");</script>';
 	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
 }
 
-?>
+$value = safe_css_color($_POST['box2'] ?? '');
+if ($value === null) {
+	echo '<script type="text/javascript">alert("Please enter a color like red or #ff0000.");</script>';
+	echo '<meta http-equiv="refresh" content="1;url=index.php">';
+	exit();
+}
+
+db_query($link, "UPDATE custom SET BgColor = ?, lastSet = 'Background' WHERE UID = ?", [$value, $id]) or die('Error querying database.');
+header("location: index.php");
+exit();
