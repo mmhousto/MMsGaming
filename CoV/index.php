@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Online Gaming | Play Clash of Vikings Free</title>
     <meta name="description" content="Earn points playing Clash of Vikings. This is a free real time strategy, online game. Play only at MM's Gaming Co.">

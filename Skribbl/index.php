@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>IO Gaming | Play Skribbl with friends</title>
     <meta name="description" content="Earn points only at MM's Gaming Co, while playing Skribbl, where you can draw with friends in this epic io online game!">

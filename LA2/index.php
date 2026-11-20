@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Strategy Gaming | Play Little Alchemy 2 Online</title>
     <meta name="description" content="Love strategy games? Play Little Alchemy 2, a HTML5 online game, available at MM's Gaming Co.">

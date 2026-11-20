@@ -91,3 +91,17 @@ test('blog canonical links point at real pages', async ({ request }) => {
   const post = await (await request.get('/blog/Precision-New-Input-System-Cinemachine-and-Target-Follow.php')).text();
   expect(post).toContain('<link rel="canonical" href="https://mms-gaming.com/blog/Precision-New-Input-System-Cinemachine-and-Target-Follow.php">');
 });
+
+test('every public page fits phone screens (viewport tag)', async () => {
+  const root = path.join(__dirname, '../..');
+  const pages = fs.readdirSync(root, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && fs.existsSync(path.join(root, d.name, 'index.php')))
+    .map((d) => `${d.name}/index.php`)
+    .filter((p) => !/^(tests|templates|db|docs|node_modules)\//.test(p))
+    .concat(fs.readdirSync(root).filter((f) => /\.(php|html)$/.test(f)));
+  const missing = pages.filter((p) => {
+    const src = fs.readFileSync(path.join(root, p), 'utf8');
+    return /<\/head>/i.test(src) && !/name="viewport"/i.test(src) && p !== 'freecontactforminstall.php';
+  });
+  expect(missing).toEqual([]);
+});

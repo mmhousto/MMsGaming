@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Free Online Gaming | Play Super Buddy Kick 2</title>
     <meta name="description" content="Play Super Buddy Kick 2 free, online at MM's Gaming Co. This is a classic html5 game.">

@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Free Online Gaming | Play Soldier Attack 2</title>
     <meta name="description" content="Earn points playing Soldier Attack 2, an epic, HTML5, online game. Defend the world from an alien invasion. Play at MM's Gaming Co for free.">

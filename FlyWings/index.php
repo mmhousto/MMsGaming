@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Simulator Gaming | Play Flight Simulator - FlyWings 2016</title>
     <meta name="description" content="Earn points playing Flight Simulator - FlyWings 2016, a HTML5 simulator game. Play online only at MM's Gaming Co.">

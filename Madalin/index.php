@@ -27,6 +27,7 @@ $total = $mmsgStats['total'];
     <?php include __DIR__ . '/../templates/analytics.php'; ?>
 
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
     <title>Play Madalin Stunt Cars 2 Online [Car Racing Game]</title>
     <meta name="description" content="Madalin Stunt Cars 2 is one of the best multiplayer car games out. Try racing against your friends in luxurious sports mobiles! Play at MM's Gaming Co.">
