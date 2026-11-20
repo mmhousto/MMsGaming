@@ -6,6 +6,12 @@
  */
 $mmsgProgress = progress_for($totalPoints ?? 0, $total ?? 100);
 ?>
+<?php if (isset($link) && needs_email_verification($link)) { ?>
+<div id="verifyBanner" style="background: #fff3cd; color: #5c4400; padding: 10px 16px; text-align: center; font-family: Arial;">
+    Please confirm your email address to earn points, comment and use the Store. Check your inbox for our link.
+    <form method="post" action="/resend-verification.php" style="display: inline;"><button type="submit" style="margin-left: 8px;">Resend the email</button></form>
+</div>
+<?php } ?>
 <div id="heading1" class="heading1">
         <div id="info" class="info">
         <h3><b><?php if (!empty($isDonor)) { echo "Donor"; } else { echo "Gamer"; } ?>:</b> <span id="Gamer"><a href="/profile.php"><?php echo e($username ?? ''); ?></a></span></h3>

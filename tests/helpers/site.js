@@ -12,12 +12,13 @@ function uniqueName(prefix = 'u') {
 }
 
 /** Register a new account through the real form handler. Returns the username. */
-async function registerUser(request, username = uniqueName()) {
+async function registerUser(request, username = uniqueName(), { verified = true } = {}) {
   const res = await postForm(request, '/register.php', {
     form: { username, email: `${username}@example.com`, password: PASSWORD, confirm_password: PASSWORD },
     maxRedirects: 0,
   });
   expect(res.status(), `register ${username}`).toBe(302);
+  if (verified) mysql(`UPDATE users SET email_verified_at = NOW() WHERE username = ${q(username)}`);
   return username;
 }
 
@@ -33,7 +34,7 @@ function insertUserDirect(username, { points = 0, totalPoints = 0 } = {}) {
   const hash = require('child_process')
     .execFileSync('php', ['-r', `echo password_hash('${PASSWORD}', PASSWORD_DEFAULT);`], { encoding: 'utf8' });
   mysql(
-    `INSERT INTO users (username, password, points, totalPoints) VALUES (${q(username)}, ${q(hash)}, ${points}, ${totalPoints});
+    `INSERT INTO users (username, password, points, totalPoints, email_verified_at) VALUES (${q(username)}, ${q(hash)}, ${points}, ${totalPoints}, NOW());
      INSERT INTO custom (UID) VALUES (LAST_INSERT_ID());`
   );
   return username;
@@ -65,3 +66,12 @@ async function postForm(ctx, url, options = {}) {
 
 module.exports.csrfToken = csrfToken;
 module.exports.postForm = postForm;
+
+/** Emails the site "sent" during tests, newest last (see MMSG_MAIL_LOG). */
+function sentEmails() {
+  const fs = require('fs');
+  const file = process.env.MMSG_MAIL_LOG;
+  if (!file || !fs.existsSync(file)) return [];
+  return fs.readFileSync(file, 'utf8').trim().split('\n').filter(Boolean).map((l) => JSON.parse(l));
+}
+module.exports.sentEmails = sentEmails;

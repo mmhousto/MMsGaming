@@ -38,7 +38,7 @@ function scalar(sql) {
 
 function resetDatabase() {
   const root = path.join(__dirname, '..', '..', 'db');
-  const tables = ['users', 'custom', 'comments', 'replies', 'secondReplies', 'posts', 'games', 'pwdReset', 'rate_limits'];
+  const tables = ['users', 'custom', 'comments', 'replies', 'secondReplies', 'posts', 'games', 'pwdReset', 'rate_limits', 'email_verifications'];
   mysql(`CREATE DATABASE IF NOT EXISTS \`${cfg.name}\` CHARACTER SET utf8mb4;`, { db: false });
   mysql(
     'SET FOREIGN_KEY_CHECKS=0;\n' +

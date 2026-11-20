@@ -15,7 +15,8 @@ CREATE TABLE users (
   created_at datetime DEFAULT CURRENT_TIMESTAMP,
   points int DEFAULT 0,
   totalPoints int NOT NULL DEFAULT 0,
-  `rank` varchar(255) NOT NULL DEFAULT 'Noob'
+  `rank` varchar(255) NOT NULL DEFAULT 'Noob',
+  email_verified_at datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE custom (
@@ -84,4 +85,15 @@ CREATE TABLE rate_limits (
   attempted_at datetime NOT NULL,
   KEY kind_subject (kind, subject, attempted_at),
   KEY kind_ip (kind, ip, attempted_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE email_verifications (
+  id int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id int NOT NULL,
+  email varchar(255) NOT NULL,
+  selector varchar(32) NOT NULL,
+  token_hash char(64) NOT NULL,
+  expires_at datetime NOT NULL,
+  UNIQUE KEY selector (selector),
+  KEY user_id (user_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -132,8 +132,19 @@ function getComments($link) {
 // user id sent by the form), set the date on the server, and only let
 // people edit or delete their own posts.
 function comment_user() {
-    return (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && !empty($_SESSION['username']))
-        ? (string) $_SESSION['username'] : null;
+    global $link;
+    if (!(isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true && !empty($_SESSION['username']))) {
+        return null;
+    }
+    if (needs_email_verification($link)) {
+        static $told = false;
+        if (!$told) {
+            $told = true;
+            echo '<script>alert(' . js('Please confirm your email address before commenting. Check your inbox, or use "Resend the email" at the top of the page.') . ');</script>';
+        }
+        return null;
+    }
+    return (string) $_SESSION['username'];
 }
 
 function comment_message() {

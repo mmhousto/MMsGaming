@@ -331,6 +331,9 @@ input::-webkit-credentials-auto-fill-button:hover {
         <h1>Login to Earn Points</h1>
         <p>Please fill in your credentials to login.</p>
                 <?php 
+    if(($_GET["verify"] ?? '') === "sent") {
+        echo '<p class="signupsuccess">Account created! We sent you an email: click the link in it to confirm your address and start earning points.</p>';
+    }
     if(isset($_GET["newpwd"])) {
         if ($_GET["newpwd"] == "passwordupdated") {
             echo '<p class="signupsuccess">Your password has been reset!</p>';
