@@ -127,3 +127,6 @@ VALUES ('RetroSpaceBall', 'Retro Space Ball', 'A space shooter with a pinball tw
   '/RSB.jpg', 'embed', 'https://v6p9d9t4.ssl.hwcdn.net/html/2032191/WebGL_b1.2.0/index.html',
   'Play Retro Space Ball online for free. This is a space shooter, but with pinball to add a twist!', 50)
 ON DUPLICATE KEY UPDATE slug = slug;
+
+-- db/migrations/005_magnet_destroyer_play.sql
+UPDATE unity_games SET play_type = 'launch', launch_url = '/Magnet-Destroyer/Play-Magnet-Destroyer/' WHERE slug = 'Magnet-Destroyer';
