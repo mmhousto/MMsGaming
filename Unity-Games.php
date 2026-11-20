@@ -896,17 +896,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
      
  <h1 style="text-align: center;"><font size="+5"><strong>Unity Games</strong></font></h1>
 <p style="text-align: left;"><font size="+3">Play games developed & published by MM's Gaming Community LLC! These are Unity games I have made/worked on:</font></p><br/>
-    <ul style="display: flex; list-style-type: none;">
-        <li><a href="Imprecision"><img alt='A first/third person action-adventure rogue-lite.' src='ImprecisionLogoTilt.png' width='120px'/><br/><font size="+3">Imprecision</font></a></li>
-        <br>
-        <li><a href="Gravity-Balls"><img alt='A casual Mobile arcade game available on iOS and Android' src='appIcon2.png' width='120px'/><br/><font size="+3">Paddle Balls</font></a></li>
-        <br>
-        <li><a href="Magnet-Destroyer"><img alt='A casual Mobile arcade game available on iOS and Android' src='Magnet-Destroyer\MagnetDestroyerIcon-120.png' width='120px'/><br/><font size="+3">Magnet Destroyer</font></a></li>
-        <br>
-        <li><a href="ZombCube"><img alt='A fps, wave-based, zombie-survival game available on PC, Xbox, MacOS, tvOS, iOS, and Android!' src='ZombCubeLogo.jpg' width='120px'/><br/><font size="+3">ZombCube</font></a></li>
-        <br>
-  		<li><a href="HGWK"><font size="+3">Have Gun, Will Kill<br>
-  		(Assets didn't load right when converted to WebGL)</font></a></li>
+    <ul style="display: flex; list-style-type: none;" id="my-games-list">
+<?php foreach (unity_games_published($link) as $mmsgGame) { ?>
+        <li><a href="/<?php echo rawurlencode($mmsgGame['slug']); ?>/"><?php if ($mmsgGame['thumbnail'] !== '') { ?><img alt="<?php echo e($mmsgGame['tagline'] ?: $mmsgGame['title']); ?>" src="<?php echo e($mmsgGame['thumbnail']); ?>" width="120"/><br/><?php } ?><font size="+3"><?php echo e($mmsgGame['title']); ?></font></a></li>
+<?php } ?>
 	</ul><br/>
 	
   </div>
