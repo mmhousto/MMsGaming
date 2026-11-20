@@ -1,7 +1,7 @@
 -- MM's Gaming Community database structure (used by the automated tests).
 --
 -- NOTE: this was reconstructed from the PHP code, not exported from the
--- live database. To make tests match production exactly, export the real
+-- live database (e.g. the live users table has no created_at column). To make tests match production exactly, export the real
 -- structure from phpMyAdmin (Export -> Custom -> Structure only, no data)
 -- and replace this file. Never commit data or passwords here.
 
@@ -12,7 +12,6 @@ CREATE TABLE users (
   Email varchar(255) DEFAULT NULL,
   username varchar(50) NOT NULL UNIQUE,
   password varchar(255) NOT NULL,
-  created_at datetime DEFAULT CURRENT_TIMESTAMP,
   points int DEFAULT 0,
   totalPoints int NOT NULL DEFAULT 0,
   `rank` varchar(255) NOT NULL DEFAULT 'Noob',
