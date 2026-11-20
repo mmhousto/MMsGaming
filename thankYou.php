@@ -322,7 +322,7 @@ span2 {
 <center>
 <br><br>
     <h1>Thank You For Donating</h1>
-	<p><span2>Thank You <?php echo e($username); ?>, for your kindly donation.</span2></p><br><p><span>It really helps me continue updating and maintaining the site! <br> Expect your points to be added within 24 hours!</span></p><br><p><span style="font-size: 24px;">Since you have donated, your name will now be displayed in green,<br> on the Scoreboard, for others to see and on your account stats for you. <br>Soon I will update this to incorporate whatever color you wish for!</span></p>
+	<p><span2>Thank You <?php echo e($username); ?>, for your kindly donation.</span2></p><br><p><span>It really helps me continue updating and maintaining the site! <br> Your points are added automatically as soon as PayPal confirms the payment, usually within a few minutes.</span></p><br><p><span style="font-size: 24px;">Since you have donated, your name will now be displayed in green,<br> on the Scoreboard, for others to see and on your account stats for you. <br>Soon I will update this to incorporate whatever color you wish for!</span></p>
 
 </center>
 <div id="gradient" class="footer">

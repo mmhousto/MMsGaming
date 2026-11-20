@@ -1,57 +1,18 @@
 <?php
+// PayPal's payment notice (IPN) for donations. PayPal posts here from its own
+// servers, so there is no logged-in player: the player comes from the signed
+// "custom" code the Donate button sent (see lib/donations.php).
+require_once "config.php";
 
-if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    } 
-
-require_once "config.php";  
-
-if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-	header('Location: index.php');
-	exit();
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
+    header('Location: index.php');
+    exit();
 }
-	$username = $_SESSION['username'];
-    $id = $_SESSION['id'];
-    $points = $_SESSION['points'];
-    $isDonor = $_SESSION['Donor'];
-	$postFields = 'cmd=_notify-validate';
 
-	$p = "SELECT points FROM users WHERE username = ?";
-	$result1 = db_query($link, $p, [$username]);//"SELECT points FROM users WHERE username = $username";
-	while($row = mysqli_fetch_assoc($result1)) {
-		$points = $row["points"];
-	}
-	$isDonor = player_custom($link, $id ?? null)['Donor'];
-
-		foreach ($_POST as $key => $value) {
-			$postFields .= "&$key=".urlencode($value);
-		}
-
-
-		$ch = curl_init();
-
-		curl_setopt_array($ch, array(
-			CURLOPT_URL => 'https://ipnpb.paypal.com/cgi-bin/webscr',
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSL_VERIFYHOST => 2,
-			CURLOPT_SSL_VERIFYPEER => true,
-			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $postFields
-		));
-
-		$result = curl_exec($ch);
-		curl_close($ch);
-
-		if ($result == 'VERIFIED') {
-			$pointsRecieved = $_POST['mc_gross'] * 1000;
-			$sql = "UPDATE users SET points = points + ? WHERE username = ?";
-			db_query($link, $sql, [$pointsRecieved, $username]);
-			$isDonor = 1;
-			$sql2 = "UPDATE custom SET Donor = ? WHERE UID = ?";
-			db_query($link, $sql2, [$isDonor, $id]);
-		}
-
-		exit();
-
-?>
+$mmsgResult = handle_paypal_ipn($link, (string) file_get_contents('php://input'), $_POST);
+if (!in_array($mmsgResult, ['credited', 'credited-guest', 'refunded', 'duplicate', 'ignored-status'], true)) {
+    error_log('MMsGaming: PayPal notice ' . $mmsgResult . ' (txn ' . substr((string) ($_POST['txn_id'] ?? ''), 0, 64) . ')');
+}
+// Always answer 200 so PayPal doesn't keep re-sending; the result is logged.
+header('Content-Type: text/plain');
+echo $mmsgResult;

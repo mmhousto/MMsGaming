@@ -61,4 +61,5 @@ require_once __DIR__ . '/lib/player.php';
 require_once __DIR__ . '/lib/accounts.php';
 require_once __DIR__ . '/lib/verify.php';
 require_once __DIR__ . '/lib/unity-games.php';
+require_once __DIR__ . '/lib/donations.php';
 csrf_protect();
