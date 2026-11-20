@@ -59,3 +59,16 @@ test('ZombCube links to its own privacy policy', async ({ request }) => {
   const body = await (await request.get('/ZombCube/index.php')).text();
   expect(body).toContain('<a href="/ZombCube/PrivacyPolicy.html">Privacy Policy</a>');
 });
+
+// These three are plain HTML (no PHP), so their footer is kept in step by hand.
+for (const htmlPage of ['terms.html', 'privacyPolicy.html', 'contactform.html']) {
+  test(`${htmlPage} footer matches the shared footer`, async ({ page }) => {
+    await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (route) => route.abort());
+    await page.goto(`/${htmlPage}`);
+    const footer = page.locator('footer#gradient');
+    await expect(footer).toContainText(`© 2019-${new Date().getFullYear()} MM's Gaming Community LLC`);
+    for (const href of ['/sitemap.xml', '/terms.html', '/privacyPolicy.html', '/contactform.html']) {
+      await expect(footer.locator(`a[href="${href}"]`)).toHaveCount(1);
+    }
+  });
+}
