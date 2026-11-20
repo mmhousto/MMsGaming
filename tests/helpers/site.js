@@ -13,7 +13,7 @@ function uniqueName(prefix = 'u') {
 
 /** Register a new account through the real form handler. Returns the username. */
 async function registerUser(request, username = uniqueName()) {
-  const res = await request.post('/register.php', {
+  const res = await postForm(request, '/register.php', {
     form: { username, email: `${username}@example.com`, password: PASSWORD, confirm_password: PASSWORD },
     maxRedirects: 0,
   });
@@ -23,7 +23,7 @@ async function registerUser(request, username = uniqueName()) {
 
 /** Log in an API request context (keeps the session cookie). */
 async function login(request, username, password = PASSWORD) {
-  const res = await request.post('/login.php', { form: { username, password }, maxRedirects: 0 });
+  const res = await postForm(request, '/login.php', { form: { username, password }, maxRedirects: 0 });
   expect(res.status(), `login ${username}`).toBe(302);
   expect(res.headers()['location']).toContain('index.php');
 }
@@ -48,3 +48,20 @@ function setPoints(username, points) {
 }
 
 module.exports = { PASSWORD, uniqueName, registerUser, login, insertUserDirect, userId, setPoints };
+
+/** The session's form token, read from a page the way a browser gets it. */
+async function csrfToken(ctx) {
+  const html = await (await ctx.get('/forgot-password.php')).text();
+  const m = html.match(/name="csrf_token" value="([0-9a-f]+)"/);
+  if (!m) throw new Error('No csrf_token found on /forgot-password.php');
+  return m[1];
+}
+
+/** POST a form like a browser would: including the session's form token. */
+async function postForm(ctx, url, options = {}) {
+  const token = await csrfToken(ctx);
+  return ctx.post(url, { ...options, form: { ...(options.form || {}), csrf_token: token } });
+}
+
+module.exports.csrfToken = csrfToken;
+module.exports.postForm = postForm;
