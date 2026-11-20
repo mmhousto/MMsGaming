@@ -83,22 +83,26 @@ test('ZombCube: PLAY GAME opens its full-window player; store buttons; credits',
   expect((await request.get('/ZombCube/Play-ZombCube/')).status()).toBe(200);
 });
 
-test('Imprecision and Magnet Destroyer are store pages (no broken PLAY GAME)', async ({ request }) => {
+test('Imprecision is a store page; Magnet Destroyer launches its own build', async ({ request }) => {
   const imp = await (await request.get('/Imprecision/')).text();
   expect(imp).not.toContain('id="play-game"');
   expect(imp).toContain('href="https://store.steampowered.com/app/2466820/Imprecision"');
   expect(imp).toContain('CC BY 4.0');
 
   const mag = await (await request.get('/Magnet-Destroyer/')).text();
-  expect(mag).not.toContain('id="play-game"');
-  expect(mag).not.toContain('GAME ON!');
+  expect(mag).toContain('<a class="button" id="play-game" href="/Magnet-Destroyer/Play-Magnet-Destroyer/">PLAY GAME</a>');
   expect(mag).toContain('href="https://apps.apple.com/us/app/magnet-destroyer/id1622929531"');
   expect(mag).toContain('href="https://play.google.com/store/apps/details?id=com.MorganHouston.MagnetDestroyer"');
 
-  // Its old play page (which loaded ZombCube by mistake) now sends people to the game page.
-  const old = await (await request.get('/Magnet-Destroyer/Play-Magnet-Destroyer/')).text();
-  expect(old).toContain('url=/Magnet-Destroyer/');
-  expect(old).not.toContain('ZombCube WebGL'); // no leftover ZombCube player
+  // Its player page loads Magnet Destroyer's own build (it used to hold an old ZombCube player).
+  const player = await (await request.get('/Magnet-Destroyer/Play-Magnet-Destroyer/')).text();
+  expect(player).toContain('"/MagnetDestroyerWebGLBuild.loader.js"');
+  expect(player).toContain('"/MagnetDestroyerWebGLBuild.data.unityweb"');
+  expect(player).not.toContain('ZombCube');
+  for (const f of ['MagnetDestroyerWebGLBuild.loader.js', 'MagnetDestroyerWebGLBuild.data.unityweb',
+    'MagnetDestroyerWebGLBuild.framework.js.unityweb', 'MagnetDestroyerWebGLBuild.wasm.unityweb']) {
+    expect((await request.head(`/Magnet-Destroyer/Play-Magnet-Destroyer/Build/${f}`)).status(), f).toBe(200);
+  }
 });
 
 test('Retro Space Ball shows its itch.io build in a frame', async ({ request }) => {
