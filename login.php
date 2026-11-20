@@ -73,6 +73,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["ownBg"] = $ownBg;
                             $_SESSION["ownImg"] = $ownImg;
                             $_SESSION["ownCursor"] = $ownCursor;
+                            $_SESSION["ownFont"] = $ownFont;
                             $_SESSION["lastSet"] = $lastSet;
                             $_SESSION["BgColor"] = $bgColor;
                             $_SESSION["Trail"] = $TrailC;

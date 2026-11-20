@@ -57,7 +57,7 @@ jobs:
 
       - name: Run tests
         working-directory: tests
-        run: npx playwright test
+        run: npx playwright test --project=e2e
 
       - name: Upload test report
         if: failure()
