@@ -1,0 +1,64 @@
+/*
+ * Shared blog layout, loaded by every page in /blog/. It overrides the older
+ * styles copied into each post, so all posts lay out the same way:
+ *   desktop: article and comments on the left, About Me / Popular Post /
+ *            Follow Me on the right
+ *   narrow screens: one column, with the sidebar under the comments
+ */
+
+/* The logo box was fixed at 150px but the logo is taller, so it slid under
+   the menu. Let the box fit the logo, like the rest of the site. */
+#heading1 #rightHd,
+#heading1 #logo { height: auto; }
+
+.row.blog-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  column-gap: 24px;
+  align-items: start;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+}
+.row.blog-layout::after { content: none; }
+
+.blog-layout > .leftcolumn,
+.blog-layout > .rightcolumn {
+  float: none;
+  width: auto;
+  height: auto;
+  margin: 20px 0 0;
+  column-count: auto;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+/* Article (or post list), sidebar, then comments */
+.blog-layout > .leftcolumn:first-child { grid-column: 1; grid-row: 1; }
+.blog-layout > .rightcolumn { grid-column: 2; grid-row: 1 / span 2; }
+.blog-layout > .rightcolumn + .leftcolumn { grid-column: 1; grid-row: 2; }
+
+.blog-layout > .leftcolumn > .card,
+.blog-layout > .rightcolumn > .card {
+  float: none;
+  width: auto;
+  margin: 0 0 20px;
+  box-sizing: border-box;
+}
+.blog-layout .card img:not(.myimg) { max-width: 100%; height: auto; }
+
+/* Articles, post list entries and comments: white rounded cards, matching
+   the sidebar cards */
+.blog-layout > .leftcolumn > .card {
+  background: white;
+  border: 1px solid black;
+  border-radius: 25px;
+  padding: 20px 24px;
+}
+
+@media screen and (max-width: 900px) {
+  .row.blog-layout { grid-template-columns: minmax(0, 1fr); width: 95%; }
+  .blog-layout > .rightcolumn { grid-column: 1; grid-row: 3; }
+}

@@ -10,22 +10,28 @@ function getPosts($link) {
       <h2>".$row['title']."</h2>
       <h5>".$row['summary']."</h5><p style='color: #969696'>".$row['posted']."</p>
       <img src='".$row['image']."' style='max-width:100%;height:auto;' alt='".$row['alt']."'>
-      <form method='POST' action='".$row['href']."'>
-            <input type='hidden' name='aid' value='".$row['aid']."'>
-            <button class='read-Btn' type='submit' name='readSubmit'>Read more &raquo;</button>
-      </form>
+      <p><a class='read-Btn' href='".e($row['href'])."'>Read more &raquo;</a></p>
       </div>";
         
     }
 }
 
 
+/*
+ * The article for the blog post page being viewed, found by the page's own
+ * file name (posts.href is e.g. "Best-Io-Games.php" or a full address).
+ * Older "Read more" buttons posted the article id instead; still accepted.
+ */
 function getArticle($link) {
-    if (isset($_POST['readSubmit'])) {
-    $aid = $_POST['aid'];
+    if (isset($_POST['readSubmit'], $_POST['aid'])) {
+        $result = db_query($link, 'SELECT * FROM posts WHERE aid = ?', [(int) $_POST['aid']]);
+    } else {
+        $page = basename((string) ($_SERVER['SCRIPT_NAME'] ?? ''));
+        $result = db_query($link, 'SELECT * FROM posts WHERE href = ? OR href LIKE ? LIMIT 1', [$page, '%/' . $page]);
     }
-    $sql = "SELECT * FROM posts WHERE aid = ?";
-    $result = db_query($link, $sql, [$aid]);
+    if (!$result) {
+        return;
+    }
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<div class='card'>
       <h1>".$row['title']."</h1>
@@ -64,7 +70,10 @@ function getArticle($link) {
        opacity: 0.8;
        color: white;
        border: none;
+       display: inline-block;
+       text-decoration: none;
        }
+.read-Btn:hover, .read-Btn:focus { color: white; text-decoration: none; }
        
 .read-Btn:hover {
     opacity: 1.0;

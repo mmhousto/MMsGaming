@@ -131,3 +131,23 @@ test('Slither.io is gone and its old links go to the IO Games page', async ({ re
   expect(xml).not.toContain('Slither');
   expect(await (await request.get('/about.php')).text()).not.toContain('/Slither/');
 });
+
+test('a blog post shows its article when opened directly (e.g. from Google)', async ({ request }) => {
+  const body = await (await request.get('/blog/Best-Io-Games.php')).text();
+  expect(body).toContain('<h1>Test Post</h1>');
+  expect(body).toContain('Test body');
+});
+
+test('the blog list links to posts with normal links search engines can follow', async ({ request }) => {
+  const body = await (await request.get('/blog/')).text();
+  expect(body).toContain("<a class='read-Btn' href='blog/Best-Io-Games.php'>Read more &raquo;</a>");
+});
+
+test('every blog page uses the shared blog layout', () => {
+  const dir = path.join(__dirname, '../../blog');
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.php'))) {
+    const src = fs.readFileSync(path.join(dir, f), 'utf8');
+    expect(src, f).toContain('<link rel="stylesheet" href="/css/blog.css">');
+    expect(src, f).toContain('<div class="row blog-layout">');
+  }
+});

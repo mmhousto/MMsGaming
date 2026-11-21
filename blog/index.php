@@ -92,6 +92,7 @@ $_SESSION['secure'] = $secure;
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
     <link rel="manifest" href="../site.webmanifest">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/blog.css">
     <link rel="stylesheet" href="../basic.css">
     <link rel="canonical" href="https://mms-gaming.com/blog/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -696,7 +697,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <center>
     <br>
   <h2>Showing Latest News in Gaming</h2>
- <div class="row">
+ <div class="row blog-layout">
   <div class="leftcolumn col-md-8">
           <?php echo getPosts($link); ?>
     <div class="card"><a href="#coming">
