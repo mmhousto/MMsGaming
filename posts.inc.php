@@ -3,7 +3,8 @@ require_once "config.php";
 
 
 function getPosts($link) {
-    $sql = "SELECT * FROM posts";
+    // Newest first. "posted" is free text, so sort by the auto-increment id.
+    $sql = "SELECT * FROM posts ORDER BY aid DESC";
     $result = mysqli_query($link, $sql);
     while ($row = mysqli_fetch_assoc($result)) {
         echo "<div class='card'>
