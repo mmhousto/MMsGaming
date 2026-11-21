@@ -92,7 +92,7 @@ $_SESSION['secure'] = $secure;
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
     <link rel="manifest" href="../site.webmanifest">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <link rel="stylesheet" href="/css/blog.css">
+    <link rel="stylesheet" href="/css/blog.css?v=<?php echo @filemtime(__DIR__ . '/../css/blog.css') ?: 1; ?>">
     <link rel="canonical" href="https://mms-gaming.com/blog/Precision-Terrain-Grass-and-Score.php">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
