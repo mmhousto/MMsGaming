@@ -111,6 +111,7 @@ test('UNO Online is now Duo with Friends at /Duo/', async ({ request }) => {
   expect(body).toContain('<title>Play Duo with Friends Online Free | Multiplayer Card Game</title>');
   expect(body).toContain('<link rel="canonical" href="https://mms-gaming.com/Duo/">');
   expect(body).not.toContain('UNO');
+  expect(body).not.toContain('must be played in http');
   const htaccess = fs.readFileSync(path.join(__dirname, '../../.htaccess'), 'utf8');
   expect(htaccess).toContain('RewriteRule ^UNO(/.*)?$ /Duo/ [R=301,L]');
   const xml = await (await request.get('/sitemap.php')).text();
