@@ -118,3 +118,8 @@ test('UNO Online is now Duo with Friends at /Duo/', async ({ request }) => {
   expect(xml).toContain('<loc>https://mms-gaming.com/Duo/</loc>');
   expect(xml).not.toContain('/UNO/');
 });
+
+test('Krew.io no longer tells visitors to switch to http', async ({ request }) => {
+  const body = await (await request.get('/Krew/')).text();
+  expect(body).not.toContain('must be played in http');
+});
