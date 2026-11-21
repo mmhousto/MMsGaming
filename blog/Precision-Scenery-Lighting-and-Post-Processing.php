@@ -676,6 +676,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <a href="https://www.facebook.com/MMsGamingCo/" class="fa fa-facebook"></a>&nbsp;
       <a href="https://twitter.com/MM6sGamingCo" class="fa fa-twitter"></a>
     </div>
+<?php include __DIR__ . '/../templates/ad-banner.php'; ?>
   </div>
   <div class="leftcolumn">
     <div class="card">

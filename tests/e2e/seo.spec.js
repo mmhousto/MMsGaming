@@ -151,3 +151,14 @@ test('every blog page uses the shared blog layout', () => {
     expect(src, f).toContain('<div class="row blog-layout">');
   }
 });
+
+test('each blog post has one AdSense banner, in the sidebar', async ({ request }) => {
+  const dir = path.join(__dirname, '../../blog');
+  for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.php') && n !== 'index.php')) {
+    const body = await (await request.get('/blog/' + f)).text();
+    expect(body.match(/class="adsbygoogle"/g), f).toHaveLength(1);
+    const side = body.slice(body.indexOf('class="rightcolumn"'));
+    expect(side.indexOf('class="adsbygoogle"'), f).toBeGreaterThan(-1);
+    expect(side.indexOf('class="adsbygoogle"'), f).toBeLessThan(side.indexOf('class="leftcolumn"'));
+  }
+});

@@ -62,3 +62,7 @@
   .row.blog-layout { grid-template-columns: minmax(0, 1fr); width: 95%; }
   .blog-layout > .rightcolumn { grid-column: 1; grid-row: 3; }
 }
+
+/* Sidebar ad (templates/ad-banner.php) */
+.blog-layout .ad-card { min-height: 120px; overflow: hidden; }
+.blog-layout .ad-label { margin: 0 0 6px; font-size: 11px; color: #777; text-transform: uppercase; letter-spacing: 0.05em; }
