@@ -167,6 +167,7 @@ test('the blog front page is a gaming news hub, not a request for writers', asyn
   const body = await (await request.get('/blog/')).text();
   expect(body).toContain('All Your Gaming News in One Place');
   expect(body).toContain('focus on the indie community');
+  expect(body).not.toContain('GTA');
   expect(body).not.toContain('interested in blogging');
   expect(body).not.toContain('Need someone to write me');
 });

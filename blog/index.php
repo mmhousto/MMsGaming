@@ -86,7 +86,7 @@ $_SESSION['secure'] = $secure;
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- Optimal Internet Explorer compatibility -->
 
     <title>Indie Game News &amp; Gaming Blog | MM's Gaming Community</title>
-    <meta name="description" content="All your gaming news in one place, focused on the indie community: new indie releases, hidden gems and dev stories, plus the big games like GTA VI.">
+    <meta name="description" content="All your gaming news in one place, focused on the indie community: new indie releases, hidden gems and dev stories, plus the biggest games and updates.">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -717,7 +717,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <div class="leftcolumn col-md-8">
   <div class='card'>
       <h1>All Your Gaming News in One Place</h1>
-      <p>Get all your gaming news here, with a focus on the indie community: new indie releases, hidden gems, developer stories and behind-the-scenes looks at the games we're making in Unity. We cover the big games too, from GTA VI to the latest blockbuster updates. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
+      <p>Get all your gaming news here, with a focus on the indie community: new indie releases, hidden gems, developer stories and behind-the-scenes looks at the games we're making in Unity. We cover the big games and blockbuster updates too. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
   </div>
   </div>
 </div>
