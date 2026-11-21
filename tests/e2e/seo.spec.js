@@ -123,3 +123,11 @@ test('Krew.io no longer tells visitors to switch to http', async ({ request }) =
   const body = await (await request.get('/Krew/')).text();
   expect(body).not.toContain('must be played in http');
 });
+
+test('Slither.io is gone and its old links go to the IO Games page', async ({ request }) => {
+  const htaccess = fs.readFileSync(path.join(__dirname, '../../.htaccess'), 'utf8');
+  expect(htaccess).toContain('RewriteRule ^Slither(/.*)?$ /IO-Games.php [R=301,L]');
+  const xml = await (await request.get('/sitemap.php')).text();
+  expect(xml).not.toContain('Slither');
+  expect(await (await request.get('/about.php')).text()).not.toContain('/Slither/');
+});

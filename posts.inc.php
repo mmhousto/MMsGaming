@@ -32,7 +32,7 @@ function getArticle($link) {
       <p>Author: ".$row['author']."</p>
       <p>Posted: ".$row['posted']."</p>
       <h4>".$row['summary']."</h4>
-      <img src='".$row['image']."' style='max-width:100%;height:auto;' alt='Slither.io is an epic, free online 2D survival, IO game, multiplayer game you can play with friends, on MM's Gaming Co.' title='Play Slither.io'><br><br>
+      <img src='".$row['image']."' style='max-width:100%;height:auto;' alt='".e($row['title'])."'><br><br>
       <div class='aContent'>".$row['content']."</div>
     </div>";
         
