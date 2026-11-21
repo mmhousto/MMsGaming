@@ -850,7 +850,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   		<a class="orange" href="/Survivio/"><li><u>Surviv.io</u></li></a>
   		<a class="orange" href="/8Ball/"><li><u>8Ball Pool</u></li></a>
   		<a class="orange" href="/Madalin/"><li><u>Madalin Stunt Cars 2</u></li></a>
-  		<a class="orange" href="/UNO/"><li><u>UNO Online</u></li></a>
+  		<a class="orange" href="/Duo/"><li><u>Duo with Friends</u></li></a>
   	</ol></font></div>
   </div>
   

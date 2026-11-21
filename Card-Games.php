@@ -94,12 +94,12 @@ $_SESSION['secure'] = $secure;
   <meta property="og:url" content="https://mms-gaming.com/Card-Games.php" />
   <meta property="og:type"  content="website" />
   <meta property="og:title" content="Play Free Games with Cards Online [Card Gaming]" />
-  <meta property="og:description" content="Play online games with cards, such as, UNO with Friends. Best Free Card Fun @ MM's Gaming Co!" />
+  <meta property="og:description" content="Play online games with cards, such as, Duo with Friends. Best Free Card Fun @ MM's Gaming Co!" />
   <meta property="og:image" content="https://mms-gaming.com/MM.png" />
   <!--- ----->
 
     <title>Play Free Games with Cards Online [Card Gaming]</title>
-    <meta name="description" content="Play online games with cards, such as, UNO with Friends. Best Free Card Fun @ MM's Gaming Co!">
+    <meta name="description" content="Play online games with cards, such as, Duo with Friends. Best Free Card Fun @ MM's Gaming Co!">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">

@@ -94,12 +94,12 @@ $_SESSION['secure'] = $secure;
   <meta property="og:url" content="https://mms-gaming.com/Strategy-Games.php" />
   <meta property="og:type"  content="website" />
   <meta property="og:title" content="Play Thinking Games for Kids Online [Strategy Gaming]" />
-  <meta property="og:description" content="Play free thinking games that are great for kids, such as, Little Alchemy 2, UNO with friends, and more! Online Strategy fun for all @ MM's Gaming Co!" />
+  <meta property="og:description" content="Play free thinking games that are great for kids, such as, Little Alchemy 2, Duo with Friends, and more! Online Strategy fun for all @ MM's Gaming Co!" />
   <meta property="og:image" content="https://mms-gaming.com/MM.png" />
   <!--- ----->
 
     <title>Play Thinking Games for Kids Online [Strategy Gaming]</title>
-    <meta name="description" content="Play free thinking games that are great for kids, such as, Little Alchemy 2, UNO with friends, and more! Online Strategy fun for all @ MM's Gaming Co!">
+    <meta name="description" content="Play free thinking games that are great for kids, such as, Little Alchemy 2, Duo with Friends, and more! Online Strategy fun for all @ MM's Gaming Co!">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">

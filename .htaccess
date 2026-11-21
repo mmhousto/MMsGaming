@@ -14,6 +14,9 @@ RewriteRule (^|/)(package(-lock)?\.json|\.git[^/]*|\.user\.ini)$ - [R=404,L]
 # The sitemap is built from the site itself (sitemap.php).
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
+# UNO Online was renamed Duo with Friends: send old links and bookmarks to the new page.
+RewriteRule ^UNO(/.*)?$ /Duo/ [R=301,L]
+
 
 </IfModule>
 
