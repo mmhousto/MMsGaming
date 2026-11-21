@@ -145,3 +145,30 @@
   .aContent .post .post-grid { grid-template-columns: minmax(0, 1fr); }
   .aContent .post .post-facts figure { max-width: 220px; margin: 0 auto; }
 }
+
+/* Game facts shown as chips under a game's heading */
+.aContent .post ul.post-game-meta { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0 0 18px; }
+.aContent .post ul.post-game-meta li { margin: 0; padding: 3px 12px; background: var(--post-soft); border-radius: 999px; font-size: 14px; line-height: 1.6; }
+
+/* Jump list of the games covered in a roundup */
+.aContent .post ol.post-toc { margin: 0 0 24px; padding: 16px 20px 16px 40px; background: var(--post-soft); border-radius: 16px; text-align: left; }
+.aContent .post ol.post-toc li { margin: 0 0 4px; }
+
+/* Highlight box, e.g. for one of our own games */
+.aContent .post .post-callout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  margin: 32px 0;
+  padding: 20px;
+  border: 2px solid var(--post-accent);
+  border-radius: 16px;
+}
+.aContent .post .post-callout figure { margin: 0; }
+.aContent .post .post-callout h3 { width: auto; margin: 0 0 8px; font-size: 20px; line-height: 1.3; }
+.aContent .post .post-callout p:last-child { margin-bottom: 0; }
+
+@media screen and (max-width: 600px) {
+  .aContent .post .post-callout { grid-template-columns: minmax(0, 1fr); }
+}
