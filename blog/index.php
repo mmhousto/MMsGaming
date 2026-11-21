@@ -700,12 +700,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
  <div class="row blog-layout">
   <div class="leftcolumn col-md-8">
           <?php echo getPosts($link); ?>
-    <div class="card"><a href="#coming">
-      <h2>Coming Soon..</h2>
-      <h5>Need someone to write me,</h5><p style="color: #969696">Posted: Jan 1, 9999</p>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      </a>
-    </div>
   </div>
   <div class="rightcolumn">
     <div class="card">
@@ -722,8 +716,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </div>
   <div class="leftcolumn col-md-8">
   <div class='card'>
-      <h1>Blog About Games</h1>
-      <p>This is more than a blog all about games and topics alike. It is a community for gamers to come, learn and express ideas on topics in the gaming world. If you are interested in blogging about games, please contact me.</p>
+      <h1>All Your Gaming News in One Place</h1>
+      <p>Get all your gaming news here: new releases, game updates, the best free browser games, and behind-the-scenes looks at the games we're making in Unity. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
   </div>
   </div>
 </div>

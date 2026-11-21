@@ -162,3 +162,10 @@ test('each blog post has one AdSense banner, in the sidebar', async ({ request }
     expect(side.indexOf('class="adsbygoogle"'), f).toBeLessThan(side.indexOf('class="leftcolumn"'));
   }
 });
+
+test('the blog front page is a gaming news hub, not a request for writers', async ({ request }) => {
+  const body = await (await request.get('/blog/')).text();
+  expect(body).toContain('All Your Gaming News in One Place');
+  expect(body).not.toContain('interested in blogging');
+  expect(body).not.toContain('Need someone to write me');
+});
