@@ -1,7 +1,7 @@
 -- Blog post: GTA VI launch reviews.
 --
 -- Safe to run more than once: it removes any earlier copy of this post, then
--- inserts the current version. "posted" is stamped with the time you run it,
+-- inserts the current version. "posted" (a DATE) is set to the day you run it,
 -- in US Central time (CST, UTC-6; change '-06:00' to '-05:00' during CDT).
 --
 -- Images live in /blog/images/gta-vi/ (official Rockstar Games artwork).
@@ -10,7 +10,7 @@ DELETE FROM posts WHERE href = 'GTA-VI-Launch-Reviews.php';
 INSERT INTO posts (title, summary, posted, image, alt, href, author, content) VALUES (
   'GTA VI Is Here, and the Reviews Are Glowing!',
   'After a 13-year wait, Rockstar&rsquo;s Grand Theft Auto VI launched on November 19, 2026 to some of the best reviews in gaming history. Here&rsquo;s everything you need to know.',
-  DATE_FORMAT(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-06:00'), '%M %e, %Y %l:%i %p'),
+  DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-06:00')),
   '/blog/images/gta-vi/gta-vi-key-art.jpg',
   'Grand Theft Auto VI key art featuring Jason, Lucia and scenes from Vice City',
   'GTA-VI-Launch-Reviews.php',

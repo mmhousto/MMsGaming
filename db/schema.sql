@@ -61,7 +61,7 @@ CREATE TABLE secondReplies (
 
 CREATE TABLE posts (
   aid int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  title varchar(255), summary text, posted varchar(50), image varchar(255),
+  title varchar(255), summary text, posted date, image varchar(255),
   alt varchar(255), href varchar(255), author varchar(100), content text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

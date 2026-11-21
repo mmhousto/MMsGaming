@@ -1,7 +1,7 @@
 -- Blog post: 6 indie games to play this weekend (November 2026).
 --
 -- Safe to run more than once: it removes any earlier copy of this post, then
--- inserts the current version. "posted" is stamped with the time you run it,
+-- inserts the current version. "posted" (a DATE) is set to the day you run it,
 -- in US Central time (CST, UTC-6; change '-06:00' to '-05:00' during CDT).
 --
 -- Images live in /blog/images/indie-picks-nov-2026/ (official Steam store
@@ -11,7 +11,7 @@ DELETE FROM posts WHERE href = 'Indie-Games-to-Play-This-Weekend-November-2026.p
 INSERT INTO posts (title, summary, posted, image, alt, href, author, content) VALUES (
   '6 Indie Games to Play This Weekend (Yes, Even With GTA VI Out!)',
   'GTA VI is grabbing the headlines, but the indie scene has been on fire too. From cozy sky islands to a small-town horror nightmare, here are six fresh indie games that deserve a spot in your weekend.',
-  DATE_FORMAT(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-06:00'), '%M %e, %Y %l:%i %p'),
+  DATE(CONVERT_TZ(UTC_TIMESTAMP(), '+00:00', '-06:00')),
   '/blog/images/indie-picks-nov-2026/indie-picks-feature.jpg',
   'Six indie games to play this weekend: Silver Pines, Ratatan, Hillthorn, Spirit Crossing, TANUKI: Pon&rsquo;s Summer and Milki Delivery',
   'Indie-Games-to-Play-This-Weekend-November-2026.php',
