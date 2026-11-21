@@ -85,8 +85,8 @@ $_SESSION['secure'] = $secure;
   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- Optimal Internet Explorer compatibility -->
 
-    <title>Gaming Blog | Latest news for Games</title>
-    <meta name="description" content="Learn about the latest news in gaming happening over subjects like: browser games, new games, esports, coding and security!">
+    <title>Indie Game News &amp; Gaming Blog | MM's Gaming Community</title>
+    <meta name="description" content="All your gaming news in one place, focused on the indie community: new indie releases, hidden gems and dev stories, plus the biggest games and updates.">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -696,16 +696,10 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <br>
 <center>
     <br>
-  <h2>Showing Latest News in Gaming</h2>
+  <h2>Latest Indie &amp; Gaming News</h2>
  <div class="row blog-layout">
   <div class="leftcolumn col-md-8">
           <?php echo getPosts($link); ?>
-    <div class="card"><a href="#coming">
-      <h2>Coming Soon..</h2>
-      <h5>Need someone to write me,</h5><p style="color: #969696">Posted: Jan 1, 9999</p>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      </a>
-    </div>
   </div>
   <div class="rightcolumn">
     <div class="card">
@@ -722,8 +716,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   </div>
   <div class="leftcolumn col-md-8">
   <div class='card'>
-      <h1>Blog About Games</h1>
-      <p>This is more than a blog all about games and topics alike. It is a community for gamers to come, learn and express ideas on topics in the gaming world. If you are interested in blogging about games, please contact me.</p>
+      <h1>All Your Gaming News in One Place</h1>
+      <p>Get all your gaming news here, with a focus on the indie community: new indie releases, hidden gems, developer stories and behind-the-scenes looks at the games we're making in Unity. We cover the big games and blockbuster updates too. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
   </div>
   </div>
 </div>
