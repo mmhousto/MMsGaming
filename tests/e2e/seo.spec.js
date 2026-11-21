@@ -147,8 +147,18 @@ test('every blog page uses the shared blog layout', () => {
   const dir = path.join(__dirname, '../../blog');
   for (const f of fs.readdirSync(dir).filter((n) => n.endsWith('.php'))) {
     const src = fs.readFileSync(path.join(dir, f), 'utf8');
-    expect(src, f).toContain('<link rel="stylesheet" href="/css/blog.css">');
+    // The link carries ?v=<file modified time> so CDN-cached copies refresh.
+    expect(src, f).toContain(
+      `<link rel="stylesheet" href="/css/blog.css?v=<?php echo @filemtime(__DIR__ . '/../css/blog.css') ?: 1; ?>">`
+    );
     expect(src, f).toContain('<div class="row blog-layout">');
+  }
+});
+
+test('blog pages link a versioned blog.css so CSS updates get past the CDN cache', async ({ request }) => {
+  for (const page of ['/blog/', '/blog/Best-Io-Games.php']) {
+    const body = await (await request.get(page)).text();
+    expect(body, page).toMatch(/<link rel="stylesheet" href="\/css\/blog\.css\?v=[1-9]\d{8,}">/);
   }
 });
 
