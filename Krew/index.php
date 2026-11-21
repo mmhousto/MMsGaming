@@ -481,10 +481,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 	<p style="color:black; margin: -30px 10px 10px;"><font size="+2">GAME ON!</font></p>
 	<br><br>
 <?php
-if (!empty($_SERVER['HTTPS'])) 
-{
-  echo '<div class="desc-box"><h2 style="text-align: center;"><font size="+3">Why is Krew.io not working?</font></h2><p><font size="+2">Krew.io must be played in http, change the address from "<b>https</b>://mms-gaming.com/Krew/" to "<b>http</b>://mms-gaming.com/Krew/" to play the game!<br>If that does not work, allow insecure content. You can do this by going to "Site settings" and scrolling down to "Insecure content" set this to "Allow"</font></p></div>';
-}
 include '../games.inc.php';
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     echo '<div id="game">';
