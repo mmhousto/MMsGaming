@@ -845,7 +845,6 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   	<div class="bestGames">
   	<ol align="center">
   		<a class="orange" href="/Krunker/"><li><u>Krunker.io</u></li></a>
-  		<a class="orange" href="/Slither/"><li><u>Slither.io</u></li></a>
   		<a class="orange" href="/Krew/"><li><u>Krew.io</u></li></a>
   		<a class="orange" href="/Survivio/"><li><u>Surviv.io</u></li></a>
   		<a class="orange" href="/8Ball/"><li><u>8Ball Pool</u></li></a>

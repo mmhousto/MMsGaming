@@ -93,12 +93,12 @@ $_SESSION['secure'] = $secure;
   <meta property="og:url" content="https://mms-gaming.com/Multiplayer-Games.php" />
   <meta property="og:type"  content="website" />
   <meta property="og:title" content="Play Free Online Games [Multiplayer Gaming]" />
-  <meta property="og:description" content="Earn points playing free multiplayer games, such as Slither.io, Krew.io, Madalin Stunt Cars 2 and more! Play online with friends for free @ MM's Gaming Co." />
+  <meta property="og:description" content="Earn points playing free multiplayer games, such as Krew.io, Duo with Friends, Madalin Stunt Cars 2 and more! Play online with friends for free @ MM's Gaming Co." />
   <meta property="og:image" content="https://mms-gaming.com/MM.png" />
   <!--- ----->
 
     <title>Play Free Online Games [Multiplayer Gaming]</title>
-    <meta name="description" content="Earn points playing free multiplayer games, such as Slither.io, Krew.io, Madalin Stunt Cars 2 and more! Play online with friends for free @ MM's Gaming Co.">
+    <meta name="description" content="Earn points playing free multiplayer games, such as Krew.io, Duo with Friends, Madalin Stunt Cars 2 and more! Play online with friends for free @ MM's Gaming Co.">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
