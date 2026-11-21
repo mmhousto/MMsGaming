@@ -85,8 +85,8 @@ $_SESSION['secure'] = $secure;
   <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Ensures optimal rendering on mobile devices. -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- Optimal Internet Explorer compatibility -->
 
-    <title>Gaming Blog | Latest news for Games</title>
-    <meta name="description" content="Learn about the latest news in gaming happening over subjects like: browser games, new games, esports, coding and security!">
+    <title>Indie Game News &amp; Gaming Blog | MM's Gaming Community</title>
+    <meta name="description" content="All your gaming news in one place, focused on the indie community: new indie releases, hidden gems and dev stories, plus the big games like GTA VI.">
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -696,7 +696,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <br>
 <center>
     <br>
-  <h2>Showing Latest News in Gaming</h2>
+  <h2>Latest Indie &amp; Gaming News</h2>
  <div class="row blog-layout">
   <div class="leftcolumn col-md-8">
           <?php echo getPosts($link); ?>
@@ -717,7 +717,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <div class="leftcolumn col-md-8">
   <div class='card'>
       <h1>All Your Gaming News in One Place</h1>
-      <p>Get all your gaming news here: new releases, game updates, the best free browser games, and behind-the-scenes looks at the games we're making in Unity. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
+      <p>Get all your gaming news here, with a focus on the indie community: new indie releases, hidden gems, developer stories and behind-the-scenes looks at the games we're making in Unity. We cover the big games too, from GTA VI to the latest blockbuster updates. New posts are added regularly, so check back often, and log in to comment and share what you think.</p>
   </div>
   </div>
 </div>
