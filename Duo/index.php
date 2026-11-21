@@ -29,8 +29,8 @@ $total = $mmsgStats['total'];
 	<meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Optimal Internet Explorer compatibility -->
-    <title>Multiplayer Gaming Online | Play UNO with Friends Free</title>
-    <meta name="description" content="Play the best online card game, UNO with friends! This is a HTML5 game with multiplayer. Playable at MM's Gaming Co.">
+    <title>Play Duo with Friends Online Free | Multiplayer Card Game</title>
+    <meta name="description" content="Play Duo with Friends, a free multiplayer card game: match colors and numbers, play action cards and be first to empty your hand. Play online at MM's Gaming Co.">
 
     <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -39,7 +39,7 @@ $total = $mmsgStats['total'];
     <link rel="stylesheet" type="text/css" href="../footer.css">
     <link rel="stylesheet" href="../basic.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="canonical" href="https://mms-gaming.com/UNO/">
+    <link rel="canonical" href="https://mms-gaming.com/Duo/">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
@@ -483,7 +483,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <?php
 if (!empty($_SERVER['HTTPS'])) 
 {
-  echo '<div class="desc-box"><h2 style="text-align: center;"><font size="+3">Why is UNO Online not working?</font></h2><p><font size="+2">UNO Online must be played in http, change the address from "<b>https</b>://mms-gaming.com/UNO/" to "<b>http</b>://mms-gaming.com/UNO/" to play the game!<br>If that does not work, allow insecure content. You can do this by going to "Site settings" and scrolling down to "Insecure content" set this to "Allow"</font></p></div>';
+  echo '<div class="desc-box"><h2 style="text-align: center;"><font size="+3">Why is Duo with Friends not working?</font></h2><p><font size="+2">Duo with Friends must be played in http, change the address from "<b>https</b>://mms-gaming.com/Duo/" to "<b>http</b>://mms-gaming.com/Duo/" to play the game!<br>If that does not work, allow insecure content. You can do this by going to "Site settings" and scrolling down to "Insecure content" set this to "Allow"</font></p></div>';
 }
 include '../games.inc.php';
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
@@ -508,7 +508,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <br>
 <div class="desc-box" align="center" style="text-align: center;">
     <h4 style="text-align: center;"><font size="+3"><strong>More Online Gaming</strong></font></h4>
-    <p>Done playing UNO with Friends? Choose other genres of games to find new ones to play! Games similar to this are multiplayer or strategy ones. Select 'Strategy Gaming' or 'Multiplayer Gaming Online' to view more games alike. I also think you would enjoy io type games. They are multiplayer, like this game, and can be played with friends.</p>
+    <p>Done playing Duo with Friends? Choose other genres of games to find new ones to play! Games similar to this are multiplayer or strategy ones. Select 'Strategy Gaming' or 'Multiplayer Gaming Online' to view more games alike. I also think you would enjoy io type games. They are multiplayer, like this game, and can be played with friends.</p>
     <a class="button" href="../IO-Games.php">IO Gaming</a>
     <a class="button" href="../Strategy-Games.php">Strategy Gaming</a>
     <a class="button" href="../Multiplayer-Games.php">Multiplayer Gaming Online</a>

@@ -105,3 +105,15 @@ test('every public page fits phone screens (viewport tag)', async () => {
   });
   expect(missing).toEqual([]);
 });
+
+test('UNO Online is now Duo with Friends at /Duo/', async ({ request }) => {
+  const body = await (await request.get('/Duo/')).text();
+  expect(body).toContain('<title>Play Duo with Friends Online Free | Multiplayer Card Game</title>');
+  expect(body).toContain('<link rel="canonical" href="https://mms-gaming.com/Duo/">');
+  expect(body).not.toContain('UNO');
+  const htaccess = fs.readFileSync(path.join(__dirname, '../../.htaccess'), 'utf8');
+  expect(htaccess).toContain('RewriteRule ^UNO(/.*)?$ /Duo/ [R=301,L]');
+  const xml = await (await request.get('/sitemap.php')).text();
+  expect(xml).toContain('<loc>https://mms-gaming.com/Duo/</loc>');
+  expect(xml).not.toContain('/UNO/');
+});
