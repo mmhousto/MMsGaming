@@ -94,6 +94,20 @@ $_SESSION['secure'] = $secure;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <link rel="stylesheet" href="/css/blog.css">
     <link rel="canonical" href="https://mms-gaming.com/blog/GTA-VI-Launch-Reviews.php">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="MM's Gaming Co.">
+    <meta property="og:title" content="GTA VI Is Here, and the Reviews Are Glowing!">
+    <meta property="og:description" content="After a 13-year wait, GTA VI launched November 19, 2026 to some of the best reviews in gaming history. Trailers, screenshots and everything you need to know.">
+    <meta property="og:url" content="https://mms-gaming.com/blog/GTA-VI-Launch-Reviews.php">
+    <meta property="og:image" content="https://mms-gaming.com/blog/images/gta-vi/gta-vi-share.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Grand Theft Auto VI key art">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@MMs_Gaming_Co">
+    <meta name="twitter:title" content="GTA VI Is Here, and the Reviews Are Glowing!">
+    <meta name="twitter:description" content="After a 13-year wait, GTA VI launched November 19, 2026 to some of the best reviews in gaming history.">
+    <meta name="twitter:image" content="https://mms-gaming.com/blog/images/gta-vi/gta-vi-share.jpg">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script> 
