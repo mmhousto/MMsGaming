@@ -172,3 +172,23 @@
 @media screen and (max-width: 600px) {
   .aContent .post .post-callout { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Tick-box checklist, e.g. "everything to grab in this mission" */
+.aContent .post ul.post-checklist { list-style: none; padding: 18px 20px; margin: 0 0 24px; background: var(--post-soft); border-radius: 16px; }
+.aContent .post ul.post-checklist li { position: relative; padding-left: 34px; margin: 0 0 10px; }
+.aContent .post ul.post-checklist li:last-child { margin-bottom: 0; }
+.aContent .post ul.post-checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--post-accent);
+  border-radius: 5px;
+  background: #fff;
+}
+
+/* Short tip box */
+.aContent .post .post-tip { margin: 20px 0; padding: 14px 18px; background: #fff4f9; border-left: 4px solid var(--post-accent); border-radius: 0 12px 12px 0; }
+.aContent .post .post-tip p { margin: 0; }
