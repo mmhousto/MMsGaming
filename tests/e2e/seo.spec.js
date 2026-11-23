@@ -181,3 +181,19 @@ test('the blog front page is a gaming news hub, not a request for writers', asyn
   expect(body).not.toContain('interested in blogging');
   expect(body).not.toContain('Need someone to write me');
 });
+
+test('Slush.io, Hole.io and Carjack.io are gone and their old links go to the IO Games page', async ({ request }) => {
+  const htaccess = fs.readFileSync(path.join(__dirname, '../../.htaccess'), 'utf8');
+  expect(htaccess).toContain('RewriteRule ^(Slush-io|Hole-io|Carjack-io)(/.*)?$ /IO-Games.php [R=301,L]');
+  const root = path.join(__dirname, '../..');
+  for (const dir of ['Slush-io', 'Hole-io', 'Carjack-io']) {
+    expect(fs.existsSync(path.join(root, dir)), dir).toBe(false);
+  }
+  const xml = await (await request.get('/sitemap.php')).text();
+  const images = fs.readFileSync(path.join(root, 'image-sitemap.xml'), 'utf8');
+  for (const name of ['Slush-io', 'Hole-io', 'Carjack-io']) {
+    expect(xml, name).not.toContain(name);
+    expect(images, name).not.toContain(name);
+  }
+  expect(await (await request.get('/Madalin/')).text()).not.toContain('Carjack');
+});

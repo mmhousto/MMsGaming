@@ -503,7 +503,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <br>
 <div class="desc-box" align="center" style="text-align: center;">
     <h4 style="text-align: center;"><font size="+3"><strong>More Online Gaming</strong></font></h4>
-    <p>Bored of Madalin Stunt Cars 2? Choose other genres of games to play! Games similar to this one are car or multiplayer ones. Select 'Car Racing Gaming' or 'Multiplayer Gaming Online'. I also think you would enjoy io games. They are multiplayer, like this game, and can be played with friends. One calld Carjack.io is a car racing game as well!</p>
+    <p>Bored of Madalin Stunt Cars 2? Choose other genres of games to play! Games similar to this one are car or multiplayer ones. Select 'Car Racing Gaming' or 'Multiplayer Gaming Online'. I also think you would enjoy io games. They are multiplayer, like this game, and can be played with friends. Find them all on the <a href="/IO-Games.php">IO Games</a> page!</p>
     <a class="button" href="../IO-Games.php">IO Gaming</a>
     <a class="button" href="../Strategy-Games.php">Strategy Gaming</a>
     <a class="button" href="../Multiplayer-Games.php">Multiplayer Gaming Online</a>
