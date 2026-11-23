@@ -192,3 +192,27 @@
 /* Short tip box */
 .aContent .post .post-tip { margin: 20px 0; padding: 14px 18px; background: #fff4f9; border-left: 4px solid var(--post-accent); border-radius: 0 12px 12px 0; }
 .aContent .post .post-tip p { margin: 0; }
+
+/* Game card: image beside its write-up, used in game roundups */
+.aContent .post .post-game-card { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 20px; align-items: start; margin: 0 0 12px; }
+.aContent .post .post-game-card figure { margin: 0; }
+.aContent .post .post-game-card p:last-child { margin-bottom: 0; }
+
+/* Call-to-action button, e.g. "Play this game" */
+.aContent .post a.post-play-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--post-accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.aContent .post a.post-play-btn:hover,
+.aContent .post a.post-play-btn:focus { background: #c92f74; color: #fff; text-decoration: none; }
+
+@media screen and (max-width: 600px) {
+  .aContent .post .post-game-card { grid-template-columns: minmax(0, 1fr); }
+}
