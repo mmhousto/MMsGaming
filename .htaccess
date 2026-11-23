@@ -20,6 +20,9 @@ RewriteRule ^UNO(/.*)?$ /Duo/ [R=301,L]
 # Slither.io was removed (it only runs over http, which the site can't embed).
 RewriteRule ^Slither(/.*)?$ /IO-Games.php [R=301,L]
 
+# Slush.io (domain parked), Hole.io and Carjack.io (both now redirect elsewhere) were removed.
+RewriteRule ^(Slush-io|Hole-io|Carjack-io)(/.*)?$ /IO-Games.php [R=301,L]
+
 
 </IfModule>
 
